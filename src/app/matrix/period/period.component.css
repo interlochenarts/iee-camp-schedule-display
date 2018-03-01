@@ -2,6 +2,7 @@
   display: flex;
   flex-direction: row;
   flex: auto;
+  margin: 0 1em;
 }
 .course {
   border: 1px solid gray;
@@ -9,4 +10,7 @@
   flex-grow: 1;
   flex-shrink: 1;
   flex-basis: 0;
+}
+.course.no-border {
+  border: 1px solid white;
 }

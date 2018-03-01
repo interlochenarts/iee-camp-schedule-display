@@ -1,9 +1,15 @@
 <div class="row">
-  <div class="course">Period {{periodNumber}}</div>
-  <div class="course" *ngFor="let d of periodDays">
-    <p>{{getCourseForDay(d).courseName}}</p>
-    <p>{{getCourseForDay(d).instructor}}</p>
-    <p>{{getCourseForDay(d).location}}</p>
+  <div [ngClass]="{'no-border': periodNumber === 0}" class="course">
+    <span *ngIf="periodNumber > 0">Period {{periodNumber}}</span>
   </div>
-
+  <div class="course" *ngFor="let d of periodDays">
+    <div *ngIf="periodNumber > 0">
+      <p>{{getCourseForDay(d).courseName}}</p>
+      <p>{{getCourseForDay(d).instructor}}</p>
+      <p>{{getCourseForDay(d).location}}</p>
+    </div>
+    <div *ngIf="periodNumber === 0">
+      {{getCourseForDay(d).getDayName(d)}}
+    </div>
+  </div>
 </div>
