@@ -1,2 +1,2 @@
 <iee-header></iee-header>
-<iee-period></iee-period>
+<iee-period *ngFor="let sp of schedulePeriods; let i = index" [periodCourses]="sp" [periodNumber]="i"></iee-period>

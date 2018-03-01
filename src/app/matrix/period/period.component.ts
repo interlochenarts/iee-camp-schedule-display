@@ -8,6 +8,7 @@ import {ScheduleCourse} from '../../classes/ScheduleCourse';
 })
 export class PeriodComponent implements OnInit {
   @Input() periodCourses: ScheduleCourse[];
+  @Input() periodNumber: number;
 
   constructor() { }
 

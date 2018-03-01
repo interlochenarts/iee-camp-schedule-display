@@ -9,13 +9,15 @@ import {ScheduleCourse} from '../classes/ScheduleCourse';
 export class MatrixComponent implements OnInit {
   scheduleCourses: ScheduleCourse[] = [];
   scheduleCourseStrings = [
-    '{courseName: "Artchery", instructor: "Shooter McGavin", location: "Lake", schedule: "5(Mon-Sat)"}',
-    '{courseName: "Intro to Microphones", instructor: "Mike Patton", location: "Drainage Ditch", schedule: "1-2,6-7(Mon,Wed,Fri)"}',
-    '{courseName: "Cantankery", instructor: "Ed Asner", location: "Who Cares?", schedule: "1-2,6-7(Tue,Thu)"}',
-    '{courseName: "Villainy", instructor: "Snidely Whiplash", location: "Railroad Tracks", schedule: "3-4(Mon-Sat)"}',
-    '{courseName: "Building Bridges", instructor: "Jeff Bridges", location: "River", schedule: "8(Mon-Sat)"}',
-    '{courseName: "Use Yer Imagination", instructor: "Fred Rogers", location: "Neighborhood of Make-Believe", schedule: "9(Mon-Sat)"}'
+    '{"courseName": "Artchery", "instructor": "Shooter McGavin", "location": "Lake", "schedule": "5(Mon-Sat)"}',
+    '{"courseName": "Intro to Microphones", "instructor": "Mike Patton", "location": "Drainage Ditch", "schedule": "1-2,6-7(Mon,Wed,Fri)"}',
+    '{"courseName": "Cantankery", "instructor": "Ed Asner", "location": "Who Cares?", "schedule": "1-2,6-7(Tue,Thu)"}',
+    '{"courseName": "Villainy", "instructor": "Snidely Whiplash", "location": "Railroad Tracks", "schedule": "3-4(Mon-Sat)"}',
+    '{"courseName": "Building Bridges", "instructor": "Jeff Bridges", "location": "River", "schedule": "8(Mon-Sat)"}',
+    '{"courseName": "Use Yer Imagination", "instructor": "Fred Rogers","location":"Neighborhood of Make-Believe", "schedule": "9(Mon-Sat)"}'
   ];
+
+  schedulePeriods: Array<ScheduleCourse[]> = [[]];
 
   constructor() {
   }
@@ -25,7 +27,17 @@ export class MatrixComponent implements OnInit {
       return ScheduleCourse.createFromJson(JSON.parse(sc));
     });
 
-    console.log(this.scheduleCourses);
+    this.scheduleCourses.forEach(c => {
+      console.log('name: ' + c.courseName + ' / days: ' + c.days.join() + ' / periods: ' + c.periods.join());
+      c.periods.forEach(p => {
+        let courses: ScheduleCourse[] = this.schedulePeriods[p];
+        if (!courses) {
+          courses = [];
+        }
+        courses.push(c);
+        this.schedulePeriods[p] = courses;
+      });
+    });
   }
 
 }

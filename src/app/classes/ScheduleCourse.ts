@@ -18,7 +18,7 @@ export class ScheduleCourse {
         const start = dayNames.indexOf(value.substring(0, value.indexOf('-')));
         const end = dayNames.indexOf(value.substring(value.indexOf('-') + 1));
 
-        return Array.from({length: (end - start)}, (v, k) => k + start);
+        return Array.from({length: (end - start + 1)}, (v, k) => k + start);
       } else {
         return dayNames.indexOf(value);
       }
@@ -35,7 +35,7 @@ export class ScheduleCourse {
         const start = +value.substring(0, value.indexOf('-'));
         const end = +value.substring(value.indexOf('-') + 1);
 
-        return Array.from({length: (end - start)}, (v, k) => k + start);
+        return Array.from({length: (end - start + 1)}, (v, k) => k + start);
       } else {
         return +value;
       }
