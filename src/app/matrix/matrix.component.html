@@ -1,12 +1,7 @@
-<div class="table">
-  <div class="table-header">
-    <iee-header></iee-header>
-  </div>
-  <div class="table-body">
-    <iee-period *ngFor="let sp of schedulePeriods; let i = index"
-                [periodCourses]="sp"
-                [periodNumber]="i"
-                [firstDay]="firstDay"
-                [lastDay]="lastDay"></iee-period>
-  </div>
+<div class="matrix">
+  <iee-period *ngFor="let sp of schedulePeriods; let i = index"
+              [periodCourses]="sp"
+              [periodNumber]="i"
+              [firstDay]="firstDay"
+              [lastDay]="lastDay"></iee-period>
 </div>

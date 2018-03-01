@@ -25,7 +25,7 @@ export class MatrixComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.scheduleCourses = this.scheduleCourseStrings.map((sc) => {
+    this.scheduleCourses = this.scheduleCourseStrings.map(sc => {
       return ScheduleCourse.createFromJson(JSON.parse(sc));
     });
 

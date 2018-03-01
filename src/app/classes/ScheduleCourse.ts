@@ -5,8 +5,14 @@ export class ScheduleCourse {
   private schedule: string;
 
   public static createFromJson(json: any): ScheduleCourse {
-    const scheduleCourse = new ScheduleCourse();
+    const scheduleCourse = new ScheduleCourse(null);
     return Object.assign(scheduleCourse, json);
+  }
+
+  constructor(courseName: string) {
+    if (courseName) {
+      this.courseName = courseName;
+    }
   }
 
   get days(): number[] {

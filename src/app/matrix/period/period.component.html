@@ -1,4 +1,9 @@
-<div class="table-cell">
-  <p>Period {{periodNumber}}</p>
+<div class="row">
+  <div class="course">Period {{periodNumber}}</div>
+  <div class="course" *ngFor="let d of periodDays">
+    <p>{{getCourseForDay(d).courseName}}</p>
+    <p>{{getCourseForDay(d).instructor}}</p>
+    <p>{{getCourseForDay(d).location}}</p>
+  </div>
+
 </div>
-<iee-cell *ngFor="let d of periodDays" [course]="getCourseForDay(d)"></iee-cell>

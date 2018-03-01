@@ -4,7 +4,8 @@ import {ScheduleCourse} from '../../classes/ScheduleCourse';
 @Component({
   selector: 'iee-period',
   templateUrl: './period.component.html',
-  styleUrls: ['./period.component.css']
+  styleUrls: ['./period.component.css'],
+  preserveWhitespaces: false
 })
 export class PeriodComponent implements OnInit {
   @Input() periodCourses: ScheduleCourse[];
@@ -25,12 +26,12 @@ export class PeriodComponent implements OnInit {
   }
 
   getCourseForDay(day: number): ScheduleCourse {
-    for (i = 0; i <= this.periodCourses.length; i++) {
+    for (let i = 0; i < this.periodCourses.length; i++) {
       if (this.periodCourses[i].days.indexOf(day) >= 0) {
         return this.periodCourses[i];
       }
     }
 
-    return null;
+    return new ScheduleCourse('Free Period');
   }
 }
