@@ -14,6 +14,17 @@ Run `ng generate component component-name` to generate a new component. You can 
 
 Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
 
+##### Production Build
+
+`ng build --prod --aot --output-hashing=none`
+
+`--prod` sets the build into production mode, which strips out all dev libraries.
+
+`--aot` changes the build mode to 'ahead of time' so more compilation happens before the JIT compiler on the browser gets reached.
+
+`--output-hashing=none` makes the file names not have any hashed character sequences so we can refer to
+them nicely in the static resource bundles.   
+
 ## Running unit tests
 
 Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
