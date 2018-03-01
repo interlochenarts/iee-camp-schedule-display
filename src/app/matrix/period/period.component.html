@@ -1,3 +1,4 @@
-<li *ngFor="let sc of periodCourses">
-  P{{periodNumber}}: {{sc.courseName}} - {{sc.instructor}}
-</li>
+<div class="table-cell">
+  <p>Period {{periodNumber}}</p>
+</div>
+<iee-cell *ngFor="let d of periodDays" [course]="getCourseForDay(d)"></iee-cell>

@@ -16,6 +16,8 @@ export class MatrixComponent implements OnInit {
     '{"courseName": "Building Bridges", "instructor": "Jeff Bridges", "location": "River", "schedule": "8(Mon-Sat)"}',
     '{"courseName": "Use Yer Imagination", "instructor": "Fred Rogers","location":"Neighborhood of Make-Believe", "schedule": "9(Mon-Sat)"}'
   ];
+  firstDay = 7;
+  lastDay = -1;
 
   schedulePeriods: Array<ScheduleCourse[]> = [[]];
 
@@ -37,7 +39,15 @@ export class MatrixComponent implements OnInit {
         courses.push(c);
         this.schedulePeriods[p] = courses;
       });
+
+      c.days.forEach(d => {
+        if (d < this.firstDay) {
+          this.firstDay = d;
+        }
+        if (d > this.lastDay) {
+          this.lastDay = d;
+        }
+      });
     });
   }
-
 }
