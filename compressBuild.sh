@@ -1,6 +1,6 @@
 #!/bin/bash
 
-FILE='IEE_ElectivePickerAngular'
+FILE='IEE_CampScheduleAngular'
 EXT='zip'
 
 # remove old zip file if it exists
