@@ -14,7 +14,7 @@ export class MatrixComponent implements OnInit {
     '{"courseName": "Cantankery", "instructor": "Ed Asner", "location": "Who Cares?", "schedule": "1-2,6-7(Tue,Thu)"}',
     '{"courseName": "Villainy", "instructor": "Snidely Whiplash", "location": "Railroad Tracks", "schedule": "3-4(Mon-Sat)"}',
     '{"courseName": "Building Bridges", "instructor": "Jeff Bridges", "location": "River", "schedule": "8(Mon-Sat)"}',
-    '{"courseName": "Use Yer Imagination", "instructor": "Fred Rogers","location":"Neighborhood of Make-Believe", "schedule": "9(Mon-Sat)"}'
+    '{"courseName": "Use Your Imagination","instructor": "Fred Rogers","location":"Neighborhood of Make-Believe", "schedule": "9(Mon-Sat)"}'
   ];
   firstDay = 7;
   lastDay = -1;
@@ -30,7 +30,7 @@ export class MatrixComponent implements OnInit {
     });
 
     this.scheduleCourses.forEach(c => {
-      console.log('name: ' + c.courseName + ' / days: ' + c.days.join() + ' / periods: ' + c.periods.join());
+      // console.log('name: ' + c.courseName + ' / days: ' + c.days.join() + ' / periods: ' + c.periods.join());
       c.periods.forEach(p => {
         let courses: ScheduleCourse[] = this.schedulePeriods[p];
         if (!courses) {
