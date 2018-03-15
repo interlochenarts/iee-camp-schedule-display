@@ -2,11 +2,11 @@ import {Component, Input, OnInit} from '@angular/core';
 import {Student} from '../classes/Student';
 
 @Component({
-  selector: 'iee-header',
-  templateUrl: './header.component.html',
-  styleUrls: ['./header.component.css']
+  selector: 'iee-print-header',
+  templateUrl: './print-header.component.html',
+  styleUrls: ['./print-header.component.css']
 })
-export class HeaderComponent implements OnInit {
+export class PrintHeaderComponent implements OnInit {
   @Input() student: Student;
 
   constructor() { }
