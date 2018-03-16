@@ -8,10 +8,13 @@ import {Student} from '../classes/Student';
 })
 export class HeaderComponent implements OnInit {
   @Input() student: Student;
+  @Input() educationId: string;
+  linkToDashboard: string;
 
   constructor() { }
 
   ngOnInit() {
+    this.linkToDashboard = '/interlochen/IEE_CampLanding?Id=' + this.educationId;
   }
 
 }

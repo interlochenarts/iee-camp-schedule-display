@@ -1,11 +1,19 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
+import {NgModule} from '@angular/core';
 
-import { AppComponent } from './app.component';
-import { MatrixComponent } from './matrix/matrix.component';
-import { PeriodComponent } from './matrix/period/period.component';
-import { HeaderComponent } from './header/header.component';
-import { PrintHeaderComponent } from './print-header/print-header.component';
+import {AppComponent} from './app.component';
+import {MatrixComponent} from './matrix/matrix.component';
+import {PeriodComponent} from './matrix/period/period.component';
+import {HeaderComponent} from './header/header.component';
+import {PrintHeaderComponent} from './print-header/print-header.component';
+import {RouterModule, Routes, ExtraOptions} from '@angular/router';
+import { ScreenDisplayComponent } from './screen-display/screen-display.component';
+import { PrintDisplayComponent } from './print-display/print-display.component';
+
+const appRoutes: Routes = [
+  {path: ':educationId', component: ScreenDisplayComponent},
+  {path: ':educationId/print', component: PrintDisplayComponent}
+];
 
 @NgModule({
   declarations: [
@@ -13,12 +21,16 @@ import { PrintHeaderComponent } from './print-header/print-header.component';
     MatrixComponent,
     PeriodComponent,
     HeaderComponent,
-    PrintHeaderComponent
+    PrintHeaderComponent,
+    ScreenDisplayComponent,
+    PrintDisplayComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    RouterModule.forRoot(appRoutes, {useHash: true, paramsInheritanceStrategy: 'always'})
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

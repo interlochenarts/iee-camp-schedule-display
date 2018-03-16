@@ -1,7 +1,9 @@
-<div class="matrix well margin-top-sm">
-  <iee-period *ngFor="let sp of schedulePeriods; let i = index"
-              [periodCourses]="sp"
-              [periodNumber]="i"
-              [firstDay]="firstDay"
-              [lastDay]="lastDay"></iee-period>
+<div class="col-xs-12">
+  <div class="matrix well margin-top-sm">
+    <iee-period *ngFor="let sp of schedulePeriods; let i = index"
+                [periodCourses]="sp"
+                [periodNumber]="i"
+                [firstDay]="firstDay"
+                [lastDay]="lastDay"></iee-period>
+  </div>
 </div>
