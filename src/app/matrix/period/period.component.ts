@@ -32,6 +32,31 @@ export class PeriodComponent implements OnInit {
       }
     }
 
-    return new ScheduleCourse('Free Period');
+    const course = new ScheduleCourse('Free Period');
+    course.schedulePeriods = String(this.periodNumber);
+    return course;
+  }
+
+  printBottomBorder(course: ScheduleCourse): boolean {
+    const index = course.periods.indexOf(this.periodNumber);
+    if (index === (course.periods.length - 1)) {
+      return true;
+    } else {
+      return course.periods[index + 1] !== this.periodNumber + 1;
+    }
+  }
+
+  printRightBorder(dayNumber: number): boolean {
+    return dayNumber === this.lastDay;
+  }
+
+  // did we already print the info about this course immediately above it?
+  displayCourseInfo(course: ScheduleCourse): boolean {
+    const index = course.periods.indexOf(this.periodNumber);
+    if (index === 0) {
+      return true;
+    } else {
+      return course.periods[index - 1] !== this.periodNumber - 1;
+    }
   }
 }

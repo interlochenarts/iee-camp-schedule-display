@@ -2,8 +2,8 @@ export class ScheduleCourse {
   public courseName: string;
   public instructor: string;
   public location: string;
-  private schedulePeriods: string;
-  private scheduleDays: string;
+  public schedulePeriods: string;
+  public scheduleDays: string;
 
   private dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
