@@ -26,9 +26,11 @@ export class PeriodComponent implements OnInit {
   }
 
   getCourseForDay(day: number): ScheduleCourse {
-    for (let i = 0; i < this.periodCourses.length; i++) {
-      if (this.periodCourses[i].days.indexOf(day) >= 0) {
-        return this.periodCourses[i];
+    if (this.periodCourses) {
+      for (let i = 0; i < this.periodCourses.length; i++) {
+        if (this.periodCourses[i].days.indexOf(day) >= 0) {
+          return this.periodCourses[i];
+        }
       }
     }
 

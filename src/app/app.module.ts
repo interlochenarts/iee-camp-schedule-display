@@ -7,12 +7,18 @@ import {PeriodComponent} from './matrix/period/period.component';
 import {HeaderComponent} from './header/header.component';
 import {PrintHeaderComponent} from './print-header/print-header.component';
 import {RouterModule, Routes, ExtraOptions} from '@angular/router';
-import { ScreenDisplayComponent } from './screen-display/screen-display.component';
-import { PrintDisplayComponent } from './print-display/print-display.component';
+import {ScreenDisplayComponent} from './screen-display/screen-display.component';
+import {PrintDisplayComponent} from './print-display/print-display.component';
 
 const appRoutes: Routes = [
-  {path: ':educationId', component: ScreenDisplayComponent},
-  {path: ':educationId/print', component: PrintDisplayComponent}
+  {
+    path: ':educationId',
+    children: [
+      {path: '', redirectTo: '0', pathMatch: 'prefix'},
+      {path: ':termIndex', component: ScreenDisplayComponent},
+      {path: ':educationId/print', component: PrintDisplayComponent}
+    ]
+  },
 ];
 
 @NgModule({
