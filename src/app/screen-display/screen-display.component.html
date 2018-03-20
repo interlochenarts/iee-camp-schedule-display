@@ -2,5 +2,15 @@
   <iee-header [student]="student" [educationId]="educationId"></iee-header>
 </div>
 <div class="row">
-  <iee-matrix [termSchedule]="activeSchedule"></iee-matrix>
+  <div class="col-xs-12">
+    <ul class="nav nav-tabs">
+      <li *ngFor="let term of terms; let i = index"
+          [ngClass]="{'active': (i === activeTermIndex)}">
+        <a data-toggle="tab" [routerLink]="['../', i]">{{term}}</a>
+      </li>
+    </ul>
+    <div class="matrix well" id="matrixWell">
+      <iee-matrix [termSchedule]="activeSchedule"></iee-matrix>
+    </div>
+  </div>
 </div>

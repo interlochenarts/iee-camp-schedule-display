@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, ParamMap} from '@angular/router';
+import {ActivatedRoute, ParamMap, Router} from '@angular/router';
 import {Student} from '../classes/Student';
 import {ScheduleReaderService} from '../services/schedule-reader.service';
 import {ScheduleCourse} from '../classes/ScheduleCourse';
@@ -18,7 +18,7 @@ export class ScreenDisplayComponent implements OnInit {
   activeSchedule: ScheduleCourse[] = [];
   terms: string[] = [];
 
-  constructor(private activatedRoute: ActivatedRoute, private scheduleReader: ScheduleReaderService) {
+  constructor(private activatedRoute: ActivatedRoute, private scheduleReader: ScheduleReaderService, private router: Router) {
   }
 
   ngOnInit() {
