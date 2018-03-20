@@ -20,7 +20,7 @@ export class ScheduleReaderService {
   private getSchedule(educationId: string) {
     if (educationId) {
       Visualforce.remoting.Manager.invokeAction(
-        'IEE_CampScheduleController.getStudentSchedules',
+        'IEE_CampScheduleController.getStudentSchedulesByEducation',
         educationId,
         json => {
           if (json !== null) {

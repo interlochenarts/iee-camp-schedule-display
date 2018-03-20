@@ -39,11 +39,7 @@ export class PeriodComponent implements OnInit {
 
   printBottomBorder(course: ScheduleCourse): boolean {
     const index = course.periods.indexOf(this.periodNumber);
-    if (index === (course.periods.length - 1)) {
-      return true;
-    } else {
-      return course.periods[index + 1] !== this.periodNumber + 1;
-    }
+    return index === (course.periods.length - 1) || course.periods[index + 1] !== this.periodNumber + 1;
   }
 
   printRightBorder(dayNumber: number): boolean {
@@ -53,10 +49,6 @@ export class PeriodComponent implements OnInit {
   // did we already print the info about this course immediately above it?
   displayCourseInfo(course: ScheduleCourse): boolean {
     const index = course.periods.indexOf(this.periodNumber);
-    if (index === 0) {
-      return true;
-    } else {
-      return course.periods[index - 1] !== this.periodNumber - 1;
-    }
+    return index === 0 || course.periods[index - 1] !== this.periodNumber - 1;
   }
 }
