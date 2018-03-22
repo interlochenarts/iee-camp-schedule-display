@@ -1,8 +1,9 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import {ScheduleCourse} from '../classes/ScheduleCourse';
+import {Student} from '../classes/Student';
 
 declare const Visualforce: any;
 
@@ -11,10 +12,12 @@ export class ScheduleReaderService {
   public schedule = new BehaviorSubject<Map<string, ScheduleCourse[]>>(new Map<string, ScheduleCourse[]>());
   public educationId = new BehaviorSubject<string>(null);
   public terms = new BehaviorSubject<string[]>([]);
+  public student = new BehaviorSubject<Student>(new Student());
 
   constructor() {
     this.educationId.asObservable().subscribe(edId => {
       this.getSchedule(edId);
+      this.getStudent(edId);
     });
   }
 
@@ -36,6 +39,23 @@ export class ScheduleReaderService {
 
             this.terms.next(Object.keys(j));
             this.schedule.next(courseMap);
+          }
+        },
+        {buffer: false, escape: false}
+      );
+    }
+  }
+
+  private getStudent(educationId: string) {
+    if (educationId) {
+      Visualforce.remoting.Manager.invokeAction(
+        'IEE_CampScheduleController.getStudentInformationByEducation',
+        educationId,
+        json => {
+          if (json !== null) {
+            const j = JSON.parse(json);
+            this.student.next(Student.createFromJson(j));
+            console.log(Student.createFromJson(j));
           }
         },
         {buffer: false, escape: false}

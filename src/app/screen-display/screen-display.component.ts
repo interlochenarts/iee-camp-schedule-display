@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, ParamMap, Router} from '@angular/router';
+import {ActivatedRoute, ParamMap} from '@angular/router';
 import {Student} from '../classes/Student';
 import {ScheduleReaderService} from '../services/schedule-reader.service';
 import {ScheduleCourse} from '../classes/ScheduleCourse';
@@ -18,7 +18,7 @@ export class ScreenDisplayComponent implements OnInit {
   activeSchedule: ScheduleCourse[] = [];
   terms: string[] = [];
 
-  constructor(private activatedRoute: ActivatedRoute, private scheduleReader: ScheduleReaderService, private router: Router) {
+  constructor(private activatedRoute: ActivatedRoute, private scheduleReader: ScheduleReaderService) {
   }
 
   ngOnInit() {
@@ -32,6 +32,10 @@ export class ScreenDisplayComponent implements OnInit {
       Observable.combineLatest(scheduleObs, termsObs).subscribe(obs => {
         [this.schedules, this.terms] = obs;
         this.activeSchedule = this.schedules.get(this.terms[this.activeTermIndex]);
+      });
+
+      this.scheduleReader.student.asObservable().subscribe(s => {
+        this.student = s;
       });
     });
   }

@@ -10,6 +10,9 @@
       </li>
     </ul>
     <div class="matrix well" id="matrixWell">
+      <div>
+        {{student.majorByTermName[terms[activeTermIndex]]}}
+      </div>
       <iee-matrix [termSchedule]="activeSchedule"></iee-matrix>
     </div>
   </div>
