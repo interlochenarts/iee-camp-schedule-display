@@ -1,19 +1,24 @@
 <div class="row">
   <div class="col-xs-4">
-    <h2>Interlochen Center for the Arts</h2>
+    <h2 class="school">Interlochen Center for the Arts</h2>
   </div>
   <div class="col-xs-4 text-center">
-    <h1>Student Schedule</h1>
-    <h3 class="termDisplay">{{student.term}}</h3>
+    <h1 class="scheduleName">Student Schedule</h1>
+    <h3 class="term">{{session}}</h3>
   </div>
   <div class="col-xs-4">
-    <h2>{{student.school}}</h2>
+    <h2 class="school">{{student.school}}</h2>
   </div>
-  <div class="col-xs-12"><hr /></div>
+  <div class="col-xs-12">
+    <hr/>
+  </div>
 </div>
 <div class="row">
   <div class="col-xs-3">{{student.name}}</div>
-  <div class="col-xs-3">{{student.major}}</div>
+  <div class="col-xs-3">{{getSessionName()}}</div>
   <div class="col-xs-3">{{student.division}}</div>
   <div class="col-xs-3">{{student.cabin}}</div>
+  <div class="col-xs-12">
+    <hr/>
+  </div>
 </div>

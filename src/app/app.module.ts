@@ -15,8 +15,8 @@ const appRoutes: Routes = [
     path: ':educationId',
     children: [
       {path: '', redirectTo: '0', pathMatch: 'prefix'},
-      {path: ':termIndex', component: ScreenDisplayComponent},
-      {path: ':educationId/print', component: PrintDisplayComponent}
+      {path: 'print', component: PrintDisplayComponent},
+      {path: ':termIndex', component: ScreenDisplayComponent}
     ]
   },
 ];

@@ -4,7 +4,7 @@ export class Student {
   division: string;
   term: string;
   school: string;
-  majorByTermName: any;
+  majorBySessionName: any;
 
   public static createFromJson(json: any): Student {
     const student = new Student();

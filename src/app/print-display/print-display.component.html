@@ -1,6 +1,8 @@
-<div class="row">
-  <iee-print-header [student]="student"></iee-print-header>
-</div>
-<div class="row">
-  <iee-matrix></iee-matrix>
+<div class="row" *ngFor="let session of sessions">
+  <div class="col-xs-12">
+    <div class="well">
+      <iee-print-header [student]="student" [session]="session"></iee-print-header>
+      <iee-matrix [termSchedule]="getScheduleBySessionName(session)"></iee-matrix>
+    </div>
+  </div>
 </div>

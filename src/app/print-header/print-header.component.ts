@@ -8,10 +8,19 @@ import {Student} from '../classes/Student';
 })
 export class PrintHeaderComponent implements OnInit {
   @Input() student: Student;
+  @Input() session: string;
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit() {
   }
 
+  getSessionName(): string {
+    if (this.student.majorBySessionName) {
+      return this.student.majorBySessionName[this.session];
+    }
+
+    return '';
+  }
 }
