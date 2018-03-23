@@ -7,7 +7,7 @@ export class ScheduleCourse {
 
   private dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
-  public static createFromJson(json: any): ScheduleCourse {
+  public static createFromJson(json: JSON): ScheduleCourse {
     const scheduleCourse = new ScheduleCourse(null);
     return Object.assign(scheduleCourse, json);
   }

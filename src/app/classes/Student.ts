@@ -6,7 +6,7 @@ export class Student {
   school: string;
   majorBySessionName: any;
 
-  public static createFromJson(json: any): Student {
+  public static createFromJson(json: JSON): Student {
     const student = new Student();
     return Object.assign(student, json);
   }

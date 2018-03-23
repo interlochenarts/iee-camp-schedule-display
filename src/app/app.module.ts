@@ -9,6 +9,7 @@ import {PrintHeaderComponent} from './print-header/print-header.component';
 import {RouterModule, Routes, ExtraOptions} from '@angular/router';
 import {ScreenDisplayComponent} from './screen-display/screen-display.component';
 import {PrintDisplayComponent} from './print-display/print-display.component';
+import { SafeUrlPipe } from './safe-url.pipe';
 
 const appRoutes: Routes = [
   {
@@ -29,7 +30,8 @@ const appRoutes: Routes = [
     HeaderComponent,
     PrintHeaderComponent,
     ScreenDisplayComponent,
-    PrintDisplayComponent
+    PrintDisplayComponent,
+    SafeUrlPipe,
   ],
   imports: [
     BrowserModule,

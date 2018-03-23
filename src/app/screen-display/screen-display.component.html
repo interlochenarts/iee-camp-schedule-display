@@ -9,11 +9,17 @@
         <a data-toggle="tab" [routerLink]="['../', i]">{{term}}</a>
       </li>
     </ul>
-    <div class="matrix well" id="matrixWell">
+    <div class="matrix well" id="matrixWell" *ngIf="activeTerm && activeTerm.includes('1 week') === false">
       <div>
-        {{student.majorBySessionName[terms[activeTermIndex]]}}
+        {{student.majorBySessionName[activeTerm]}}
       </div>
       <iee-matrix [termSchedule]="activeSchedule"></iee-matrix>
+    </div>
+    <div class="matrix well" id="matrixWell" *ngIf="activeTerm && activeTerm.includes('1 week')">
+      <div>
+        {{student.majorBySessionName[activeTerm]}}
+      </div>
+      <embed *ngIf="instituteSchedule && instituteSchedule.pdfLink" [src]="instituteSchedule.pdfLink | safeUrl" width="100%" height="600" alt="pdf" pluginspage="http://www.adobe.com/products/acrobat/readstep2.html">
     </div>
   </div>
 </div>

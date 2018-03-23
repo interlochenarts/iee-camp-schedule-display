@@ -4,6 +4,7 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import {ScheduleCourse} from '../classes/ScheduleCourse';
 import {Student} from '../classes/Student';
+import {InstituteSchedule} from '../classes/InstituteSchedule';
 
 declare const Visualforce: any;
 
@@ -13,11 +14,13 @@ export class ScheduleReaderService {
   public educationId = new BehaviorSubject<string>(null);
   public terms = new BehaviorSubject<string[]>([]);
   public student = new BehaviorSubject<Student>(new Student());
+  public instituteSchedule = new BehaviorSubject<InstituteSchedule>(new InstituteSchedule());
 
   constructor() {
     this.educationId.asObservable().subscribe(edId => {
       this.getSchedule(edId);
       this.getStudent(edId);
+      this.getInstituteSchedule(edId);
     });
   }
 
@@ -37,8 +40,23 @@ export class ScheduleReaderService {
               courseMap.set(k, courses);
             });
 
-            this.terms.next(Object.keys(j));
             this.schedule.next(courseMap);
+          }
+        },
+        {buffer: false, escape: false}
+      );
+    }
+  }
+
+  private getInstituteSchedule(educationId: string) {
+    if (educationId) {
+      Visualforce.remoting.Manager.invokeAction(
+        'IEE_CampScheduleController.getInstituteScheduleByEducation',
+        educationId,
+        json => {
+          if (json !== null) {
+            const j = JSON.parse(json);
+            this.instituteSchedule.next(InstituteSchedule.createFromJson(j));
           }
         },
         {buffer: false, escape: false}
@@ -54,8 +72,9 @@ export class ScheduleReaderService {
         json => {
           if (json !== null) {
             const j = JSON.parse(json);
-            this.student.next(Student.createFromJson(j));
-            console.log(Student.createFromJson(j));
+            const s: Student = Student.createFromJson(j);
+            this.student.next(s);
+            this.terms.next(Object.keys(s.majorBySessionName));
           }
         },
         {buffer: false, escape: false}
