@@ -1,3 +1,13 @@
+<div class="row buttons">
+  <div class="col-xs-12 margin-top-sm text-right">
+    <a class="btn btn-default"
+       [routerLink]="['../',0]"><i class="fa fa-calendar"
+                                   aria-hidden="true"></i> View as calendar</a>
+    <a class="btn btn-default"
+       href="javascript:void(0);" (click)="onPrint()"><i class="fa fa-print"
+                                                              aria-hidden="true"></i> Print</a>
+  </div>
+</div>
 <div class="row" *ngFor="let session of sessions">
   <div class="col-print-12 col-xs-12">
     <div class="well margin-top-sm">

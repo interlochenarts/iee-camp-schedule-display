@@ -15,6 +15,7 @@ import {DomSanitizer, SafeUrl} from '@angular/platform-browser';
 })
 export class ScreenDisplayComponent implements OnInit {
   student: Student = new Student();
+  educationId = '';
   schedules: Map<string, ScheduleCourse[]> = new Map<string, ScheduleCourse[]>();
   activeTermIndex = 0;
   activeTerm = '';
@@ -28,6 +29,7 @@ export class ScreenDisplayComponent implements OnInit {
   ngOnInit() {
     this.activatedRoute.paramMap.subscribe((p: ParamMap) => {
       this.scheduleReader.educationId.next(p.get('educationId'));
+      this.educationId = p.get('educationId');
       this.activeTermIndex = +p.get('termIndex');
 
       const scheduleObs = this.scheduleReader.schedule.asObservable();

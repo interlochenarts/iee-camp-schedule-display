@@ -6,10 +6,10 @@ import {MatrixComponent} from './matrix/matrix.component';
 import {PeriodComponent} from './matrix/period/period.component';
 import {HeaderComponent} from './header/header.component';
 import {PrintHeaderComponent} from './print-header/print-header.component';
-import {RouterModule, Routes, ExtraOptions} from '@angular/router';
+import {RouterModule, Routes} from '@angular/router';
 import {ScreenDisplayComponent} from './screen-display/screen-display.component';
 import {PrintDisplayComponent} from './print-display/print-display.component';
-import { SafeUrlPipe } from './safe-url.pipe';
+import {SafeUrlPipe} from './safe-url.pipe';
 
 const appRoutes: Routes = [
   {

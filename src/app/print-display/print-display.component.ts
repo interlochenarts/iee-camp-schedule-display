@@ -41,4 +41,8 @@ export class PrintDisplayComponent implements OnInit {
 
     return [];
   }
+
+  onPrint(): void {
+    window.print();
+  }
 }

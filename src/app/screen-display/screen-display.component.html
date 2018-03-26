@@ -2,24 +2,31 @@
   <iee-header [student]="student" [educationId]="educationId"></iee-header>
 </div>
 <div class="row">
-  <div class="col-xs-12">
+  <div class="col-xs-12 text-right buttons">
+    <a class="btn btn-default"
+       [routerLink]="['../','print']"><i class="fa fa-print"
+                                         aria-hidden="true"></i> Printable View</a>
+  </div>
+  <div class="col-xs-12 schedules">
     <ul class="nav nav-tabs">
       <li *ngFor="let term of terms; let i = index"
           [ngClass]="{'active': (i === activeTermIndex)}">
         <a data-toggle="tab" [routerLink]="['../', i]">{{term}}</a>
       </li>
     </ul>
-    <div class="matrix well" id="matrixWell" *ngIf="activeTerm && activeTerm.includes('1 week') === false">
+    <div class="matrix well" id="matrixWell" *ngIf="activeTerm && activeTerm.toLowerCase().includes('1 week') === false">
       <div>
         {{student.majorBySessionName[activeTerm]}}
       </div>
       <iee-matrix [termSchedule]="activeSchedule"></iee-matrix>
     </div>
-    <div class="matrix well" id="matrixWell" *ngIf="activeTerm && activeTerm.includes('1 week')">
+    <div class="matrix well" id="instituteWell" *ngIf="activeTerm && activeTerm.toLowerCase().includes('1 week')">
       <div>
         {{student.majorBySessionName[activeTerm]}}
       </div>
-      <embed *ngIf="instituteSchedule && instituteSchedule.pdfLink" [src]="instituteSchedule.pdfLink | safeUrl" width="100%" height="600" alt="pdf" pluginspage="http://www.adobe.com/products/acrobat/readstep2.html">
+      <embed *ngIf="instituteSchedule && instituteSchedule.pdfLink"
+             [src]="instituteSchedule.pdfLink | safeUrl"
+             width="100%" height="600" alt="pdf" pluginspage="http://www.adobe.com/products/acrobat/readstep2.html">
     </div>
   </div>
 </div>

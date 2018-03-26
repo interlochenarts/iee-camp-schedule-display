@@ -1,3 +1,9 @@
-#matrixWell {
+#matrixWell,
+#instituteWell {
   border-top: 0;
+}
+.buttons a {
+  margin-bottom: -30px;
+  position: relative;
+  z-index: 10;
 }
