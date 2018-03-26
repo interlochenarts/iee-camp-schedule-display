@@ -10,12 +10,10 @@ import {RouterModule, Routes} from '@angular/router';
 import {ScreenDisplayComponent} from './screen-display/screen-display.component';
 import {PrintDisplayComponent} from './print-display/print-display.component';
 import {SafeUrlPipe} from './safe-url.pipe';
-import { BatchDisplayComponent } from './batch-display/batch-display.component';
+import {BatchDisplayComponent} from './batch-display/batch-display.component';
 
 const appRoutes: Routes = [
-  {
-    path: 'batch'
-  },
+  {path: 'batch', component: BatchDisplayComponent},
   {
     path: ':educationId',
     children: [
