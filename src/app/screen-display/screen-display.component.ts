@@ -1,11 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, ParamMap} from '@angular/router';
-import {Student} from '../classes/Student';
+import {Student} from '../_classes/Student';
 import {ScheduleReaderService} from '../services/schedule-reader.service';
-import {ScheduleCourse} from '../classes/ScheduleCourse';
+import {ScheduleCourse} from '../_classes/ScheduleCourse';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/observable/combineLatest';
-import {InstituteSchedule} from '../classes/InstituteSchedule';
+import {InstituteSchedule} from '../_classes/InstituteSchedule';
 import {DomSanitizer, SafeUrl} from '@angular/platform-browser';
 
 @Component({

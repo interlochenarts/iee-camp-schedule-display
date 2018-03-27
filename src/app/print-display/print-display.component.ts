@@ -2,8 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import {ActivatedRoute, ParamMap} from '@angular/router';
 import {ScheduleReaderService} from '../services/schedule-reader.service';
-import {ScheduleCourse} from '../classes/ScheduleCourse';
-import {Student} from '../classes/Student';
+import {ScheduleCourse} from '../_classes/ScheduleCourse';
+import {Student} from '../_classes/Student';
 
 @Component({
   selector: 'iee-print-display',
@@ -12,7 +12,7 @@ import {Student} from '../classes/Student';
 })
 export class PrintDisplayComponent implements OnInit {
   student: Student = new Student();
-  schedules: Map<string, ScheduleCourse[]> = new Map<string, ScheduleCourse[]>();
+  schedulesByTerm: Map<string, ScheduleCourse[]> = new Map<string, ScheduleCourse[]>();
   sessions: string[] = [];
 
   constructor(private activatedRoute: ActivatedRoute, private scheduleReader: ScheduleReaderService) {
@@ -23,7 +23,7 @@ export class PrintDisplayComponent implements OnInit {
       this.scheduleReader.educationId.next(p.get('educationId'));
 
       this.scheduleReader.schedule.asObservable().subscribe(schedules => {
-        this.schedules = schedules;
+        this.schedulesByTerm = schedules;
         this.sessions = Array.from(schedules.keys());
         console.log(this.sessions);
       });
@@ -35,8 +35,8 @@ export class PrintDisplayComponent implements OnInit {
   }
 
   getScheduleBySessionName(sessionName: string): ScheduleCourse[] {
-    if (this.schedules) {
-      return this.schedules.get(sessionName);
+    if (this.schedulesByTerm) {
+      return this.schedulesByTerm.get(sessionName);
     }
 
     return [];

@@ -2,9 +2,9 @@ import {Injectable} from '@angular/core';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
-import {ScheduleCourse} from '../classes/ScheduleCourse';
-import {Student} from '../classes/Student';
-import {InstituteSchedule} from '../classes/InstituteSchedule';
+import {ScheduleCourse} from '../_classes/ScheduleCourse';
+import {Student} from '../_classes/Student';
+import {InstituteSchedule} from '../_classes/InstituteSchedule';
 
 declare const Visualforce: any;
 

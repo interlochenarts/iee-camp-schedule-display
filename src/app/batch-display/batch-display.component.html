@@ -1,19 +1,32 @@
-<label>
-  Filter By:
-  <select>
-    <option>Show All</option>
-    <option>Cabin</option>
-    <option>Division</option>
-    <option>Housing Division</option>
-  </select>
-</label>
+<div class="well margin-top-sm">
+  <label>
+    Filter By:
+    <select #filterField class="form-control">
+      <option value="all">Show All</option>
+      <option value="cabin">Cabin</option>
+      <option value="division">Division</option>
+      <option value="housing">Housing Division</option>
+    </select>
+  </label>
 
-<label>
-  Sort By:
-  <select>
-    <option>Last Name</option>
-    <option>Cabin</option>
-    <option>Division</option>
-    <option>Housing Division</option>
-  </select>
-</label>
+  <label>
+    Sort By:
+    <select #sortField
+            class="form-control"
+            (change)="onSortSchedules($event, sortField.value)">
+      <option value="lastName">Last Name</option>
+      <option value="cabin">Cabin</option>
+      <option value="division">Division</option>
+      <option value="housing">Housing Division</option>
+    </select>
+  </label>
+</div>
+
+<div class="row" *ngFor="let studentSchedule of studentSchedules">
+  <div class="col-print-12 col-xs-12">
+    <div class="well margin-top-sm">
+      <iee-print-header [student]="studentSchedule.student" [session]="studentSchedule.session"></iee-print-header>
+      <iee-matrix [termSchedule]="studentSchedule.schedule"></iee-matrix>
+    </div>
+  </div>
+</div>

@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {ScheduleCourse} from '../../classes/ScheduleCourse';
+import {ScheduleCourse} from '../../_classes/ScheduleCourse';
 
 @Component({
   selector: 'iee-period',

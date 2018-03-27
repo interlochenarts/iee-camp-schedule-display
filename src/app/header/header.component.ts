@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Student} from '../classes/Student';
+import {Student} from '../_classes/Student';
 
 @Component({
   selector: 'iee-header',

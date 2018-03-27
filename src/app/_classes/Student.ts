@@ -1,5 +1,6 @@
 export class Student {
-  name: string;
+  lastName: string;
+  firstName: string;
   cabin: string;
   division: string;
   term: string;
@@ -9,5 +10,9 @@ export class Student {
   public static createFromJson(json: JSON): Student {
     const student = new Student();
     return Object.assign(student, json);
+  }
+
+  get name(): string {
+    return this.firstName + ' ' + this.lastName;
   }
 }
