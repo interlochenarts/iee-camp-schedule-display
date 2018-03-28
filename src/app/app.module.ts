@@ -14,9 +14,6 @@ import { BatchDisplayComponent } from './batch-display/batch-display.component';
 
 const appRoutes: Routes = [
   {
-    path: 'batch'
-  },
-  {
     path: ':educationId',
     children: [
       {path: '', redirectTo: '0', pathMatch: 'prefix'},
