@@ -1,5 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {StudentSchedule} from '../_classes/StudentSchedule';
+import {BatchSchedule} from '../_classes/BatchSchedule';
+
+declare const Visualforce: any;
 
 @Component({
   selector: 'iee-batch-display',
@@ -7,7 +9,8 @@ import {StudentSchedule} from '../_classes/StudentSchedule';
   styleUrls: ['./batch-display.component.css']
 })
 export class BatchDisplayComponent implements OnInit {
-  studentSchedules: StudentSchedule[] = [];
+  schedules: BatchSchedule[] = [];
+  loadingBatch = false;
 
   constructor() {
   }
@@ -15,8 +18,27 @@ export class BatchDisplayComponent implements OnInit {
   ngOnInit() {
   }
 
+  getBatchSchedule() {
+    this.loadingBatch = true;
+    this.schedules.length = 0;
+    Visualforce.remoting.Manager.invokeAction(
+      'IEE_CampScheduleController.getBatchOfRecords',
+      'column', 'value',
+      json => {
+        if (json !== null) {
+          const j = JSON.parse(json);
+          j.forEach(s => {
+            this.schedules.push(s);
+          });
+        }
+        this.loadingBatch = false;
+      },
+      {buffer: false, escape: false}
+    );
+  }
+
   onSortSchedules($event, sortBy: string) {
-    this.studentSchedules.sort((a: StudentSchedule, b: StudentSchedule) => {
+    this.schedules.sort((a: BatchSchedule, b: BatchSchedule) => {
 
       switch (sortBy) {
         case 'lastName': {
