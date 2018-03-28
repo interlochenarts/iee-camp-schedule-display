@@ -7,7 +7,11 @@ export class BatchSchedule {
   session: string;
 
   public static createFromJson(json: JSON): BatchSchedule {
-    const schedule = new BatchSchedule();
-    return Object.assign(schedule, json);
+    const batchSchedule = new BatchSchedule();
+    batchSchedule.schedule = json.schedule.map(s => {
+      return ScheduleCourse.createFromJson(s);
+    });
+    batchSchedule.student = Student.createFromJson(json.student);
+    return Object.assign(batchSchedule, json);
   }
 }
