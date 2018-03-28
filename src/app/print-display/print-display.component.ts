@@ -1,5 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {Observable} from 'rxjs/Observable';
 import {ActivatedRoute, ParamMap} from '@angular/router';
 import {ScheduleReaderService} from '../services/schedule-reader.service';
 import {ScheduleCourse} from '../_classes/ScheduleCourse';
@@ -25,7 +24,6 @@ export class PrintDisplayComponent implements OnInit {
       this.scheduleReader.schedule.asObservable().subscribe(schedules => {
         this.schedulesByTerm = schedules;
         this.sessions = Array.from(schedules.keys());
-        console.log(this.sessions);
       });
 
       this.scheduleReader.student.asObservable().subscribe(s => {
