@@ -28,7 +28,7 @@ export class BatchDisplayComponent implements OnInit {
         if (json !== null) {
           const j = JSON.parse(json);
           j.forEach(s => {
-            this.schedules.push(s);
+            this.schedules.push(BatchSchedule.createFromJson(s));
           });
         }
         this.loadingBatch = false;
