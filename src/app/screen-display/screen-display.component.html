@@ -16,7 +16,7 @@
     </ul>
     <div class="matrix well" id="matrixWell" *ngIf="activeTerm && activeTerm.toLowerCase().includes('1 week') === false">
       <div>
-        {{student.majorBySessionName[activeTerm]}}
+        <h3>{{student.majorBySessionName[activeTerm]}}</h3>
       </div>
       <iee-matrix [termSchedule]="activeSchedule"></iee-matrix>
     </div>

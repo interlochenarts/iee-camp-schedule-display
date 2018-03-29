@@ -16,7 +16,7 @@ export class PrintHeaderComponent implements OnInit {
   ngOnInit() {
   }
 
-  getSessionName(): string {
+  getMajorName(): string {
     if (this.student.majorBySessionName) {
       return this.student.majorBySessionName[this.session];
     }
