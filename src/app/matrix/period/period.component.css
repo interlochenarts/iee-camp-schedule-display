@@ -1,5 +1,6 @@
 .course {
   border-left: 1px solid gray;
+  border-bottom: 1px solid gray;
   padding: 5px;
 }
 .course.no-border {
@@ -8,9 +9,6 @@
 }
 .course.border-top {
   border-top: 1px solid gray;
-}
-.course.border-bottom {
-  border-bottom: 1px solid gray;
 }
 .course.border-right {
   border-right: 1px solid gray;
@@ -29,3 +27,4 @@
     background-color: #a7e6fb;
   }
 }
+/*# sourceMappingURL=period.component.css.map */

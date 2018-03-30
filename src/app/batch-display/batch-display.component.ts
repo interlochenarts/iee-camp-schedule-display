@@ -42,13 +42,16 @@ export class BatchDisplayComponent implements OnInit {
 
       switch (sortBy) {
         case 'lastName': {
-          return a.student.lastName - b.student.lastName;
+          return 0;
+          // return a.student.lastName - b.student.lastName;
         }
         case 'cabin': {
-          return a.student.cabin - b.student.cabin;
+          // return a.student.cabin - b.student.cabin;
+          return 0;
         }
         case 'division': {
-          return a.student.division - b.student.division;
+          // return a.student.division - b.student.division;
+          return 0;
         }
         case 'housing': {
           return 0; // TODO: need to find out if we're getting housing division separately from division

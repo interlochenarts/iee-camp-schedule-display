@@ -6,7 +6,7 @@ export class BatchSchedule {
   schedule: ScheduleCourse[];
   session: string;
 
-  public static createFromJson(json: JSON): BatchSchedule {
+  public static createFromJson(json: any): BatchSchedule {
     const batchSchedule = new BatchSchedule();
     batchSchedule.schedule = json.schedule.map(s => {
       return ScheduleCourse.createFromJson(s);

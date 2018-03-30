@@ -1,17 +1,17 @@
 <div [ngClass]="{'no-border': periodNumber === 0, 'period-number-cell': periodNumber > 0}"
-     class="course border-bottom text-center">
+     class="course border-bottom text-center"
+     [style]="getPeriodGridCellStyle() | safeStyle">
   <div class="period-number" *ngIf="periodNumber > 0">Period {{periodNumber}}</div>
 </div>
 <div class="course"
-     *ngFor="let d of periodDays"
-     [ngClass]="{'border-bottom': periodNumber === 0 || periodNumber > 0 && printBottomBorder(getCourseForDay(d)),
-              'border-top': periodNumber === 0,
-              'border-right': printRightBorder(d),
+     *ngFor="let d of periodDays; let i = index"
+     [style]="getCourseGridStyle(d, i) | safeStyle"
+     [ngClass]="{'border-top': periodNumber === 0,
               'header-cell': periodNumber === 0}">
   <div *ngIf="periodNumber === 0" class="text-center">
-    {{getCourseForDay(d).getDayName(d)}}
+    {{getDayName(d)}}
   </div>
-  <div *ngIf="periodNumber > 0 && displayCourseInfo(getCourseForDay(d))">
+  <div *ngIf="periodNumber > 0">
     <p class="name">{{getCourseForDay(d).courseName}}</p>
     <p class="instructor">{{getCourseForDay(d).instructor}}</p>
     <p class="location">{{getCourseForDay(d).location}}</p>

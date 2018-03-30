@@ -9,8 +9,9 @@ import {PrintHeaderComponent} from './print-header/print-header.component';
 import {RouterModule, Routes} from '@angular/router';
 import {ScreenDisplayComponent} from './screen-display/screen-display.component';
 import {PrintDisplayComponent} from './print-display/print-display.component';
-import {SafeUrlPipe} from './safe-url.pipe';
+import {SafeUrlPipe} from './_pipes/safe-url.pipe';
 import {BatchDisplayComponent} from './batch-display/batch-display.component';
+import { SafeStylePipe } from './_pipes/safe-style.pipe';
 
 const appRoutes: Routes = [
   {path: 'batch', component: BatchDisplayComponent},
@@ -35,6 +36,7 @@ const appRoutes: Routes = [
     PrintDisplayComponent,
     SafeUrlPipe,
     BatchDisplayComponent,
+    SafeStylePipe,
   ],
   imports: [
     BrowserModule,

@@ -1,4 +1,4 @@
-<div class="grid" [style]="gridColumnStyle">
+<div class="grid" [style]="getGridColumnStyle() | safeStyle">
   <iee-period *ngFor="let sp of schedulePeriods; let i = index"
               [periodCourses]="sp"
               [periodNumber]="i"

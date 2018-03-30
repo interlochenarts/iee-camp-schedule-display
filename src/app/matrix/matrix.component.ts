@@ -10,12 +10,14 @@ export class MatrixComponent implements OnInit, OnChanges {
   @Input() termSchedule: ScheduleCourse[];
   firstDay = 7;
   lastDay = -1;
+  style: string;
 
   schedulePeriods: Array<ScheduleCourse[]> = [];
 
-  get gridColumnStyle(): string {
-    const days = this.lastDay - this.firstDay;
-    return 'grid-template-columns: repeat(0.75fr, ' + days + ', 1fr);';
+  getGridColumnStyle(): string {
+    const days = this.lastDay - this.firstDay + 1;
+    this.style = 'grid-template-columns: 0.75fr repeat(' + days + ', 1fr);';
+    return this.style;
   }
 
   constructor() {

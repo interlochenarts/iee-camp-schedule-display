@@ -5,8 +5,6 @@ export class ScheduleCourse {
   public schedulePeriods: string;
   public scheduleDays: string;
 
-  private dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-
   public static createFromJson(json: JSON): ScheduleCourse {
     const scheduleCourse = new ScheduleCourse(null);
     return Object.assign(scheduleCourse, json);
@@ -22,10 +20,6 @@ export class ScheduleCourse {
     return this.scheduleDays.split(',').map(value => {
       return +value;
     });
-  }
-
-  getDayName(day: number): string {
-    return this.dayNames[day];
   }
 
   get periods(): number[] {

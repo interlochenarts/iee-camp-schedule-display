@@ -3,7 +3,7 @@ export class InstituteSchedule {
   public pdfLink;
   public scheduleLink;
 
-  public static createFromJson(json: JSON): InstituteSchedule {
+  public static createFromJson(json: any): InstituteSchedule {
     const instituteSchedule = new InstituteSchedule();
     return Object.assign(instituteSchedule, json);
   }
