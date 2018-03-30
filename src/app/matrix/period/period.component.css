@@ -1,15 +1,6 @@
-.row {
-  display: flex;
-  flex-direction: row;
-  flex: auto;
-  margin: 0 1em;
-}
 .course {
   border-left: 1px solid gray;
   padding: 5px;
-  flex-grow: 1;
-  flex-shrink: 1;
-  flex-basis: 0;
 }
 .course.no-border {
   border-top: 1px solid white;

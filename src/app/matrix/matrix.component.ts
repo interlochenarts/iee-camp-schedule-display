@@ -13,6 +13,11 @@ export class MatrixComponent implements OnInit, OnChanges {
 
   schedulePeriods: Array<ScheduleCourse[]> = [];
 
+  get gridColumnStyle(): string {
+    const days = this.lastDay - this.firstDay;
+    return 'grid-template-columns: repeat(0.75fr, ' + days + ', 1fr);';
+  }
+
   constructor() {
   }
 

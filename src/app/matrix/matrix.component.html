@@ -1,5 +1,7 @@
-<iee-period *ngFor="let sp of schedulePeriods; let i = index"
-            [periodCourses]="sp"
-            [periodNumber]="i"
-            [firstDay]="firstDay"
-            [lastDay]="lastDay"></iee-period>
+<div class="grid" [style]="gridColumnStyle">
+  <iee-period *ngFor="let sp of schedulePeriods; let i = index"
+              [periodCourses]="sp"
+              [periodNumber]="i"
+              [firstDay]="firstDay"
+              [lastDay]="lastDay"></iee-period>
+</div>

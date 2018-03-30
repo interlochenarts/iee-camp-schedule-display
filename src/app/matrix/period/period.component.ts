@@ -19,6 +19,12 @@ export class PeriodComponent implements OnInit {
       (v, k) => k + this.firstDay);
   }
 
+  get gridRowStyle(): string {
+    const index = course.periods.indexOf(this.periodNumber);
+
+    return 'grid-row: 1 / 3;';
+  }
+
   constructor() {
   }
 
