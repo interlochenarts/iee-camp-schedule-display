@@ -1,4 +1,46 @@
 .grid {
   display: grid;
-  grid-auto-rows: minmax(100px, auto);
+  grid-auto-rows: minmax(2em, auto);
 }
+.course {
+  border-left: 1px solid gray;
+  border-bottom: 1px solid gray;
+  padding: 5px;
+}
+.course.border-top {
+  border-top: 1px solid gray;
+}
+.course.border-right {
+  border-right: 1px solid gray;
+}
+.course .name {
+  font-weight: bold;
+}
+.period-number-cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-left: 1px solid gray;
+  border-right: 1px solid gray;
+  border-bottom: 1px solid gray;
+}
+.period-number-cell.border-top {
+  border-top: 1px solid gray;
+}
+.header-cell {
+  grid-row: 1;
+  padding: 5px;
+  border-top: 1px solid gray;
+  border-right: 1px solid gray;
+  border-bottom: 1px solid gray;
+}
+.header-cell.border-left {
+  border-left: 1px solid gray;
+}
+@media screen {
+  .header-cell,
+  .period-number-cell {
+    background-color: #a7e6fb;
+  }
+}
+/*# sourceMappingURL=matrix.component.css.map */

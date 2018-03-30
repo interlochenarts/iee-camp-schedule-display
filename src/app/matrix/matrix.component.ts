@@ -1,4 +1,4 @@
-import {Component, Input, OnChanges, OnInit} from '@angular/core';
+import {Component, Input, OnChanges, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
 import {ScheduleCourse} from '../_classes/ScheduleCourse';
 
 @Component({
@@ -8,16 +8,41 @@ import {ScheduleCourse} from '../_classes/ScheduleCourse';
 })
 export class MatrixComponent implements OnInit, OnChanges {
   @Input() termSchedule: ScheduleCourse[];
+  @ViewChild('matrixContainer', {read: ViewContainerRef}) matrixContainer: ViewContainerRef;
   firstDay = 7;
   lastDay = -1;
   style: string;
 
-  schedulePeriods: Array<ScheduleCourse[]> = [];
+  periodNumbers: number[] = [];
+
+  dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
   getGridColumnStyle(): string {
     const days = this.lastDay - this.firstDay + 1;
     this.style = 'grid-template-columns: 0.75fr repeat(' + days + ', 1fr);';
     return this.style;
+  }
+
+  get periodDays(): number[] {
+    return Array.from(
+      {length: (this.lastDay - this.firstDay + 1)},
+      (v, k) => k + this.firstDay);
+  }
+
+  getHeaderGridColumnStyle(index: number): string {
+    return 'grid-column: ' + (index + 2) + ' / ' + (index + 2) + ';';
+  }
+
+  getPeriodColumnGridRowStyle(period: number): string {
+    return 'grid-row: ' + (period + 1) + ' / ' + (period + 1) + ';';
+  }
+
+  getPeriodGridCellStyle(period: number): string {
+    return this.getPeriodColumnGridRowStyle(period) + this.getPeriodGridColumnStyle(0);
+  }
+
+  getPeriodGridColumnStyle(index): string {
+    return 'grid-column: ' + (index + 1) + ' / ' + (index + 1) + ';';
   }
 
   constructor() {
@@ -33,16 +58,12 @@ export class MatrixComponent implements OnInit, OnChanges {
 
   updateSchedule(): void {
     if (this.termSchedule) {
-      this.schedulePeriods.length = 0;
       this.termSchedule.forEach(c => {
         // console.log('name: ' + c.courseName + ' / days: ' + c.days.join() + ' / periods: ' + c.periods.join());
         c.periods.forEach(p => {
-          let courses: ScheduleCourse[] = this.schedulePeriods[p];
-          if (!courses) {
-            courses = [];
+          if (this.periodNumbers.indexOf(p) < 0) {
+            this.periodNumbers.push(p);
           }
-          courses.push(c);
-          this.schedulePeriods[p] = courses;
         });
 
         c.days.forEach(d => {
@@ -54,6 +75,25 @@ export class MatrixComponent implements OnInit, OnChanges {
           }
         });
       });
+
+      this.periodNumbers.sort();
     }
+  }
+
+  createDivsForCourse(course: ScheduleCourse) {
+    course.periods.forEach(p => {
+
+    });
+  }
+
+  lastPeriodInRange(course: ScheduleCourse, period: number): number {
+    const index = course.periods.indexOf(period);
+    for (let i = index; i < course.periods.length; i++) {
+      if (course.periods[i + 1] && course.periods[i] + 1 !== course.periods[i + 1]) {
+        return course.periods[i];
+      }
+    }
+
+    return course.periods[course.periods.length - 1];
   }
 }

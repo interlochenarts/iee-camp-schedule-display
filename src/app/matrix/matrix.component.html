@@ -1,7 +1,14 @@
-<div class="grid" [style]="getGridColumnStyle() | safeStyle">
-  <iee-period *ngFor="let sp of schedulePeriods; let i = index"
-              [periodCourses]="sp"
-              [periodNumber]="i"
-              [firstDay]="firstDay"
-              [lastDay]="lastDay"></iee-period>
+<div #matrixContainer class="grid" [style]="getGridColumnStyle() | safeStyle">
+  <div *ngFor="let d of periodDays; let i = index"
+       class="header-cell text-center"
+       [ngClass]="{'border-left': i === 0}"
+       [style]="getHeaderGridColumnStyle(i) | safeStyle">
+    {{dayNames[d]}}
+  </div>
+  <div *ngFor="let p of periodNumbers; let i = index"
+       [style]="getPeriodGridCellStyle(p) | safeStyle"
+       [ngClass]="{'border-top': i === 0}"
+       class="period-number-cell">
+    Period {{p}}
+  </div>
 </div>
