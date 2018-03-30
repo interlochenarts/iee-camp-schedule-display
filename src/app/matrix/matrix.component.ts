@@ -82,7 +82,9 @@ export class MatrixComponent implements OnInit, OnChanges {
 
   createDivsForCourse(course: ScheduleCourse) {
     course.periods.forEach(p => {
-
+      if (this.courseIsFirstInRange(course, p)) {
+        // insert div
+      }
     });
   }
 
@@ -95,5 +97,10 @@ export class MatrixComponent implements OnInit, OnChanges {
     }
 
     return course.periods[course.periods.length - 1];
+  }
+
+  courseIsFirstInRange(course: ScheduleCourse, period: number): boolean {
+    const periodIndex = course.periods.indexOf(period);
+    return periodIndex === 0 || course.periods[periodIndex - 1] !== period - 1;
   }
 }
