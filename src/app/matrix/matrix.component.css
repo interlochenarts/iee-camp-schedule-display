@@ -21,18 +21,16 @@
   align-items: center;
   justify-content: center;
   border-left: 1px solid gray;
-  border-right: 1px solid gray;
-  border-bottom: 1px solid gray;
-}
-.period-number-cell.border-top {
   border-top: 1px solid gray;
+}
+.period-number-cell.border-bottom {
+  border-bottom: 1px solid gray;
 }
 .header-cell {
   grid-row: 1;
   padding: 5px;
   border-top: 1px solid gray;
   border-left: 1px solid gray;
-  border-bottom: 1px solid gray;
 }
 .header-cell.border-right {
   border-right: 1px solid gray;

@@ -149,10 +149,11 @@ export class MatrixComponent implements OnInit, OnChanges {
           div.style['grid-row'] = (p + 1) + ' / ' + (this.lastPeriodInRange(course, p) + 2);
           div.style['grid-column'] = (d + 1) + ' / ' + (d + 2);
           div.style.padding = '5px';
-          div.style.borderBottom = '1px solid gray';
-          if (d !== this.firstDay) {
-            div.style.borderLeft = '1px solid gray';
+          div.style.borderTop = '1px solid gray';
+          if (this.lastPeriodInRange(course, p) === this.periodNumbers[this.periodNumbers.length - 1]) {
+            div.style.borderBottom = '1px solid gray';
           }
+          div.style.borderLeft = '1px solid gray';
           if (d === this.lastDay) {
             div.style.borderRight = '1px solid gray';
           }
