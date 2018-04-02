@@ -8,7 +8,8 @@
   <div *ngFor="let p of periodNumbers; let i = index"
        [style]="getPeriodGridCellStyle(p) | safeStyle"
        [ngClass]="{'border-top': i === 0}"
-       class="period-number-cell">
-    Period {{p}}
+       class="period-number-cell text-center">
+    Period {{p}}<br/>
+    {{periodTimes[i]}}
   </div>
 </div>
