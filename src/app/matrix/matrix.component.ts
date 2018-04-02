@@ -77,6 +77,8 @@ export class MatrixComponent implements OnInit, OnChanges {
       });
 
       this.periodNumbers.sort();
+
+      this.createDivsForCourse(c);
     }
   }
 
@@ -84,6 +86,7 @@ export class MatrixComponent implements OnInit, OnChanges {
     course.periods.forEach(p => {
       if (this.courseIsFirstInRange(course, p)) {
         // insert div
+        
       }
     });
   }
