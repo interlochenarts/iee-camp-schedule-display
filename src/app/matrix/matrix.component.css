@@ -31,11 +31,11 @@
   grid-row: 1;
   padding: 5px;
   border-top: 1px solid gray;
-  border-right: 1px solid gray;
+  border-left: 1px solid gray;
   border-bottom: 1px solid gray;
 }
-.header-cell.border-left {
-  border-left: 1px solid gray;
+.header-cell.border-right {
+  border-right: 1px solid gray;
 }
 @media screen {
   .header-cell,
@@ -43,3 +43,4 @@
     background-color: #a7e6fb;
   }
 }
+/*# sourceMappingURL=matrix.component.css.map */

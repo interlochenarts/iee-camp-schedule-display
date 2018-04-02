@@ -1,7 +1,7 @@
 <div #matrixContainer class="grid" [style]="getGridColumnStyle() | safeStyle">
   <div *ngFor="let d of periodDays; let i = index"
        class="header-cell text-center"
-       [ngClass]="{'border-left': i === 0}"
+       [ngClass]="{'border-right': i === periodDays.length - 1}"
        [style]="getHeaderGridColumnStyle(i) | safeStyle">
     {{dayNames[d]}}
   </div>
