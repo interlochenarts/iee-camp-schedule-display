@@ -70,6 +70,7 @@ export class MatrixComponent implements OnInit, OnChanges {
   updateSchedule(): void {
     if (this.termSchedule) {
       this.divs.length = 0;
+      this.freePeriods.length = 0;
       this.periodNumbers.length = 0;
       this.firstDay = 7;
       this.lastDay = -1;
