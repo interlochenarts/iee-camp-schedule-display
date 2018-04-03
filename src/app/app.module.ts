@@ -10,7 +10,7 @@ import {ScreenDisplayComponent} from './screen-display/screen-display.component'
 import {PrintDisplayComponent} from './print-display/print-display.component';
 import {SafeUrlPipe} from './_pipes/safe-url.pipe';
 import {BatchDisplayComponent} from './batch-display/batch-display.component';
-import { SafeStylePipe } from './_pipes/safe-style.pipe';
+import {SafeStylePipe} from './_pipes/safe-style.pipe';
 
 const appRoutes: Routes = [
   {path: 'batch', component: BatchDisplayComponent},
