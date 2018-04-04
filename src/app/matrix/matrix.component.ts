@@ -76,19 +76,21 @@ export class MatrixComponent implements OnInit, OnChanges {
       this.lastDay = -1;
       this.termSchedule.forEach(c => {
         // console.log('name: ' + c.courseName + ' / days: ' + c.days.join() + ' / periods: ' + c.periods.join());
-        c.periods.forEach(p => {
-          if (this.periodNumbers.indexOf(p) < 0) {
-            this.periodNumbers.push(p);
-          }
-        });
+        const days = Array.from(c.scheduleViewMap.keys());
 
-        c.days.forEach(d => {
+        days.forEach(d => {
           if (d < this.firstDay) {
             this.firstDay = d;
           }
           if (d > this.lastDay) {
             this.lastDay = d;
           }
+
+          c.scheduleViewMap.get(d).forEach(p => {
+            if (this.periodNumbers.indexOf(p) < 0) {
+              this.periodNumbers.push(p);
+            }
+          });
         });
       });
 
@@ -127,11 +129,10 @@ export class MatrixComponent implements OnInit, OnChanges {
         let course = freePs[dayIndex];
         if (!course) {
           course = new ScheduleCourse('Free Period');
-          course.schedulePeriods = this.periodNumbers[periodIndex] + '';
-          course.scheduleDays = (dayIndex + 1) + '';
+          course.scheduleView =  this.periodNumbers[periodIndex] + '(' + this.dayNames[dayIndex] + ')';
         } else {
-          course.schedulePeriods += ',' + this.periodNumbers[periodIndex] + '';
-          course.scheduleDays += ',' + (dayIndex + 1) + '';
+          const view: string[] = course.scheduleView.split('(');
+          course.scheduleView = view[0] + ',' + this.periodNumbers[periodIndex] + '(' + view[1];
         }
 
         freePs[dayIndex] = course;
@@ -142,16 +143,16 @@ export class MatrixComponent implements OnInit, OnChanges {
   }
 
   createDivsForCourse(course: ScheduleCourse) {
-    course.days.forEach(d => {
-      course.periods.forEach(p => {
-        if (this.courseIsFirstInRange(course, p)) {
+    Array.from(course.scheduleViewMap.keys()).forEach(d => {
+      course.scheduleViewMap.get(d).forEach(p => {
+        if (this.courseIsFirstInRange(course, p, d)) {
           // insert div
           const div: HTMLDivElement = <HTMLDivElement>document.createElement('div');
-          div.style['grid-row'] = (p + 1) + ' / ' + (this.lastPeriodInRange(course, p) + 2);
+          div.style['grid-row'] = (p + 1) + ' / ' + (this.lastPeriodInRange(course, p, d) + 2);
           div.style['grid-column'] = (d + 1) + ' / ' + (d + 2);
           div.style.padding = '5px';
           div.style.borderTop = '1px solid gray';
-          if (this.lastPeriodInRange(course, p) === this.periodNumbers[this.periodNumbers.length - 1]) {
+          if (this.lastPeriodInRange(course, p, d) === this.periodNumbers[this.periodNumbers.length - 1]) {
             div.style.borderBottom = '1px solid gray';
           }
           div.style.borderLeft = '1px solid gray';
@@ -173,19 +174,21 @@ export class MatrixComponent implements OnInit, OnChanges {
 
   }
 
-  lastPeriodInRange(course: ScheduleCourse, period: number): number {
-    const index = course.periods.indexOf(period);
-    for (let i = index; i < course.periods.length; i++) {
-      if (course.periods[i + 1] && course.periods[i] + 1 !== course.periods[i + 1]) {
-        return course.periods[i];
+  lastPeriodInRange(course: ScheduleCourse, period: number, day: number): number {
+    const periods = course.scheduleViewMap.get(day);
+    const index = periods.indexOf(period);
+    for (let i = index; i < periods.length; i++) {
+      if (periods[i + 1] && periods[i] + 1 !== periods[i + 1]) {
+        return periods[i];
       }
     }
 
-    return course.periods[course.periods.length - 1];
+    return periods[periods.length - 1];
   }
 
-  courseIsFirstInRange(course: ScheduleCourse, period: number): boolean {
-    const periodIndex = course.periods.indexOf(period);
-    return periodIndex === 0 || course.periods[periodIndex - 1] !== period - 1;
+  courseIsFirstInRange(course: ScheduleCourse, period: number, day: number): boolean {
+    const periods = course.scheduleViewMap.get(day);
+    const periodIndex = periods.indexOf(period);
+    return periodIndex === 0 || periods[periodIndex - 1] !== period - 1;
   }
 }

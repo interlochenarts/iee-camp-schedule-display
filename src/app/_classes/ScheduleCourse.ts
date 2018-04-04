@@ -19,10 +19,13 @@ export class ScheduleCourse {
     const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
     const viewMap: Map<number, number[]> = new Map<number, number[]>();
-    const schedules: string[] = this.scheduleView.split(',');
+    const schedules: string[] = this.scheduleView.split(/\),/);
 
     schedules.forEach(schedule => {
-      const dayString = schedule.substring(this.schedule.indexOf('(') + 1, this.schedule.indexOf(')'));
+      if (schedule.indexOf(')') === -1) {
+        schedule += ')';
+      }
+      const dayString = schedule.substring(schedule.indexOf('(') + 1, schedule.indexOf(')'));
       const days = dayString.split(',').map(dayRange => {
         if (dayRange.indexOf('-') >= 0) {
           const start = dayNames.indexOf(dayRange.substring(0, dayRange.indexOf('-')));
@@ -33,40 +36,29 @@ export class ScheduleCourse {
           return dayNames.indexOf(dayRange);
         }
       });
-    });
-  }
 
-  get days(): number[] {
-    // 2-3,7-8(Mon-Sat)
-    const dayString = this.schedule.substring(this.schedule.indexOf('(') + 1, this.schedule.indexOf(')'));
-    const days = dayString.split(',').map(value => {
-      if (value.indexOf('-') >= 0) {
-        const start = dayNames.indexOf(value.substring(0, value.indexOf('-')));
-        const end = dayNames.indexOf(value.substring(value.indexOf('-') + 1));
+      const daysFlattened = [].concat.apply([], days);
+      daysFlattened.forEach(day => {
+        const periodString = schedule.substring(0, schedule.indexOf('('));
+        let periods = periodString.split(',').map(periodRange => {
+          if (periodRange.indexOf('-') >= 0) {
+            const start = +periodRange.substring(0, periodRange.indexOf('-'));
+            const end = +periodRange.substring(periodRange.indexOf('-') + 1);
 
-        return Array.from({length: (end - start)}, (v, k) => k + start);
-      } else {
-        return dayNames.indexOf(value);
-      }
-    });
+            return Array.from({length: (end - start)}, (v, k) => k + start);
+          } else {
+            return +periodRange;
+          }
+        });
 
-    return [].concat.apply([], days);
-  }
-
-  get periods(): number[] {
-    // 2-3,7-8(Mon-Sat)
-    const periodString = this.schedule.substring(0, this.schedule.indexOf('('));
-    const periods = periodString.split(',').map((value) => {
-      if (value.indexOf('-') >= 0) {
-        const start = +value.substring(0, value.indexOf('-'));
-        const end = +value.substring(value.indexOf('-') + 1);
-
-        return Array.from({length: (end - start)}, (v, k) => k + start);
-      } else {
-        return +value;
-      }
+        const ps = viewMap.get(day);
+        if (ps) {
+          periods = periods.concat(ps);
+        }
+        viewMap.set(day, [].concat.apply([], periods));
+      });
     });
 
-    return [].concat.apply([], periods);
+    return viewMap;
   }
 }
