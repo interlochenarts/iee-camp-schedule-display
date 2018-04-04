@@ -14,12 +14,14 @@ export class MatrixComponent implements OnInit, OnChanges {
   firstDay = 7;
   lastDay = -1;
 
-  periodNumbers: number[] = [];
+  firstPeriod = 12;
+  lastPeriod = -1;
+
   periodTimes = ['8 am', '9 am', '10 am', '11 am', '12 pm', '1 pm', '2 pm', '3 pm', '4 pm', '5 pm'];
 
   freePeriods: ScheduleCourse[] = [];
 
-  dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+  private dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
   gridPositionsFilled: boolean[] = [];
 
@@ -32,6 +34,12 @@ export class MatrixComponent implements OnInit, OnChanges {
     return Array.from(
       {length: (this.lastDay - this.firstDay + 1)},
       (v, k) => k + this.firstDay);
+  }
+
+  get periodNumbers(): number[] {
+    return Array.from(
+      {length: (this.lastPeriod - this.firstPeriod + 1)},
+      (v, k) => k + this.firstPeriod);
   }
 
   private get dayCount(): number {
@@ -71,9 +79,10 @@ export class MatrixComponent implements OnInit, OnChanges {
     if (this.termSchedule) {
       this.divs.length = 0;
       this.freePeriods.length = 0;
-      this.periodNumbers.length = 0;
       this.firstDay = 7;
       this.lastDay = -1;
+      this.firstPeriod = 12;
+      this.lastPeriod = -1;
       this.termSchedule.forEach(c => {
         // console.log('name: ' + c.courseName + ' / days: ' + c.days.join() + ' / periods: ' + c.periods.join());
         const days = Array.from(c.scheduleViewMap.keys());
@@ -87,8 +96,11 @@ export class MatrixComponent implements OnInit, OnChanges {
           }
 
           c.scheduleViewMap.get(d).forEach(p => {
-            if (this.periodNumbers.indexOf(p) < 0) {
-              this.periodNumbers.push(p);
+            if (p < this.firstPeriod) {
+              this.firstPeriod = p;
+            }
+            if (p > this.lastPeriod) {
+              this.lastPeriod = p;
             }
           });
         });
@@ -124,7 +136,7 @@ export class MatrixComponent implements OnInit, OnChanges {
     this.gridPositionsFilled.forEach((filled, index) => {
       if (filled === false) {
         const periodIndex = Math.floor(index / this.dayCount);
-        const dayIndex = index - (periodIndex * this.dayCount);
+        const dayIndex = index - (periodIndex * this.dayCount) + this.firstDay;
 
         let course = freePs[dayIndex];
         if (!course) {
