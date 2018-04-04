@@ -2,6 +2,7 @@ export class ScheduleCourse {
   public courseName: string;
   public instructor: string;
   public location: string;
+  public scheduleView: string;
   public schedulePeriods: string;
   public scheduleDays: string;
 
