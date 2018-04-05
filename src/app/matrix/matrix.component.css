@@ -5,7 +5,7 @@
 .course {
   border-left: 1px solid gray;
   border-bottom: 1px solid gray;
-  padding: 5px;
+  padding: 10px;
 }
 .course.border-top {
   border-top: 1px solid gray;
@@ -20,6 +20,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 5px;
   border-left: 1px solid gray;
   border-top: 1px solid gray;
 }
