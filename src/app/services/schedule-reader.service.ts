@@ -12,7 +12,7 @@ declare const Visualforce: any;
 export class ScheduleReaderService {
   public schedule = new BehaviorSubject<Map<string, ScheduleCourse[]>>(new Map<string, ScheduleCourse[]>());
   public educationId = new BehaviorSubject<string>(null);
-  public terms = new BehaviorSubject<string[]>([]);
+  public sessions = new BehaviorSubject<string[]>([]);
   public student = new BehaviorSubject<Student>(new Student());
   public instituteSchedule = new BehaviorSubject<InstituteSchedule>(new InstituteSchedule());
 
@@ -74,7 +74,7 @@ export class ScheduleReaderService {
             const j = JSON.parse(json);
             const s: Student = Student.createFromJson(j);
             this.student.next(s);
-            this.terms.next(Object.keys(s.majorBySessionName));
+            this.sessions.next(Object.keys(s.majorBySessionName));
           }
         },
         {buffer: false, escape: false}

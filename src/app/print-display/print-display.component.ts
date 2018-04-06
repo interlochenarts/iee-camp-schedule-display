@@ -11,7 +11,7 @@ import {Student} from '../_classes/Student';
 })
 export class PrintDisplayComponent implements OnInit {
   student: Student = new Student();
-  schedulesByTerm: Map<string, ScheduleCourse[]> = new Map<string, ScheduleCourse[]>();
+  schedulesBySession: Map<string, ScheduleCourse[]> = new Map<string, ScheduleCourse[]>();
   sessions: string[] = [];
 
   constructor(private activatedRoute: ActivatedRoute, private scheduleReader: ScheduleReaderService) {
@@ -22,7 +22,7 @@ export class PrintDisplayComponent implements OnInit {
       this.scheduleReader.educationId.next(p.get('educationId'));
 
       this.scheduleReader.schedule.asObservable().subscribe(schedules => {
-        this.schedulesByTerm = schedules;
+        this.schedulesBySession = schedules;
         this.sessions = Array.from(schedules.keys()).sort();
       });
 
@@ -33,8 +33,8 @@ export class PrintDisplayComponent implements OnInit {
   }
 
   getScheduleBySessionName(sessionName: string): ScheduleCourse[] {
-    if (this.schedulesByTerm) {
-      return this.schedulesByTerm.get(sessionName);
+    if (this.schedulesBySession) {
+      return this.schedulesBySession.get(sessionName);
     }
 
     return [];

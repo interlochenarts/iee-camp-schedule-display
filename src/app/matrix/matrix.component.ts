@@ -7,7 +7,7 @@ import {ScheduleCourse} from '../_classes/ScheduleCourse';
   styleUrls: ['./matrix.component.css']
 })
 export class MatrixComponent implements OnInit, OnChanges {
-  @Input() termSchedule: ScheduleCourse[];
+  @Input() sessionSchedule: ScheduleCourse[];
   @ViewChild('matrixContainer') matrixContainer: ElementRef;
 
   divs: HTMLDivElement[] = [];
@@ -87,14 +87,14 @@ export class MatrixComponent implements OnInit, OnChanges {
   }
 
   updateSchedule(): void {
-    if (this.termSchedule) {
+    if (this.sessionSchedule) {
       this.divs.length = 0;
       this.freePeriods.length = 0;
       this.firstDay = 7;
       this.lastDay = -1;
       this.firstPeriod = 12;
       this.lastPeriod = -1;
-      this.termSchedule.forEach(c => {
+      this.sessionSchedule.forEach(c => {
         // console.log('name: ' + c.courseName + ' / days: ' + c.days.join() + ' / periods: ' + c.periods.join());
         const days = Array.from(c.scheduleViewMap.keys());
 
@@ -125,7 +125,7 @@ export class MatrixComponent implements OnInit, OnChanges {
           return false;
         });
 
-      this.termSchedule.forEach(c => {
+      this.sessionSchedule.forEach(c => {
         this.createDivsForCourse(c);
       });
 

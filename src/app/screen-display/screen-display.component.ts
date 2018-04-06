@@ -17,11 +17,11 @@ export class ScreenDisplayComponent implements OnInit {
   student: Student = new Student();
   educationId = '';
   schedules: Map<string, ScheduleCourse[]> = new Map<string, ScheduleCourse[]>();
-  activeTermIndex = 0;
-  activeTerm = '';
+  activeSessionIndex = 0;
+  activeSession = '';
   activeSchedule: ScheduleCourse[] = [];
   instituteSchedule: InstituteSchedule = null;
-  terms: string[] = [];
+  sessions: string[] = [];
 
   constructor(private activatedRoute: ActivatedRoute, private scheduleReader: ScheduleReaderService, private sanitizer: DomSanitizer) {
   }
@@ -30,16 +30,16 @@ export class ScreenDisplayComponent implements OnInit {
     this.activatedRoute.paramMap.subscribe((p: ParamMap) => {
       this.scheduleReader.educationId.next(p.get('educationId'));
       this.educationId = p.get('educationId');
-      this.activeTermIndex = +p.get('termIndex');
+      this.activeSessionIndex = +p.get('sessionIndex');
 
       const scheduleObs = this.scheduleReader.schedule.asObservable();
-      const termsObs = this.scheduleReader.terms.asObservable();
+      const sessionsObs = this.scheduleReader.sessions.asObservable();
       const instituteObs = this.scheduleReader.instituteSchedule.asObservable();
 
-      Observable.combineLatest(scheduleObs, termsObs, instituteObs).subscribe(obs => {
-        [this.schedules, this.terms, this.instituteSchedule] = obs;
-        this.activeTerm = this.terms[this.activeTermIndex];
-        this.activeSchedule = this.schedules.get(this.activeTerm);
+      Observable.combineLatest(scheduleObs, sessionsObs, instituteObs).subscribe(obs => {
+        [this.schedules, this.sessions, this.instituteSchedule] = obs;
+        this.activeSession = this.sessions[this.activeSessionIndex];
+        this.activeSchedule = this.schedules.get(this.activeSession);
       });
 
       this.scheduleReader.student.asObservable().subscribe(s => {

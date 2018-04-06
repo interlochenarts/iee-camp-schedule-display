@@ -19,7 +19,7 @@ const appRoutes: Routes = [
     children: [
       {path: '', redirectTo: '0', pathMatch: 'prefix'},
       {path: 'print', component: PrintDisplayComponent},
-      {path: ':termIndex', component: ScreenDisplayComponent}
+      {path: ':sessionIndex', component: ScreenDisplayComponent}
     ]
   },
 ];
