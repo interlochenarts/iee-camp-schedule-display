@@ -1,5 +1,6 @@
 @media print {
-  .buttons {
+  .buttons,
+  .institute-schedule {
     display: none;
   }
 }

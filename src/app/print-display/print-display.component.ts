@@ -3,6 +3,8 @@ import {ActivatedRoute, ParamMap} from '@angular/router';
 import {ScheduleReaderService} from '../services/schedule-reader.service';
 import {ScheduleCourse} from '../_classes/ScheduleCourse';
 import {Student} from '../_classes/Student';
+import {Observable} from 'rxjs/Observable';
+import {InstituteSchedule} from '../_classes/InstituteSchedule';
 
 @Component({
   selector: 'iee-print-display',
@@ -12,6 +14,7 @@ import {Student} from '../_classes/Student';
 export class PrintDisplayComponent implements OnInit {
   student: Student = new Student();
   schedulesBySession: Map<string, ScheduleCourse[]> = new Map<string, ScheduleCourse[]>();
+  instituteSchedule: InstituteSchedule = null;
   sessions: string[] = [];
 
   constructor(private activatedRoute: ActivatedRoute, private scheduleReader: ScheduleReaderService) {
@@ -20,10 +23,12 @@ export class PrintDisplayComponent implements OnInit {
   ngOnInit() {
     this.activatedRoute.paramMap.subscribe((p: ParamMap) => {
       this.scheduleReader.educationId.next(p.get('educationId'));
+      const scheduleObs = this.scheduleReader.schedule.asObservable();
+      const sessionsObs = this.scheduleReader.sessions.asObservable();
+      const instituteObs = this.scheduleReader.instituteSchedule.asObservable();
 
-      this.scheduleReader.schedule.asObservable().subscribe(schedules => {
-        this.schedulesBySession = schedules;
-        this.sessions = Array.from(schedules.keys()).sort();
+      Observable.combineLatest(scheduleObs, sessionsObs, instituteObs).subscribe(obs => {
+        [this.schedulesBySession, this.sessions, this.instituteSchedule] = obs;
       });
 
       this.scheduleReader.student.asObservable().subscribe(s => {

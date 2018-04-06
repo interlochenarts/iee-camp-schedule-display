@@ -16,7 +16,7 @@ import {DomSanitizer, SafeUrl} from '@angular/platform-browser';
 export class ScreenDisplayComponent implements OnInit {
   student: Student = new Student();
   educationId = '';
-  schedules: Map<string, ScheduleCourse[]> = new Map<string, ScheduleCourse[]>();
+  schedulesBySession: Map<string, ScheduleCourse[]> = new Map<string, ScheduleCourse[]>();
   activeSessionIndex = 0;
   activeSession = '';
   activeSchedule: ScheduleCourse[] = [];
@@ -37,9 +37,9 @@ export class ScreenDisplayComponent implements OnInit {
       const instituteObs = this.scheduleReader.instituteSchedule.asObservable();
 
       Observable.combineLatest(scheduleObs, sessionsObs, instituteObs).subscribe(obs => {
-        [this.schedules, this.sessions, this.instituteSchedule] = obs;
+        [this.schedulesBySession, this.sessions, this.instituteSchedule] = obs;
         this.activeSession = this.sessions[this.activeSessionIndex];
-        this.activeSchedule = this.schedules.get(this.activeSession);
+        this.activeSchedule = this.schedulesBySession.get(this.activeSession);
       });
 
       this.scheduleReader.student.asObservable().subscribe(s => {
