@@ -14,13 +14,13 @@
         <a data-toggle="tab" [routerLink]="['../', i]">{{session}}</a>
       </li>
     </ul>
-    <div class="matrix well" id="matrixWell" *ngIf="activeSession && activeSession.toLowerCase().includes('1 week') === false">
+    <div class="matrix well" id="matrix-well" *ngIf="activeSession && activeSession.toLowerCase().includes('1 week') === false">
       <div>
         <h3>{{student.majorBySessionName[activeSession]}}</h3>
       </div>
       <iee-matrix [sessionSchedule]="activeSchedule"></iee-matrix>
     </div>
-    <div class="matrix well" id="instituteWell" *ngIf="activeSession && activeSession.toLowerCase().includes('1 week')">
+    <div class="matrix well" id="institute-well" *ngIf="activeSession && activeSession.toLowerCase().includes('1 week')">
       <div>
         {{student.majorBySessionName[activeSession]}}
       </div>
