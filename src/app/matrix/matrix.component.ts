@@ -17,8 +17,6 @@ export class MatrixComponent implements OnInit, OnChanges {
   firstPeriod = 12;
   lastPeriod = -1;
 
-  periodTimes = ['8 am', '9 am', '10 am', '11 am', '12 pm', '1 pm', '2 pm', '3 pm', '4 pm', '5 pm'];
-
   freePeriods: ScheduleCourse[] = [];
 
   private dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
@@ -42,6 +40,19 @@ export class MatrixComponent implements OnInit, OnChanges {
       (v, k) => k + this.firstPeriod);
   }
 
+  get periodTimes(): string[] {
+    return Array.from(
+      {length: (this.lastPeriod - this.firstPeriod + 1)},
+      (v, index) => {
+        let hour = index + this.firstPeriod + 7;
+        const meridiem = hour >= 12 ? ' PM' : ' AM';
+        if (hour > 12) {
+          hour -= 12;
+        }
+        return hour + meridiem;
+      });
+  }
+
   private get dayCount(): number {
     return this.lastDay - this.firstDay + 1;
   }
@@ -50,12 +61,12 @@ export class MatrixComponent implements OnInit, OnChanges {
     return 'grid-column: ' + (index + 2) + ' / ' + (index + 2) + ';';
   }
 
-  getPeriodColumnGridRowStyle(period: number): string {
-    return 'grid-row: ' + (period + 1) + ' / ' + (period + 1) + ';';
+  getPeriodColumnGridRowStyle(periodIndex: number): string {
+    return 'grid-row: ' + (periodIndex + 2) + ' / ' + (periodIndex + 2) + ';';
   }
 
-  getPeriodGridCellStyle(period: number): string {
-    return this.getPeriodColumnGridRowStyle(period) + this.getPeriodGridColumnStyle(0);
+  getPeriodGridCellStyle(periodIndex: number): string {
+    return this.getPeriodColumnGridRowStyle(periodIndex) + this.getPeriodGridColumnStyle(0);
   }
 
   getPeriodGridColumnStyle(index): string {
@@ -109,7 +120,7 @@ export class MatrixComponent implements OnInit, OnChanges {
       this.periodNumbers.sort();
 
       this.gridPositionsFilled = Array.from(
-        {length: (this.dayCount) * this.periodNumbers[this.periodNumbers.length - 1]},
+        {length: (this.dayCount) * (this.periodNumbers.indexOf(this.lastPeriod) + 1)},
         () => {
           return false;
         });
@@ -136,7 +147,7 @@ export class MatrixComponent implements OnInit, OnChanges {
     this.gridPositionsFilled.forEach((filled, index) => {
       if (filled === false) {
         const periodIndex = Math.floor(index / this.dayCount);
-        const dayIndex = index - (periodIndex * this.dayCount) + this.firstDay;
+        const dayIndex = index - (periodIndex * this.dayCount) + 1;
 
         let course = freePs[dayIndex];
         if (!course) {
@@ -156,12 +167,14 @@ export class MatrixComponent implements OnInit, OnChanges {
 
   createDivsForCourse(course: ScheduleCourse) {
     Array.from(course.scheduleViewMap.keys()).forEach(d => {
+      const dayIndex = this.periodDays.indexOf(d);
       course.scheduleViewMap.get(d).forEach(p => {
+        const periodIndex = this.periodNumbers.indexOf(p);
         if (this.courseIsFirstInRange(course, p, d)) {
           // insert div
           const div: HTMLDivElement = <HTMLDivElement>document.createElement('div');
-          div.style['grid-row'] = (p + 1) + ' / ' + (this.lastPeriodInRange(course, p, d) + 2);
-          div.style['grid-column'] = (d + 1) + ' / ' + (d + 2);
+          div.style['grid-row'] = (periodIndex + 2) + ' / ' + (this.periodNumbers.indexOf(this.lastPeriodInRange(course, p, d)) + 3);
+          div.style['grid-column'] = (dayIndex + 2) + ' / ' + (dayIndex + 3);
           div.style.padding = '5px';
           div.style.borderTop = '1px solid gray';
           if (this.lastPeriodInRange(course, p, d) === this.periodNumbers[this.periodNumbers.length - 1]) {
@@ -179,7 +192,7 @@ export class MatrixComponent implements OnInit, OnChanges {
         }
 
         // set position filled
-        const gridPosition: number = (this.periodNumbers.indexOf(p) * this.dayCount) + this.periodDays.indexOf(d);
+        const gridPosition: number = (periodIndex * this.dayCount) + dayIndex;
         this.gridPositionsFilled[gridPosition] = true;
       });
     });

@@ -6,10 +6,9 @@
     {{dayNames[d]}}
   </div>
   <div *ngFor="let p of periodNumbers; let i = index"
-       [style]="getPeriodGridCellStyle(p) | safeStyle"
+       [style]="getPeriodGridCellStyle(i) | safeStyle"
        [ngClass]="{'border-bottom': i === periodNumbers.length - 1}"
        class="period-number-cell text-center">
-    Period {{p}}<br/>
     {{periodTimes[i]}}
   </div>
 </div>

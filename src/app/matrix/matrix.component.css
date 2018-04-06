@@ -21,6 +21,7 @@
   align-items: center;
   justify-content: center;
   padding: 5px;
+  line-height: 4;
   border-left: 1px solid gray;
   border-top: 1px solid gray;
 }

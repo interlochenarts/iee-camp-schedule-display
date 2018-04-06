@@ -23,7 +23,7 @@ export class PrintDisplayComponent implements OnInit {
 
       this.scheduleReader.schedule.asObservable().subscribe(schedules => {
         this.schedulesByTerm = schedules;
-        this.sessions = Array.from(schedules.keys());
+        this.sessions = Array.from(schedules.keys()).sort();
       });
 
       this.scheduleReader.student.asObservable().subscribe(s => {
