@@ -52,7 +52,7 @@ export class MatrixComponent implements OnInit, OnChanges {
         return times.filter((st: ScheduleTime) => {
           return this.periodNumbers.indexOf(st.period) > -1;
         }).map((st: ScheduleTime) => {
-          return st.startTime + ' - ' + st.endTime;
+          return st.startTime + '<br />' + st.endTime;
         });
       }
     }
