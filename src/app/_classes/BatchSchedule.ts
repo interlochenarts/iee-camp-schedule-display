@@ -4,7 +4,7 @@ import {Student} from './Student';
 export class BatchSchedule {
   student: Student;
   schedule: ScheduleCourse[];
-  session: string;
+  campSession: string;
 
   public static createFromJson(json: any): BatchSchedule {
     const batchSchedule = new BatchSchedule();

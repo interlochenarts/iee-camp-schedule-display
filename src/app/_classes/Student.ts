@@ -15,4 +15,8 @@ export class Student {
   get name(): string {
     return this.firstName + ' ' + this.lastName;
   }
+
+  get housingDivision() {
+    return this.cabin.split('-')[0];
+  }
 }

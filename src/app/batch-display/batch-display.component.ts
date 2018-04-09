@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {BatchSchedule} from '../_classes/BatchSchedule';
 
 declare const Visualforce: any;
@@ -9,6 +9,10 @@ declare const Visualforce: any;
   styleUrls: ['./batch-display.component.css']
 })
 export class BatchDisplayComponent implements OnInit {
+  @ViewChild('cabin') cabinSelect: HTMLSelectElement;
+  @ViewChild('division') divisionSelect: HTMLSelectElement;
+  @ViewChild('housingDivision') housingDivisionSelect: HTMLSelectElement;
+  @ViewChild('arrivalWeek') arrivalSelect: HTMLSelectElement;
   schedules: BatchSchedule[] = [];
   loadingBatch = false;
 
@@ -42,19 +46,40 @@ export class BatchDisplayComponent implements OnInit {
 
       switch (sortBy) {
         case 'lastName': {
-          return 0;
-          // return a.student.lastName - b.student.lastName;
+          if (a.student.lastName < b.student.lastName) {
+            return -1;
+          } else if (a.student.lastName > b.student.lastName) {
+            return 1;
+          } else {
+            return 0;
+          }
         }
         case 'cabin': {
-          // return a.student.cabin - b.student.cabin;
-          return 0;
+          if (a.student.cabin < b.student.cabin) {
+            return -1;
+          } else if (a.student.cabin > b.student.cabin) {
+            return 1;
+          } else {
+            return 0;
+          }
         }
         case 'division': {
-          // return a.student.division - b.student.division;
-          return 0;
+          if (a.student.division < b.student.division) {
+            return -1;
+          } else if (a.student.division > b.student.division) {
+            return 1;
+          } else {
+            return 0;
+          }
         }
         case 'housing': {
-          return 0; // TODO: need to find out if we're getting housing division separately from division
+          if (a.student.housingDivision < b.student.housingDivision) {
+            return -1;
+          } else if (a.student.housingDivision > b.student.housingDivision) {
+            return 1;
+          } else {
+            return 0;
+          }
         }
         default: {
           return 0;
