@@ -1,5 +1,7 @@
 import {Component, ElementRef, Input, OnChanges, OnInit, Renderer2, ViewChild, ViewContainerRef} from '@angular/core';
 import {ScheduleCourse} from '../_classes/ScheduleCourse';
+import {ScheduleTime} from '../_classes/ScheduleTime';
+import {ScheduleReaderService} from '../services/schedule-reader.service';
 
 @Component({
   selector: 'iee-matrix',
@@ -8,6 +10,7 @@ import {ScheduleCourse} from '../_classes/ScheduleCourse';
 })
 export class MatrixComponent implements OnInit, OnChanges {
   @Input() sessionSchedule: ScheduleCourse[];
+  @Input() division: string;
   @ViewChild('matrixContainer') matrixContainer: ElementRef;
 
   divs: HTMLDivElement[] = [];
@@ -18,6 +21,8 @@ export class MatrixComponent implements OnInit, OnChanges {
   lastPeriod = -1;
 
   freePeriods: ScheduleCourse[] = [];
+
+  timesByDivision: Map<string, ScheduleTime[]> = new Map<string, ScheduleTime[]>();
 
   private dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
@@ -41,16 +46,18 @@ export class MatrixComponent implements OnInit, OnChanges {
   }
 
   get periodTimes(): string[] {
-    return Array.from(
-      {length: (this.lastPeriod - this.firstPeriod + 1)},
-      (v, index) => {
-        let hour = index + this.firstPeriod + 7;
-        const meridiem = hour >= 12 ? ' PM' : ' AM';
-        if (hour > 12) {
-          hour -= 12;
-        }
-        return hour + meridiem;
-      });
+    if (this.division && this.timesByDivision) {
+      const times: ScheduleTime[] = this.timesByDivision.get(this.division);
+      if (times) {
+        return times.filter((st: ScheduleTime) => {
+          return this.periodNumbers.indexOf(st.period) > -1;
+        }).map((st: ScheduleTime) => {
+          return st.startTime + ' - ' + st.endTime;
+        });
+      }
+    }
+
+    return [];
   }
 
   private get dayCount(): number {
@@ -73,10 +80,13 @@ export class MatrixComponent implements OnInit, OnChanges {
     return 'grid-column: ' + (index + 1) + ' / ' + (index + 1) + ';';
   }
 
-  constructor(private renderer: Renderer2) {
+  constructor(private renderer: Renderer2, private scheduleReaderService: ScheduleReaderService) {
   }
 
   ngOnInit() {
+    this.scheduleReaderService.timesByDivision.asObservable().subscribe(value => {
+      this.timesByDivision = value;
+    });
   }
 
   ngOnChanges() {
@@ -152,7 +162,7 @@ export class MatrixComponent implements OnInit, OnChanges {
         let course = freePs[dayIndex];
         if (!course) {
           course = new ScheduleCourse('Free Period');
-          course.scheduleView =  this.periodNumbers[periodIndex] + '(' + this.dayNames[dayIndex] + ')';
+          course.scheduleView = this.periodNumbers[periodIndex] + '(' + this.dayNames[dayIndex] + ')';
         } else {
           const view: string[] = course.scheduleView.split('(');
           course.scheduleView = view[0] + ',' + this.periodNumbers[periodIndex] + '(' + view[1];

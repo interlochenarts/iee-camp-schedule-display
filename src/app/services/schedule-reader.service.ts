@@ -5,6 +5,7 @@ import 'rxjs/add/operator/catch';
 import {ScheduleCourse} from '../_classes/ScheduleCourse';
 import {Student} from '../_classes/Student';
 import {InstituteSchedule} from '../_classes/InstituteSchedule';
+import {ScheduleTime} from '../_classes/ScheduleTime';
 
 declare const Visualforce: any;
 
@@ -15,6 +16,7 @@ export class ScheduleReaderService {
   public sessions = new BehaviorSubject<string[]>([]);
   public student = new BehaviorSubject<Student>(new Student());
   public instituteSchedule = new BehaviorSubject<InstituteSchedule>(new InstituteSchedule());
+  public timesByDivision = new BehaviorSubject<Map<string, ScheduleTime[]>>(new Map<string, ScheduleTime[]>());
 
   constructor() {
     this.educationId.asObservable().subscribe(edId => {
@@ -22,6 +24,8 @@ export class ScheduleReaderService {
       this.getStudent(edId);
       this.getInstituteSchedule(edId);
     });
+
+    this.getScheduleTimes();
   }
 
   private getSchedule(educationId: string) {
@@ -80,5 +84,28 @@ export class ScheduleReaderService {
         {buffer: false, escape: false}
       );
     }
+  }
+
+  private getScheduleTimes() {
+    Visualforce.remoting.Manager.invokeAction(
+      'IEE_CampScheduleController.getScheduleTimes',
+      json => {
+        if (json) {
+          const j = JSON.parse(json);
+          const timeByDiv: Map<string, ScheduleTime[]> = new Map<string, ScheduleTime[]>();
+          Object.keys(j).forEach(division => {
+            const timesJson: any[] = j[division];
+            const times = timesJson.map(t => {
+              const st: ScheduleTime = new ScheduleTime();
+              return Object.assign(st, t);
+            });
+            timeByDiv.set(division, times);
+          });
+
+          this.timesByDivision.next(timeByDiv);
+        }
+      },
+      {buffer: false, escape: false}
+    );
   }
 }

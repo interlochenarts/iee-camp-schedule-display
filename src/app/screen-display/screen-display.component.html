@@ -18,7 +18,7 @@
       <div>
         <h3>{{student.majorBySessionName[activeSession]}}</h3>
       </div>
-      <iee-matrix [sessionSchedule]="activeSchedule"></iee-matrix>
+      <iee-matrix [sessionSchedule]="activeSchedule"  [division]="student.division"></iee-matrix>
     </div>
     <div class="matrix well" id="institute-well" *ngIf="activeSession && activeSession.toLowerCase().includes('1 week')">
       <div>
