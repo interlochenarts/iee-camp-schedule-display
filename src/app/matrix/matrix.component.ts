@@ -219,7 +219,9 @@ export class MatrixComponent implements OnInit, OnChanges {
           this.divs.push(div);
         }
 
-        // set position filled
+        // Set grid position filled. Single-dimensional array.
+        // To get the position, you multiply the row index (periodIndex) by the number of columns (dayCount),
+        //   then add the column index (dayIndex)
         const gridPosition: number = (periodIndex * this.dayCount) + dayIndex;
         this.gridPositionsFilled[gridPosition] = true;
       });
