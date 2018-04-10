@@ -33,25 +33,32 @@ export class MatrixComponent implements OnInit, OnChanges {
     return 'grid-template-columns: 0.75fr repeat(' + days + ', 1fr);';
   }
 
+  // makes a list of period days (integers) from the first day to the last on the schedule
+  // Sun is 0 (zero)
   get periodDays(): number[] {
     return Array.from(
       {length: (this.lastDay - this.firstDay + 1)},
       (v, k) => k + this.firstDay);
   }
 
+  // makes a list of period numbers from the first one on the schedule to the last one on the schedule
   get periodNumbers(): number[] {
     return Array.from(
       {length: (this.lastPeriod - this.firstPeriod + 1)},
-      (v, k) => k + this.firstPeriod);
+      (v, k) => k + this.firstPeriod); // add the index to the first period number
   }
 
+  // get a string representation of the start to end times for the schedule matrix
   get periodTimes(): string[] {
     if (this.division && this.timesByDivision) {
+      // get a list of all the times based on the student's division
       const times: ScheduleTime[] = this.timesByDivision.get(this.division);
       if (times) {
         return times.filter((st: ScheduleTime) => {
+          // filter the list based on whether we actually have a period
           return this.periodNumbers.indexOf(st.period) > -1;
         }).map((st: ScheduleTime) => {
+          // return a string for the start/end times which populates an array
           return st.startTime + '<br />' + st.endTime;
         });
       }
@@ -60,6 +67,7 @@ export class MatrixComponent implements OnInit, OnChanges {
     return [];
   }
 
+  // how many days are in the week?
   private get dayCount(): number {
     return this.lastDay - this.firstDay + 1;
   }
@@ -84,12 +92,14 @@ export class MatrixComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
+    // load the map of schedule times based on the possible student divisions
     this.scheduleReaderService.timesByDivision.asObservable().subscribe(value => {
       this.timesByDivision = value;
     });
   }
 
   ngOnChanges() {
+    // each time on change, re-render the matrix divs. Remove all existing divs first.
     this.divs.forEach(div => {
       this.renderer.removeChild(this.matrixContainer.nativeElement, div);
     });
