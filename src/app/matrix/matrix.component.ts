@@ -193,8 +193,16 @@ export class MatrixComponent implements OnInit, OnChanges {
         if (this.courseIsFirstInRange(course, p, d)) {
           // insert div
           const div: HTMLDivElement = <HTMLDivElement>document.createElement('div');
-          div.style['grid-row'] = (periodIndex + 2) + ' / ' + (this.periodNumbers.indexOf(this.lastPeriodInRange(course, p, d)) + 3);
-          div.style['grid-column'] = (dayIndex + 2) + ' / ' + (dayIndex + 3);
+          // add two to get the first column/row in the grid that's not a period number or a day title
+          const startingOffset = 2;
+          // add three to get the column/row after the end of the element
+          const endingOffset = 3;
+
+          // add the appropriate style for the gridded element
+          div.style['grid-row'] = (periodIndex + startingOffset) + ' / ' +
+            (this.periodNumbers.indexOf(this.lastPeriodInRange(course, p, d)) + endingOffset);
+
+          div.style['grid-column'] = (dayIndex + startingOffset) + ' / ' + (dayIndex + endingOffset);
           div.style.padding = '5px';
           div.style.borderTop = '1px solid gray';
           if (this.lastPeriodInRange(course, p, d) === this.periodNumbers[this.periodNumbers.length - 1]) {
