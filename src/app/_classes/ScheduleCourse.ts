@@ -3,16 +3,63 @@ export class ScheduleCourse {
   public instructor: string;
   public location: string;
   public scheduleView: string;
+  public scheduleNotes: string;
 
   public static createFromJson(json: JSON): ScheduleCourse {
     const scheduleCourse = new ScheduleCourse(null);
-    return Object.assign(scheduleCourse, json);
+    Object.assign(scheduleCourse, json);
+
+    if (scheduleCourse.courseName.toLowerCase().includes('private')) {
+      scheduleCourse.instructor = scheduleCourse.privateLessonTeacher;
+      scheduleCourse.location = scheduleCourse.privateLessonLocation;
+      scheduleCourse.scheduleView = scheduleCourse.scheduleNotesArray[0];
+    }
+
+    return scheduleCourse;
   }
 
   constructor(courseName: string) {
     if (courseName) {
       this.courseName = courseName;
     }
+  }
+
+  get scheduleNotesArray(): string[] {
+    if (this.scheduleNotes && this.courseName.toLowerCase().includes('private')) {
+      return this.scheduleNotes.split('|');
+    }
+
+    return [];
+  }
+
+  get privateLessonTeacher(): string {
+    return this.scheduleNotesArray[1];
+  }
+
+  get privateLessonLocation(): string {
+    return this.scheduleNotesArray[2];
+  }
+
+  get practiceHourMap(): Map<number, number[]> {
+    // only do this work if something exists in the first value of schedule notes
+    // and if it's a private lesson class
+    if (this.scheduleNotesArray[0] && this.courseName.toLowerCase().includes('private')) {
+      const practices = new Map<number, number[]>();
+
+      const lessonDays = Array.from(this.scheduleViewMap.keys());
+      const practiceDays = Array.from(
+        {length: 7},
+        (v, k) => k)
+        .filter(v => {
+          return lessonDays.indexOf(v) === -1;
+        }).forEach(value => {
+          practices.set(value, this.scheduleViewMap[lessonDays[0]]);
+        });
+
+      return practices;
+    }
+
+    return null;
   }
 
   get scheduleViewMap(): Map<number, number[]> {

@@ -59,7 +59,7 @@ export class MatrixComponent implements OnInit, OnChanges {
           return this.periodNumbers.indexOf(st.period) > -1;
         }).map((st: ScheduleTime) => {
           // return a string for the start/end times which populates an array
-          return st.startTime + '<br />' + st.endTime;
+          return st.startTime + '<br />to<br />' + st.endTime;
         });
       }
     }
@@ -147,11 +147,12 @@ export class MatrixComponent implements OnInit, OnChanges {
 
       this.sessionSchedule.forEach(c => {
         this.createDivsForCourse(c);
+        this.createPracticeHourDivs(c);
       });
 
       // create Free Period course divs
       this.freePeriods = this.createFreePeriods();
-      this.freePeriods.forEach(free => {
+      this.freePeriods.forEach((free: ScheduleCourse) => {
         this.createDivsForCourse(free);
       });
 
@@ -190,47 +191,81 @@ export class MatrixComponent implements OnInit, OnChanges {
       const dayIndex = this.periodDays.indexOf(d);
       course.scheduleViewMap.get(d).forEach(p => {
         const periodIndex = this.periodNumbers.indexOf(p);
-        if (this.courseIsFirstInRange(course, p, d)) {
+        if (this.courseIsFirstInRange(course.scheduleViewMap, p, d)) {
           // insert div
           const div: HTMLDivElement = <HTMLDivElement>document.createElement('div');
-          // add two to get the first column/row in the grid that's not a period number or a day title
-          const startingOffset = 2;
-          // add three to get the column/row after the end of the element
-          const endingOffset = 3;
-
-          // add the appropriate style for the gridded element
-          div.style['grid-row'] = (periodIndex + startingOffset) + ' / ' +
-            (this.periodNumbers.indexOf(this.lastPeriodInRange(course, p, d)) + endingOffset);
-
-          div.style['grid-column'] = (dayIndex + startingOffset) + ' / ' + (dayIndex + endingOffset);
-          div.style.padding = '5px';
-          div.style.borderTop = '1px solid gray';
-          if (this.lastPeriodInRange(course, p, d) === this.periodNumbers[this.periodNumbers.length - 1]) {
-            div.style.borderBottom = '1px solid gray';
-          }
-          div.style.borderLeft = '1px solid gray';
-          if (d === this.lastDay) {
-            div.style.borderRight = '1px solid gray';
-          }
-          div.innerHTML = '<p><strong>' + course.courseName + '</strong></p>' +
-            (course.instructor ? ('<p>' + course.instructor + '</p>') : '') +
-            (course.location ? ('<p>' + course.location + '</p>') : '');
+          this.generateStyleForCourseDiv(course.scheduleViewMap, div, dayIndex, periodIndex, d, p);
+          this.generateInnerHtmlForCourseDiv(course, div);
 
           this.divs.push(div);
         }
 
-        // Set grid position filled. Single-dimensional array.
-        // To get the position, you multiply the row index (periodIndex) by the number of columns (dayCount),
-        //   then add the column index (dayIndex)
-        const gridPosition: number = (periodIndex * this.dayCount) + dayIndex;
-        this.gridPositionsFilled[gridPosition] = true;
+        this.setGridPositionFilled(dayIndex, periodIndex);
       });
     });
-
   }
 
-  lastPeriodInRange(course: ScheduleCourse, period: number, day: number): number {
-    const periods = course.scheduleViewMap.get(day);
+  createPracticeHourDivs(course: ScheduleCourse) {
+    Array.from(course.practiceHourMap.keys()).forEach(d => {
+      const dayIndex = this.periodDays.indexOf(d);
+      if (this.periodDays.indexOf(d) > -1) { // check to see if we have a valid practice period for this day
+        course.practiceHourMap.get(d).forEach(p => {
+          const periodIndex = this.periodNumbers.indexOf(p);
+          if (this.courseIsFirstInRange(course.practiceHourMap, p, d)) {
+            // insert div
+            const div: HTMLDivElement = <HTMLDivElement>document.createElement('div');
+            this.generateStyleForCourseDiv(course.practiceHourMap, div, dayIndex, periodIndex, d, p);
+            this.generateInnerHtmlForCourseDiv(course, div);
+
+            this.divs.push(div);
+          }
+
+          this.setGridPositionFilled(dayIndex, periodIndex);
+        });
+      }
+    });
+  }
+
+  setGridPositionFilled(dayIndex: number, periodIndex: number) {
+    // Set grid position filled. Single-dimensional array.
+    // To get the position, you multiply the row index (periodIndex) by the number of columns (dayCount),
+    //   then add the column index (dayIndex)
+    const gridPosition: number = (periodIndex * this.dayCount) + dayIndex;
+    this.gridPositionsFilled[gridPosition] = true;
+  }
+
+  generateInnerHtmlForCourseDiv(course: ScheduleCourse, div: HTMLDivElement): void {
+    div.innerHTML = '<p><strong>' + course.courseName + '</strong></p>' +
+      (course.instructor ? ('<p>' + course.instructor + '</p>') : '') +
+      (course.location ? ('<p>' + course.location + '</p>') : '');
+  }
+
+  generateStyleForCourseDiv(viewMap: Map<number, number[]>, div: HTMLDivElement,
+                            dayIndex: number, periodIndex: number,
+                            day: number, period: number) {
+    // add two to get the first column/row in the grid that's not a period number or a day title
+    const startingOffset = 2;
+    // add three to get the column/row after the end of the element
+    const endingOffset = 3;
+
+    // add the appropriate style for the gridded element
+    div.style['grid-row'] = (periodIndex + startingOffset) + ' / ' +
+      (this.periodNumbers.indexOf(this.lastPeriodInRange(viewMap, period, day)) + endingOffset);
+
+    div.style['grid-column'] = (dayIndex + startingOffset) + ' / ' + (dayIndex + endingOffset);
+    div.style.padding = '5px';
+    div.style.borderTop = '1px solid gray';
+    if (this.lastPeriodInRange(viewMap, period, day) === this.periodNumbers[this.periodNumbers.length - 1]) {
+      div.style.borderBottom = '1px solid gray';
+    }
+    div.style.borderLeft = '1px solid gray';
+    if (day === this.lastDay) {
+      div.style.borderRight = '1px solid gray';
+    }
+  }
+
+  lastPeriodInRange(viewMap: Map<number, number[]>, period: number, day: number): number {
+    const periods = viewMap.get(day);
     const index = periods.indexOf(period);
     for (let i = index; i < periods.length; i++) {
       if (periods[i + 1] && periods[i] + 1 !== periods[i + 1]) {
@@ -241,8 +276,8 @@ export class MatrixComponent implements OnInit, OnChanges {
     return periods[periods.length - 1];
   }
 
-  courseIsFirstInRange(course: ScheduleCourse, period: number, day: number): boolean {
-    const periods = course.scheduleViewMap.get(day);
+  courseIsFirstInRange(viewMap: Map<number, number[]>, period: number, day: number): boolean {
+    const periods = viewMap.get(day);
     const periodIndex = periods.indexOf(period);
     return periodIndex === 0 || periods[periodIndex - 1] !== period - 1;
   }

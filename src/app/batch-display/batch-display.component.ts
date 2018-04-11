@@ -25,9 +25,15 @@ export class BatchDisplayComponent implements OnInit {
   getBatchSchedule() {
     this.loadingBatch = true;
     this.schedules.length = 0;
+    const fields = {};
+    fields['housingDivision'] = this.housingDivisionSelect.value;
+    fields['cabin'] = this.cabinSelect.value;
+    fields['division'] = this.divisionSelect.value;
+    fields['arrivalWeek'] = this.arrivalSelect.value;
+
     Visualforce.remoting.Manager.invokeAction(
       'IEE_CampScheduleController.getBatchOfRecords',
-      'column', 'value',
+      JSON.stringify(fields),
       json => {
         if (json !== null) {
           const j = JSON.parse(json);
