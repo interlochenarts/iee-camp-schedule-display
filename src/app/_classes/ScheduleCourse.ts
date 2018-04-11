@@ -4,6 +4,9 @@ export class ScheduleCourse {
   public location: string;
   public scheduleView: string;
   public scheduleNotes: string;
+  public practiceHourMap: Map<number, number[]> = new Map<number, number[]>();
+  public scheduleViewMap: Map<number, number[]>;
+  public practiceBuilding: string;
 
   public static createFromJson(json: JSON): ScheduleCourse {
     const scheduleCourse = new ScheduleCourse(null);
@@ -13,6 +16,11 @@ export class ScheduleCourse {
       scheduleCourse.instructor = scheduleCourse.privateLessonTeacher;
       scheduleCourse.location = scheduleCourse.privateLessonLocation;
       scheduleCourse.scheduleView = scheduleCourse.scheduleNotesArray[0];
+      scheduleCourse.setScheduleViewMap();
+      scheduleCourse.setPracticeHourMap();
+      scheduleCourse.practiceBuilding = 'PB 7';
+    } else {
+      scheduleCourse.setScheduleViewMap();
     }
 
     return scheduleCourse;
@@ -40,7 +48,7 @@ export class ScheduleCourse {
     return this.scheduleNotesArray[2];
   }
 
-  get practiceHourMap(): Map<number, number[]> {
+  setPracticeHourMap(): void {
     // only do this work if something exists in the first value of schedule notes
     // and if it's a private lesson class
     if (this.scheduleNotesArray[0] && this.courseName.toLowerCase().includes('private')) {
@@ -52,60 +60,66 @@ export class ScheduleCourse {
         (v, k) => k)
         .filter(v => {
           return lessonDays.indexOf(v) === -1;
-        }).forEach(value => {
-          practices.set(value, this.scheduleViewMap[lessonDays[0]]);
+        }).forEach(v => {
+          practices.set(v, this.scheduleViewMap.get(lessonDays[0]));
         });
 
-      return practices;
+      this.practiceHourMap = practices;
+    } else {
+      this.practiceHourMap = new Map<number, number[]>();
     }
 
-    return null;
   }
 
-  get scheduleViewMap(): Map<number, number[]> {
-    const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+  setScheduleViewMap(): void {
+    if (this.scheduleView) {
+      const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
-    const viewMap: Map<number, number[]> = new Map<number, number[]>();
-    const schedules: string[] = this.scheduleView.split(/\),/);
+      const viewMap: Map<number, number[]> = new Map<number, number[]>();
+      const schedules: string[] = this.scheduleView.split(/\),/);
 
-    schedules.forEach(schedule => {
-      if (schedule.indexOf(')') === -1) {
-        schedule += ')';
-      }
-      const dayString = schedule.substring(schedule.indexOf('(') + 1, schedule.indexOf(')'));
-      const days = dayString.split(',').map(dayRange => {
-        if (dayRange.indexOf('-') >= 0) {
-          const start = dayNames.indexOf(dayRange.substring(0, dayRange.indexOf('-')));
-          const end = dayNames.indexOf(dayRange.substring(dayRange.indexOf('-') + 1));
-
-          return Array.from({length: (end - start + 1)}, (v, k) => k + start);
-        } else {
-          return dayNames.indexOf(dayRange);
+      schedules.forEach(schedule => {
+        if (schedule.indexOf(')') === -1) {
+          schedule += ')';
         }
-      });
-
-      const daysFlattened = [].concat.apply([], days);
-      daysFlattened.forEach(day => {
-        const periodString = schedule.substring(0, schedule.indexOf('('));
-        let periods = periodString.split(',').map(periodRange => {
-          if (periodRange.indexOf('-') >= 0) {
-            const start = +periodRange.substring(0, periodRange.indexOf('-'));
-            const end = +periodRange.substring(periodRange.indexOf('-') + 1);
+        const dayString = schedule.substring(schedule.indexOf('(') + 1, schedule.indexOf(')'));
+        const days = dayString.split(',').map(dayRange => {
+          if (dayRange.indexOf('-') >= 0) {
+            const start = dayNames.indexOf(dayRange.substring(0, dayRange.indexOf('-')));
+            const end = dayNames.indexOf(dayRange.substring(dayRange.indexOf('-') + 1));
 
             return Array.from({length: (end - start + 1)}, (v, k) => k + start);
           } else {
-            return +periodRange;
+            return dayNames.indexOf(dayRange);
           }
         });
 
-        const ps = viewMap.get(day);
-        if (ps) {
-          periods = periods.concat(ps);
-        }
-        viewMap.set(day, [].concat.apply([], periods));
-      });
-    });
+        const daysFlattened = [].concat.apply([], days);
+        daysFlattened.forEach(day => {
+          const periodString = schedule.substring(0, schedule.indexOf('('));
+          let periods = periodString.split(',').map(periodRange => {
+            if (periodRange.indexOf('-') >= 0) {
+              const start = +periodRange.substring(0, periodRange.indexOf('-'));
+              const end = +periodRange.substring(periodRange.indexOf('-') + 1);
 
-    return viewMap;
+              return Array.from({length: (end - start + 1)}, (v, k) => k + start);
+            } else {
+              return +periodRange;
+            }
+          });
+
+          const ps = viewMap.get(day);
+          if (ps) {
+            periods = periods.concat(ps);
+          }
+          viewMap.set(day, [].concat.apply([], periods));
+        });
+      });
+
+      this.scheduleViewMap = viewMap;
+    } else {
+      this.scheduleViewMap = new Map<number, number[]>();
+    }
+
   }
 }

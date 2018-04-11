@@ -147,7 +147,10 @@ export class MatrixComponent implements OnInit, OnChanges {
 
       this.sessionSchedule.forEach(c => {
         this.createDivsForCourse(c);
-        this.createPracticeHourDivs(c);
+        this.createDivsForCourse(c);
+        if (c.courseName.toLowerCase().includes('private')) {
+          this.createPracticeHourDivs(c);
+        }
       });
 
       // create Free Period course divs
@@ -168,7 +171,7 @@ export class MatrixComponent implements OnInit, OnChanges {
     this.gridPositionsFilled.forEach((filled, index) => {
       if (filled === false) {
         const periodIndex = Math.floor(index / this.dayCount);
-        const dayIndex = index - (periodIndex * this.dayCount) + 1;
+        const dayIndex = index - (periodIndex * this.dayCount) + this.periodDays[0];
 
         let course = freePs[dayIndex];
         if (!course) {
@@ -178,6 +181,8 @@ export class MatrixComponent implements OnInit, OnChanges {
           const view: string[] = course.scheduleView.split('(');
           course.scheduleView = view[0] + ',' + this.periodNumbers[periodIndex] + '(' + view[1];
         }
+
+        course.setScheduleViewMap();
 
         freePs[dayIndex] = course;
       }
@@ -195,7 +200,7 @@ export class MatrixComponent implements OnInit, OnChanges {
           // insert div
           const div: HTMLDivElement = <HTMLDivElement>document.createElement('div');
           this.generateStyleForCourseDiv(course.scheduleViewMap, div, dayIndex, periodIndex, d, p);
-          this.generateInnerHtmlForCourseDiv(course, div);
+          this.generateInnerHtmlForCourseDiv(course, div, false);
 
           this.divs.push(div);
         }
@@ -208,20 +213,24 @@ export class MatrixComponent implements OnInit, OnChanges {
   createPracticeHourDivs(course: ScheduleCourse) {
     Array.from(course.practiceHourMap.keys()).forEach(d => {
       const dayIndex = this.periodDays.indexOf(d);
-      if (this.periodDays.indexOf(d) > -1) { // check to see if we have a valid practice period for this day
-        course.practiceHourMap.get(d).forEach(p => {
-          const periodIndex = this.periodNumbers.indexOf(p);
-          if (this.courseIsFirstInRange(course.practiceHourMap, p, d)) {
-            // insert div
-            const div: HTMLDivElement = <HTMLDivElement>document.createElement('div');
-            this.generateStyleForCourseDiv(course.practiceHourMap, div, dayIndex, periodIndex, d, p);
-            this.generateInnerHtmlForCourseDiv(course, div);
+      // check to see if we have a valid practice period for this day
+      if (this.periodDays.indexOf(d) > -1) {
+        const practiceHours = course.practiceHourMap.get(d);
+        if (practiceHours) {
+          practiceHours.forEach(p => {
+            const periodIndex = this.periodNumbers.indexOf(p);
+            if (this.courseIsFirstInRange(course.practiceHourMap, p, d)) {
+              // insert div
+              const div: HTMLDivElement = <HTMLDivElement>document.createElement('div');
+              this.generateStyleForCourseDiv(course.practiceHourMap, div, dayIndex, periodIndex, d, p);
+              this.generateInnerHtmlForCourseDiv(course, div, true);
 
-            this.divs.push(div);
-          }
+              this.divs.push(div);
+            }
 
-          this.setGridPositionFilled(dayIndex, periodIndex);
-        });
+            this.setGridPositionFilled(dayIndex, periodIndex);
+          });
+        }
       }
     });
   }
@@ -234,10 +243,11 @@ export class MatrixComponent implements OnInit, OnChanges {
     this.gridPositionsFilled[gridPosition] = true;
   }
 
-  generateInnerHtmlForCourseDiv(course: ScheduleCourse, div: HTMLDivElement): void {
-    div.innerHTML = '<p><strong>' + course.courseName + '</strong></p>' +
-      (course.instructor ? ('<p>' + course.instructor + '</p>') : '') +
-      (course.location ? ('<p>' + course.location + '</p>') : '');
+  generateInnerHtmlForCourseDiv(course: ScheduleCourse, div: HTMLDivElement, isPracticeHour: boolean): void {
+    div.innerHTML = '<p><strong>' + (isPracticeHour ? 'Practice Hour' : course.courseName) + '</strong></p>' +
+      (isPracticeHour ? '' : (course.instructor ? ('<p>' + course.instructor + '</p>') : '')) +
+      (isPracticeHour ? (course.practiceBuilding ? ('<p>' + course.practiceBuilding + '</p>') : '') :
+        (course.location ? ('<p>' + course.location + '</p>') : ''));
   }
 
   generateStyleForCourseDiv(viewMap: Map<number, number[]>, div: HTMLDivElement,
