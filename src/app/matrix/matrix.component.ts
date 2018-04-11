@@ -147,7 +147,6 @@ export class MatrixComponent implements OnInit, OnChanges {
 
       this.sessionSchedule.forEach(c => {
         this.createDivsForCourse(c);
-        this.createDivsForCourse(c);
         if (c.courseName.toLowerCase().includes('private')) {
           this.createPracticeHourDivs(c);
         }
