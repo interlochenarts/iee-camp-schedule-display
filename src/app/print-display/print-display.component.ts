@@ -5,6 +5,7 @@ import {ScheduleCourse} from '../_classes/ScheduleCourse';
 import {Student} from '../_classes/Student';
 import {Observable} from 'rxjs/Observable';
 import {InstituteSchedule} from '../_classes/InstituteSchedule';
+import {ScheduleTime} from '../_classes/ScheduleTime';
 
 @Component({
   selector: 'iee-print-display',
@@ -16,6 +17,8 @@ export class PrintDisplayComponent implements OnInit {
   schedulesBySession: Map<string, ScheduleCourse[]> = new Map<string, ScheduleCourse[]>();
   instituteSchedule: InstituteSchedule = null;
   sessions: string[] = [];
+  timesByDivision = new Map<string, ScheduleTime[]>();
+
 
   constructor(private activatedRoute: ActivatedRoute, private scheduleReader: ScheduleReaderService) {
   }
@@ -33,6 +36,11 @@ export class PrintDisplayComponent implements OnInit {
 
       this.scheduleReader.student.asObservable().subscribe(s => {
         this.student = s;
+      });
+
+      // load the map of schedule times based on the possible student divisions
+      this.scheduleReader.timesByDivision.asObservable().subscribe(value => {
+        this.timesByDivision = value;
       });
     });
   }

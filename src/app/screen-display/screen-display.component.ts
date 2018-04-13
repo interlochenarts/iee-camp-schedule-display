@@ -7,6 +7,7 @@ import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/observable/combineLatest';
 import {InstituteSchedule} from '../_classes/InstituteSchedule';
 import {DomSanitizer, SafeUrl} from '@angular/platform-browser';
+import {ScheduleTime} from '../_classes/ScheduleTime';
 
 @Component({
   selector: 'iee-screen-display',
@@ -22,6 +23,7 @@ export class ScreenDisplayComponent implements OnInit {
   activeSchedule: ScheduleCourse[] = [];
   instituteSchedule: InstituteSchedule = null;
   sessions: string[] = [];
+  timesByDivision = new Map<string, ScheduleTime[]>();
 
   constructor(private activatedRoute: ActivatedRoute, private scheduleReader: ScheduleReaderService, private sanitizer: DomSanitizer) {
   }
@@ -45,6 +47,11 @@ export class ScreenDisplayComponent implements OnInit {
       this.scheduleReader.student.asObservable().subscribe(s => {
         this.student = s;
       });
+    });
+
+    // load the map of schedule times based on the possible student divisions
+    this.scheduleReader.timesByDivision.asObservable().subscribe(value => {
+      this.timesByDivision = value;
     });
   }
 }

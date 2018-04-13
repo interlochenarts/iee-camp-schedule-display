@@ -1,6 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {BatchSchedule} from '../_classes/BatchSchedule';
 import {ScheduleReaderService} from '../services/schedule-reader.service';
+import {ScheduleTime} from '../_classes/ScheduleTime';
 
 declare const Visualforce: any;
 
@@ -17,6 +18,7 @@ export class BatchDisplayComponent implements OnInit {
   @ViewChild('term') termSelect: HTMLSelectElement;
   schedules: BatchSchedule[] = [];
   loadingBatch = false;
+  timesByDivision = new Map<string, ScheduleTime[]>();
 
   constructor(private scheduleReaderService: ScheduleReaderService) {
   }
@@ -35,6 +37,11 @@ export class BatchDisplayComponent implements OnInit {
         const selectItem: HTMLOptionElement = new Option(termsById.get(id), id);
         this.termSelect.nativeElement.add(selectItem);
       });
+    });
+
+    // load the map of schedule times based on the possible student divisions
+    this.scheduleReaderService.timesByDivision.asObservable().subscribe(value => {
+      this.timesByDivision = value;
     });
   }
 

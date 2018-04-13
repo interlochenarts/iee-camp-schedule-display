@@ -11,18 +11,18 @@ import {ScheduleReaderService} from '../services/schedule-reader.service';
 export class MatrixComponent implements OnInit, OnChanges {
   @Input() sessionSchedule: ScheduleCourse[];
   @Input() division: string;
-  @ViewChild('matrixContainer') matrixContainer: ElementRef;
+  @Input() timesByDivision: Map<string, ScheduleTime[]>;
 
+  @ViewChild('matrixContainer') matrixContainer: ElementRef;
   divs: HTMLDivElement[] = [];
   firstDay = 7;
-  lastDay = -1;
 
+  lastDay = -1;
   firstPeriod = 12;
+
   lastPeriod = -1;
 
   freePeriods: ScheduleCourse[] = [];
-
-  timesByDivision: Map<string, ScheduleTime[]> = new Map<string, ScheduleTime[]>();
 
   private dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
@@ -92,10 +92,6 @@ export class MatrixComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
-    // load the map of schedule times based on the possible student divisions
-    this.scheduleReaderService.timesByDivision.asObservable().subscribe(value => {
-      this.timesByDivision = value;
-    });
   }
 
   ngOnChanges() {
