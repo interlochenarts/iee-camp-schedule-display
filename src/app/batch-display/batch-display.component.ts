@@ -49,8 +49,6 @@ export class BatchDisplayComponent implements OnInit {
       'term': this.termSelect.nativeElement.value
     };
 
-    console.log(JSON.stringify(fields));
-
     Visualforce.remoting.Manager.invokeAction(
       'IEE_CampScheduleController.getBatchOfRecords',
       JSON.stringify(fields),

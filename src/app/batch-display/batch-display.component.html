@@ -80,7 +80,7 @@
 
 <div *ngIf="loadingBatch"><i class="fa fa-fw fa-spinner fa-pulse" aria-hidden="true"></i> Loading...</div>
 
-<div class="row" *ngFor="let studentSchedule of studentSchedules">
+<div class="row" *ngFor="let studentSchedule of schedules">
   <div class="col-print-12 col-xs-12">
     <div class="well margin-top-sm">
       <iee-print-header [student]="studentSchedule.student"

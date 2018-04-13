@@ -115,7 +115,6 @@ export class MatrixComponent implements OnInit, OnChanges {
       this.firstPeriod = 12;
       this.lastPeriod = -1;
       this.sessionSchedule.forEach(c => {
-        // console.log('name: ' + c.courseName + ' / days: ' + c.days.join() + ' / periods: ' + c.periods.join());
         const days = Array.from(c.scheduleViewMap.keys());
 
         days.forEach(d => {
