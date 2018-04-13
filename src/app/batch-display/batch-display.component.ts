@@ -1,5 +1,6 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {BatchSchedule} from '../_classes/BatchSchedule';
+import {ScheduleReaderService} from '../services/schedule-reader.service';
 
 declare const Visualforce: any;
 
@@ -13,23 +14,42 @@ export class BatchDisplayComponent implements OnInit {
   @ViewChild('division') divisionSelect: HTMLSelectElement;
   @ViewChild('housingDivision') housingDivisionSelect: HTMLSelectElement;
   @ViewChild('arrivalWeek') arrivalSelect: HTMLSelectElement;
+  @ViewChild('term') termSelect: HTMLSelectElement;
   schedules: BatchSchedule[] = [];
   loadingBatch = false;
 
-  constructor() {
+  constructor(private scheduleReaderService: ScheduleReaderService) {
   }
 
   ngOnInit() {
+    this.scheduleReaderService.getCabins().then((cabins: string[]) => {
+      cabins.forEach(cabin => {
+        // create a select item and add to cabin select
+        const selectItem: HTMLOptionElement = new Option(cabin, cabin);
+        this.cabinSelect.nativeElement.add(selectItem);
+      });
+    });
+
+    this.scheduleReaderService.getCampTerms().then((termsById: Map<string, string>) => {
+      Array.from(termsById.keys()).forEach(id => {
+        const selectItem: HTMLOptionElement = new Option(termsById.get(id), id);
+        this.termSelect.nativeElement.add(selectItem);
+      });
+    });
   }
 
   getBatchSchedule() {
     this.loadingBatch = true;
     this.schedules.length = 0;
-    const fields = {};
-    fields['housingDivision'] = this.housingDivisionSelect.value;
-    fields['cabin'] = this.cabinSelect.value;
-    fields['division'] = this.divisionSelect.value;
-    fields['arrivalWeek'] = this.arrivalSelect.value;
+    const fields = {
+      'housingDivision': this.housingDivisionSelect.nativeElement.value,
+      'cabin': this.cabinSelect.nativeElement.value,
+      'division': this.divisionSelect.nativeElement.value,
+      'arrivalWeek': this.arrivalSelect.nativeElement.value,
+      'term': this.termSelect.nativeElement.value
+    };
+
+    console.log(JSON.stringify(fields));
 
     Visualforce.remoting.Manager.invokeAction(
       'IEE_CampScheduleController.getBatchOfRecords',

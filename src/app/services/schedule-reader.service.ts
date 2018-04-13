@@ -108,4 +108,41 @@ export class ScheduleReaderService {
       {buffer: false, escape: false}
     );
   }
+
+  public getCabins(): Promise<string[]> {
+    return new Promise((resolve, reject) => {
+      Visualforce.remoting.Manager.invokeAction(
+        'IEE_CampScheduleController.getCampCabins',
+        json => {
+          if (json) {
+            resolve(JSON.parse(json));
+          } else {
+            reject(new Error('Failed to get cabins'));
+          }
+        },
+        {buffer: false, escape: false}
+      );
+    });
+  }
+
+  public getCampTerms(): Promise<Map<string, string>> {
+    return new Promise((resolve, reject) => {
+      Visualforce.remoting.Manager.invokeAction(
+        'IEE_CampScheduleController.getCampTerms',
+        json => {
+          if (json) {
+            const j = JSON.parse(json);
+            const m: Map<string, string> = new Map<string, string>();
+            for (const k of Object.keys(j)) {
+              m.set(k, j[k]);
+            }
+            resolve(m);
+          } else {
+            reject(new Error('Failed to get terms'));
+          }
+        },
+        {buffer: false, escape: false}
+      );
+    });
+  }
 }
