@@ -33,15 +33,44 @@ export class BatchDisplayComponent implements OnInit {
     });
 
     this.scheduleReaderService.getCampTerms().then((termsById: Map<string, string>) => {
-      Array.from(termsById.keys()).forEach(id => {
+      const keys: Array<string> = Array.from(termsById.keys());
+
+      // sort keys based on term dates
+      keys.sort((a: string, b: string) => {
+        if (termsById.get(a) < termsById.get(b)) {
+          return -1;
+        } else if (termsById.get(a) > termsById.get(b)) {
+          return 1;
+        } else {
+          return 0;
+        }
+      });
+
+      keys.forEach(id => {
         const selectItem: HTMLOptionElement = new Option(termsById.get(id), id);
         this.termSelect.nativeElement.add(selectItem);
+      });
+
+      this.scheduleReaderService.getArrivalWeeksForTerm(keys[0]).then((arrivalWeeks: string[]) => {
+        arrivalWeeks.forEach(wk => {
+          const selectItem: HTMLOptionElement = new Option(wk, wk);
+          this.arrivalSelect.nativeElement.add(selectItem);
+        });
       });
     });
 
     // load the map of schedule times based on the possible student divisions
     this.scheduleReaderService.timesByDivision.asObservable().subscribe(value => {
       this.timesByDivision = value;
+    });
+  }
+
+  onChangeTerm() {
+    this.scheduleReaderService.getArrivalWeeksForTerm(this.termSelect.nativeElement.value).then((arrivalWeeks: string[]) => {
+      arrivalWeeks.forEach(wk => {
+        const selectItem: HTMLOptionElement = new Option(wk, wk);
+        this.arrivalSelect.nativeElement.add(selectItem);
+      });
     });
   }
 

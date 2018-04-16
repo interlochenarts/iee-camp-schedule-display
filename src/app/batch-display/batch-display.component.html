@@ -7,7 +7,7 @@
 
         <div class="form-group">
           <label for="termFilter">Term:</label>
-          <select #term class="form-control" id="termFilter">
+          <select #term class="form-control" id="termFilter" (change)="onChangeTerm()">
           </select>
         </div>
 
@@ -46,10 +46,6 @@
           <label for="arrivalWeekFilter">Arrival Week:</label>
           <select #arrivalWeek class="form-control" id="arrivalWeekFilter">
             <option value="">Show All</option>
-            <option value="0">Institute</option>
-            <option value="1">Week 1</option>
-            <option value="3">Week 3</option>
-            <option value="4">Week 4</option>
           </select>
         </div>
       </fieldset>

@@ -145,4 +145,21 @@ export class ScheduleReaderService {
       );
     });
   }
+
+  public getArrivalWeeksForTerm(term: string): Promise<string[]> {
+    return new Promise((resolve, reject) => {
+      Visualforce.remoting.Manager.invokeAction(
+        'IEE_CampScheduleController.getArrivalWeekDatesForTerm',
+        term,
+        json => {
+          if(json) {
+            resolve(JSON.parse(json));
+          } else {
+            reject(new Error('Failed to get arrival weeks'));
+          }
+        },
+        {buffer: false, escape: false}
+      );
+    });
+  }
 }
