@@ -14,7 +14,7 @@ export class BatchDisplayComponent implements OnInit {
   @ViewChild('cabin') cabinSelect: HTMLSelectElement;
   @ViewChild('division') divisionSelect: HTMLSelectElement;
   @ViewChild('housingDivision') housingDivisionSelect: HTMLSelectElement;
-  @ViewChild('arrivalWeek') arrivalSelect: HTMLSelectElement;
+  @ViewChild('arrival') arrivalSelect: HTMLSelectElement;
   @ViewChild('term') termSelect: HTMLSelectElement;
   schedules: BatchSchedule[] = [];
   loadingBatch = false;
@@ -101,7 +101,11 @@ export class BatchDisplayComponent implements OnInit {
     );
   }
 
-  onSortSchedules($event, sortBy: string) {
+  onSortSchedules($event, sortBy: string): void {
+    this.sortSchedules(sortBy);
+  }
+
+  sortSchedules(sortBy: string): void {
     this.schedules.sort((a: BatchSchedule, b: BatchSchedule) => {
 
       switch (sortBy) {
