@@ -60,7 +60,7 @@
                   (change)="onSortSchedules($event, sortField.value)">
             <option value="cabin">Cabin</option>
             <option value="division">Division</option>
-            <option value="lastName">Last Name</option>
+            <option value="lastName" selected>Last Name</option>
             <option value="housing">Housing Division</option>
           </select>
         </div>
@@ -68,8 +68,10 @@
     </div>
 
     <div class="col-xs-12 text-right">
-      <a class="btn btn-default" (click)="getBatchSchedule()">
-        <i class="fa fa-star-half" aria-hidden="true"></i> Get Schedules <i class="fa fa-star-half" aria-hidden="true"></i></a>
+      <a class="btn btn-default" (click)="getBatchSchedule()" *ngIf="alt === false">
+        <i class="fa fa-star-half" aria-hidden="true"></i> Get Schedules <i class="fa fa-star-half fa-flip-horizontal" aria-hidden="true"></i></a>
+      <a class="tButton" (click)="getBatchSchedule()" *ngIf="alt === true">
+        <i class="fa fa-star-half" aria-hidden="true"></i> Get Schedules <i class="fa fa-star-half fa-flip-horizontal" aria-hidden="true"></i></a>
     </div>
   </div>
 </div>

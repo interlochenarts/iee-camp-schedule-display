@@ -2,6 +2,7 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {BatchSchedule} from '../_classes/BatchSchedule';
 import {ScheduleReaderService} from '../services/schedule-reader.service';
 import {ScheduleTime} from '../_classes/ScheduleTime';
+import {Router} from '@angular/router';
 
 declare const Visualforce: any;
 
@@ -19,11 +20,16 @@ export class BatchDisplayComponent implements OnInit {
   schedules: BatchSchedule[] = [];
   loadingBatch = false;
   timesByDivision = new Map<string, ScheduleTime[]>();
+  alt = false;
 
-  constructor(private scheduleReaderService: ScheduleReaderService) {
+  constructor(private router: Router, private scheduleReaderService: ScheduleReaderService) {
   }
 
   ngOnInit() {
+    if (this.router.url.endsWith('/c')) {
+      this.alt = true;
+    }
+
     this.scheduleReaderService.getCabins().then((cabins: string[]) => {
       cabins.forEach(cabin => {
         // create a select item and add to cabin select
@@ -65,7 +71,7 @@ export class BatchDisplayComponent implements OnInit {
     });
   }
 
-  onChangeTerm() {
+  onChangeTerm(): void {
     this.scheduleReaderService.getArrivalWeeksForTerm(this.termSelect.nativeElement.value).then((arrivalWeeks: string[]) => {
       arrivalWeeks.forEach(wk => {
         const selectItem: HTMLOptionElement = new Option(wk, wk);
@@ -94,6 +100,8 @@ export class BatchDisplayComponent implements OnInit {
           j.forEach(s => {
             this.schedules.push(BatchSchedule.createFromJson(s));
           });
+
+          this.sortSchedules('lastName');
         }
         this.loadingBatch = false;
       },

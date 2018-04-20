@@ -14,6 +14,7 @@ import {SafeStylePipe} from './_pipes/safe-style.pipe';
 
 const appRoutes: Routes = [
   {path: 'batch', component: BatchDisplayComponent},
+  {path: 'batch/c', component: BatchDisplayComponent},
   {
     path: ':educationId',
     children: [
