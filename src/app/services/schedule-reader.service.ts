@@ -112,7 +112,7 @@ export class ScheduleReaderService {
   public getCabins(): Promise<string[]> {
     return new Promise((resolve, reject) => {
       Visualforce.remoting.Manager.invokeAction(
-        'IEE_CampScheduleController.getCampCabins',
+        'IEE_CampScheduleBatchController.getCampCabins',
         json => {
           if (json) {
             resolve(JSON.parse(json));
@@ -128,7 +128,7 @@ export class ScheduleReaderService {
   public getCampTerms(): Promise<Map<string, string>> {
     return new Promise((resolve, reject) => {
       Visualforce.remoting.Manager.invokeAction(
-        'IEE_CampScheduleController.getCampTerms',
+        'IEE_CampScheduleBatchController.getCampTerms',
         json => {
           if (json) {
             const j = JSON.parse(json);
@@ -149,7 +149,7 @@ export class ScheduleReaderService {
   public getArrivalWeeksForTerm(term: string): Promise<string[]> {
     return new Promise((resolve, reject) => {
       Visualforce.remoting.Manager.invokeAction(
-        'IEE_CampScheduleController.getArrivalWeekDatesForTerm',
+        'IEE_CampScheduleBatchController.getArrivalWeekDatesForTerm',
         term,
         json => {
           if(json) {

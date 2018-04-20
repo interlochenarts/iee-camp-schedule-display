@@ -83,16 +83,21 @@ export class BatchDisplayComponent implements OnInit {
   getBatchSchedule() {
     this.loadingBatch = true;
     this.schedules.length = 0;
+
+    // get a list of selected options in the list of cabins
+    const selectedCabins: string[] = Array.apply(null, this.cabinSelect.nativeElement.options)
+      .filter(opt => opt.selected).map(opt => opt.value);
+
     const fields = {
       'housingDivision': this.housingDivisionSelect.nativeElement.value,
-      'cabin': this.cabinSelect.nativeElement.value,
+      'cabin': selectedCabins,
       'division': this.divisionSelect.nativeElement.value,
       'arrivalWeek': this.arrivalSelect.nativeElement.value,
       'term': this.termSelect.nativeElement.value
     };
 
     Visualforce.remoting.Manager.invokeAction(
-      'IEE_CampScheduleController.getBatchOfRecords',
+      'IEE_CampScheduleBatchController.getBatchOfRecords',
       JSON.stringify(fields),
       json => {
         if (json !== null) {
