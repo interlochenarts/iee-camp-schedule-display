@@ -152,7 +152,7 @@ export class ScheduleReaderService {
         'IEE_CampScheduleBatchController.getArrivalWeekDatesForTerm',
         term,
         json => {
-          if(json) {
+          if (json) {
             resolve(JSON.parse(json));
           } else {
             reject(new Error('Failed to get arrival weeks'));
