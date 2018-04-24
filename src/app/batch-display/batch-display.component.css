@@ -22,3 +22,21 @@
   color: white;
   text-decoration: none;
 }
+#filterContainer {
+  position: relative;
+}
+.dBg {
+  position: relative;
+  background: none;
+}
+.dBg::after {
+  content: "";
+  background-image: url(//upload.wikimedia.org/wikipedia/commons/2/22/Charles_R._Knight_New_Years%27s_Card.jpg);
+  opacity: 0.3;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  position: absolute;
+  z-index: -1;
+}
