@@ -1,0 +1,44 @@
+@media print {
+  #filterContainer {
+    display: none;
+  }
+}
+
+.tButton {
+  background-image: url(//smithmd.github.io/calendar-react/cdn/tet.png);
+  display: inline-block;
+  width: 206px;
+  height: 137px;
+  color: white;
+  font-size: 1.3em;
+  text-align: center;
+  padding-top: 90px;
+  text-decoration: none;
+  cursor: pointer;
+
+  &:link, &:hover, &:visited, &:active {
+    color: white;
+    text-decoration: none;
+  }
+}
+
+#filterContainer {
+  position: relative;
+}
+
+.dBg {
+  position: relative;
+  background: none;
+
+  &::after {
+    content: "";
+    background-image: url(//upload.wikimedia.org/wikipedia/commons/2/22/Charles_R._Knight_New_Years%27s_Card.jpg);
+    opacity: 0.3;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    position: absolute;
+    z-index: -1;
+  }
+}

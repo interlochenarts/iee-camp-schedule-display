@@ -2,9 +2,10 @@ import {Injectable} from '@angular/core';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
-import {ScheduleCourse} from '../classes/ScheduleCourse';
-import {Student} from '../classes/Student';
-import {InstituteSchedule} from '../classes/InstituteSchedule';
+import {ScheduleCourse} from '../_classes/ScheduleCourse';
+import {Student} from '../_classes/Student';
+import {InstituteSchedule} from '../_classes/InstituteSchedule';
+import {ScheduleTime} from '../_classes/ScheduleTime';
 
 declare const Visualforce: any;
 
@@ -12,9 +13,10 @@ declare const Visualforce: any;
 export class ScheduleReaderService {
   public schedule = new BehaviorSubject<Map<string, ScheduleCourse[]>>(new Map<string, ScheduleCourse[]>());
   public educationId = new BehaviorSubject<string>(null);
-  public terms = new BehaviorSubject<string[]>([]);
+  public sessions = new BehaviorSubject<string[]>([]);
   public student = new BehaviorSubject<Student>(new Student());
   public instituteSchedule = new BehaviorSubject<InstituteSchedule>(new InstituteSchedule());
+  public timesByDivision = new BehaviorSubject<Map<string, ScheduleTime[]>>(new Map<string, ScheduleTime[]>());
 
   constructor() {
     this.educationId.asObservable().subscribe(edId => {
@@ -22,6 +24,8 @@ export class ScheduleReaderService {
       this.getStudent(edId);
       this.getInstituteSchedule(edId);
     });
+
+    this.getScheduleTimes();
   }
 
   private getSchedule(educationId: string) {
@@ -74,11 +78,88 @@ export class ScheduleReaderService {
             const j = JSON.parse(json);
             const s: Student = Student.createFromJson(j);
             this.student.next(s);
-            this.terms.next(Object.keys(s.majorBySessionName));
+            this.sessions.next(Object.keys(s.majorBySessionName));
           }
         },
         {buffer: false, escape: false}
       );
     }
+  }
+
+  private getScheduleTimes() {
+    Visualforce.remoting.Manager.invokeAction(
+      'IEE_CampScheduleController.getScheduleTimes',
+      json => {
+        if (json) {
+          const j = JSON.parse(json);
+          const timeByDiv: Map<string, ScheduleTime[]> = new Map<string, ScheduleTime[]>();
+          Object.keys(j).forEach(division => {
+            const timesJson: any[] = j[division];
+            const times = timesJson.map(t => {
+              const st: ScheduleTime = new ScheduleTime();
+              return Object.assign(st, t);
+            });
+            timeByDiv.set(division, times);
+          });
+
+          this.timesByDivision.next(timeByDiv);
+        }
+      },
+      {buffer: false, escape: false}
+    );
+  }
+
+  public getCabins(): Promise<string[]> {
+    return new Promise((resolve, reject) => {
+      Visualforce.remoting.Manager.invokeAction(
+        'IEE_CampScheduleBatchController.getCampCabins',
+        json => {
+          if (json) {
+            resolve(JSON.parse(json));
+          } else {
+            reject(new Error('Failed to get cabins'));
+          }
+        },
+        {buffer: false, escape: false}
+      );
+    });
+  }
+
+  public getCampTerms(): Promise<Map<string, string>> {
+    return new Promise((resolve, reject) => {
+      Visualforce.remoting.Manager.invokeAction(
+        'IEE_CampScheduleBatchController.getCampTerms',
+        json => {
+          if (json) {
+            const j = JSON.parse(json);
+            const m: Map<string, string> = new Map<string, string>();
+            for (const k of Object.keys(j)) {
+              m.set(k, j[k]);
+            }
+            resolve(m);
+          } else {
+            reject(new Error('Failed to get terms'));
+          }
+        },
+        {buffer: false, escape: false}
+      );
+    });
+  }
+
+  public getArrivalWeeksForTerm(term: string): Promise<string[]> {
+    return new Promise((resolve, reject) => {
+      Visualforce.remoting.Manager.invokeAction(
+        'IEE_CampScheduleBatchController.getArrivalWeekDatesForTerm',
+        term,
+        json => {
+          if (json) {
+            resolve(JSON.parse(json));
+          } else {
+            reject(new Error('Failed to get arrival weeks'));
+          }
+        },
+        {buffer: false, escape: false}
+      );
+    });
   }
 }

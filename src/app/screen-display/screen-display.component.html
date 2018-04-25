@@ -9,20 +9,22 @@
   </div>
   <div class="col-xs-12 schedules">
     <ul class="nav nav-tabs">
-      <li *ngFor="let term of terms; let i = index"
-          [ngClass]="{'active': (i === activeTermIndex)}">
-        <a data-toggle="tab" [routerLink]="['../', i]">{{term}}</a>
+      <li *ngFor="let session of sessions; let i = index"
+          [ngClass]="{'active': (i === activeSessionIndex)}">
+        <a data-toggle="tab" [routerLink]="['../', i]">{{session}}</a>
       </li>
     </ul>
-    <div class="matrix well" id="matrixWell" *ngIf="activeTerm && activeTerm.toLowerCase().includes('1 week') === false">
+    <div class="matrix well" id="matrix-well" *ngIf="activeSession && activeSession.toLowerCase().includes('1 week') === false">
       <div>
-        <h3>{{student.majorBySessionName[activeTerm]}}</h3>
+        <h3>{{student.majorBySessionName[activeSession]}}</h3>
       </div>
-      <iee-matrix [termSchedule]="activeSchedule"></iee-matrix>
+      <iee-matrix [sessionSchedule]="activeSchedule"
+                  [timesByDivision]="timesByDivision"
+                  [division]="student.division"></iee-matrix>
     </div>
-    <div class="matrix well" id="instituteWell" *ngIf="activeTerm && activeTerm.toLowerCase().includes('1 week')">
+    <div class="matrix well" id="institute-well" *ngIf="activeSession && activeSession.toLowerCase().includes('1 week')">
       <div>
-        {{student.majorBySessionName[activeTerm]}}
+        {{student.majorBySessionName[activeSession]}}
       </div>
       <embed *ngIf="instituteSchedule && instituteSchedule.pdfLink"
              [src]="instituteSchedule.pdfLink | safeUrl"

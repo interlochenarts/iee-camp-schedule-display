@@ -1,5 +1,7 @@
 @media print {
-  .buttons {
+  .buttons,
+  .institute-schedule {
     display: none;
   }
 }
+/*# sourceMappingURL=print-display.component.css.map */

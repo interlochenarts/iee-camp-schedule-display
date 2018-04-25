@@ -1,13 +1,15 @@
+.flex-row {
+  display: flex;
+}
 .scheduleName {
+  font-size: 1.7em;
+}
+.info-row {
   font-size: 1.2em;
 }
-.school {
-  font-size: 1.1em;
-  font-weight: bold;
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-.scheduleName {
-  font-size: 1.1em;
-}
-.term {
-  font-size: 1.1em;
-}
+/*# sourceMappingURL=print-header.component.css.map */

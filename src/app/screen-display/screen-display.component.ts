@@ -1,12 +1,13 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, ParamMap} from '@angular/router';
-import {Student} from '../classes/Student';
+import {Student} from '../_classes/Student';
 import {ScheduleReaderService} from '../services/schedule-reader.service';
-import {ScheduleCourse} from '../classes/ScheduleCourse';
+import {ScheduleCourse} from '../_classes/ScheduleCourse';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/observable/combineLatest';
-import {InstituteSchedule} from '../classes/InstituteSchedule';
+import {InstituteSchedule} from '../_classes/InstituteSchedule';
 import {DomSanitizer, SafeUrl} from '@angular/platform-browser';
+import {ScheduleTime} from '../_classes/ScheduleTime';
 
 @Component({
   selector: 'iee-screen-display',
@@ -16,12 +17,13 @@ import {DomSanitizer, SafeUrl} from '@angular/platform-browser';
 export class ScreenDisplayComponent implements OnInit {
   student: Student = new Student();
   educationId = '';
-  schedules: Map<string, ScheduleCourse[]> = new Map<string, ScheduleCourse[]>();
-  activeTermIndex = 0;
-  activeTerm = '';
+  schedulesBySession: Map<string, ScheduleCourse[]> = new Map<string, ScheduleCourse[]>();
+  activeSessionIndex = 0;
+  activeSession = '';
   activeSchedule: ScheduleCourse[] = [];
   instituteSchedule: InstituteSchedule = null;
-  terms: string[] = [];
+  sessions: string[] = [];
+  timesByDivision = new Map<string, ScheduleTime[]>();
 
   constructor(private activatedRoute: ActivatedRoute, private scheduleReader: ScheduleReaderService, private sanitizer: DomSanitizer) {
   }
@@ -30,21 +32,26 @@ export class ScreenDisplayComponent implements OnInit {
     this.activatedRoute.paramMap.subscribe((p: ParamMap) => {
       this.scheduleReader.educationId.next(p.get('educationId'));
       this.educationId = p.get('educationId');
-      this.activeTermIndex = +p.get('termIndex');
+      this.activeSessionIndex = +p.get('sessionIndex');
 
       const scheduleObs = this.scheduleReader.schedule.asObservable();
-      const termsObs = this.scheduleReader.terms.asObservable();
+      const sessionsObs = this.scheduleReader.sessions.asObservable();
       const instituteObs = this.scheduleReader.instituteSchedule.asObservable();
 
-      Observable.combineLatest(scheduleObs, termsObs, instituteObs).subscribe(obs => {
-        [this.schedules, this.terms, this.instituteSchedule] = obs;
-        this.activeTerm = this.terms[this.activeTermIndex];
-        this.activeSchedule = this.schedules.get(this.activeTerm);
+      Observable.combineLatest(scheduleObs, sessionsObs, instituteObs).subscribe(obs => {
+        [this.schedulesBySession, this.sessions, this.instituteSchedule] = obs;
+        this.activeSession = this.sessions[this.activeSessionIndex];
+        this.activeSchedule = this.schedulesBySession.get(this.activeSession);
       });
 
       this.scheduleReader.student.asObservable().subscribe(s => {
         this.student = s;
       });
+    });
+
+    // load the map of schedule times based on the possible student divisions
+    this.scheduleReader.timesByDivision.asObservable().subscribe(value => {
+      this.timesByDivision = value;
     });
   }
 }

@@ -5,14 +5,22 @@
                                    aria-hidden="true"></i> View as calendar</a>
     <a class="btn btn-default"
        href="javascript:void(0);" (click)="onPrint()"><i class="fa fa-print"
-                                                              aria-hidden="true"></i> Print</a>
+                                                         aria-hidden="true"></i> Print</a>
+
+    <a *ngIf="instituteSchedule"
+       class="btn btn-default"
+       [href]="instituteSchedule.pdfLink | safeUrl"
+       target="_blank"><i class="fa fa-print"
+                          aria-hidden="true"></i> Printable Institute Schedule</a>
   </div>
 </div>
 <div class="row" *ngFor="let session of sessions">
   <div class="col-print-12 col-xs-12">
-    <div class="well margin-top-sm">
+    <div class="well margin-top-sm" *ngIf="session.toLowerCase().includes('1 week') === false">
       <iee-print-header [student]="student" [session]="session"></iee-print-header>
-      <iee-matrix [termSchedule]="getScheduleBySessionName(session)"></iee-matrix>
+      <iee-matrix [sessionSchedule]="getScheduleBySessionName(session)"
+                  [timesByDivision]="timesByDivision"
+                  [division]="student.division"></iee-matrix>
     </div>
   </div>
 </div>
