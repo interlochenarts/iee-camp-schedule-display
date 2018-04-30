@@ -24,8 +24,10 @@
                     [timesByDivision]="timesByDivision"
                     [division]="student.division"></iee-matrix>
       </div>
-      <div ngClass="isMobile">
-        <iee-list-view></iee-list-view>
+      <div *ngIf="isMobile">
+        <iee-list-view [sessionSchedule]="activeSchedule"
+                       [timesByDivision]="timesByDivision"
+                       [division]="student.division"></iee-list-view>
       </div>
     </div>
     <div class="matrix well" id="institute-well"

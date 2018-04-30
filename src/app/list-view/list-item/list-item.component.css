@@ -1,0 +1,11 @@
+.period {
+  background: #a7e6fb;
+  border-top: 1px solid white;
+  text-align: center;
+}
+.course-info {
+  border-top: 1px solid white;
+}
+.course-container {
+  line-height: 2;
+}

@@ -12,6 +12,7 @@ import {SafeUrlPipe} from './_pipes/safe-url.pipe';
 import {BatchDisplayComponent} from './batch-display/batch-display.component';
 import {SafeStylePipe} from './_pipes/safe-style.pipe';
 import { ListViewComponent } from './list-view/list-view.component';
+import { ListItemComponent } from './list-view/list-item/list-item.component';
 
 const appRoutes: Routes = [
   {path: 'batch', component: BatchDisplayComponent},
@@ -38,6 +39,7 @@ const appRoutes: Routes = [
     BatchDisplayComponent,
     SafeStylePipe,
     ListViewComponent,
+    ListItemComponent,
   ],
   imports: [
     BrowserModule,
