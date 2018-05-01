@@ -1,4 +1,4 @@
-import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {Component, Input, OnChanges, OnInit} from '@angular/core';
 import {ScheduleTime} from '../_classes/ScheduleTime';
 import {ScheduleCourse} from '../_classes/ScheduleCourse';
 
@@ -13,6 +13,7 @@ export class ListViewComponent implements OnInit, OnChanges {
   @Input() timesByDivision: Map<string, ScheduleTime[]>;
 
   scheduleByDay: Map<number, ScheduleCourse[]> = new Map<number, ScheduleCourse[]>();
+  firstPeriodByDay: Map<number, number> = new Map<number, number>();
 
   dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
@@ -46,7 +47,22 @@ export class ListViewComponent implements OnInit, OnChanges {
           this.scheduleByDay.set(day, courses);
         });
       });
+
+      this.updateFirstPeriodByDay();
     }
   }
 
+  updateFirstPeriodByDay(): void {
+    this.firstPeriodByDay = new Map<number, number>();
+    // for (const entry of this.scheduleByDay.entries()) {
+    Array.from(this.scheduleByDay.keys()).forEach(day => {
+      const schedule = this.scheduleByDay.get(day);
+      schedule.forEach((course, index) => {
+        const period = this.firstPeriodByDay.get(day);
+        if (!period || index < period) {
+          this.firstPeriodByDay.set(day, index);
+        }
+      });
+    });
+  }
 }

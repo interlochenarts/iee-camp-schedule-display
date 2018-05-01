@@ -13,6 +13,7 @@ export class ListItemComponent implements OnInit, OnChanges {
   @Input() day: number;
   @Input() division: string;
   @Input() timesByDivision: Map<string, ScheduleTime[]>;
+  @Input() firstPeriod: number;
   times: ScheduleTime[];
 
   constructor() { }
