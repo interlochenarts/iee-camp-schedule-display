@@ -5,8 +5,8 @@
   <div class="course-info col-xs-9" *ngIf="course">
     <div class="row">
       <div class="col-xs-12 col-sm-6 col-md-4">{{course.courseName}}</div>
-      <div class="col-xs-12 col-sm-6 col-md-4" *ngIf="course.instructor">{{course.instructor}}</div>
       <div class="col-xs-12 col-sm-12 col-md-4" *ngIf="course.location">{{course.location}}</div>
+      <div class="col-xs-12 col-sm-6 col-md-4" *ngIf="course.instructor">{{course.instructor}}</div>
     </div>
   </div>
   <div class="course-info col-xs-9" *ngIf="!course">
