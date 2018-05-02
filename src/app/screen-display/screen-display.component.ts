@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, HostListener} from '@angular/core';
 import {ActivatedRoute, ParamMap} from '@angular/router';
 import {Student} from '../_classes/Student';
 import {ScheduleReaderService} from '../services/schedule-reader.service';
@@ -24,11 +24,25 @@ export class ScreenDisplayComponent implements OnInit {
   instituteSchedule: InstituteSchedule = null;
   sessions: string[] = [];
   timesByDivision = new Map<string, ScheduleTime[]>();
+  innerWidth: number;
+
+  public get isMobile(): boolean {
+    return this.innerWidth < 1200;
+  }
 
   constructor(private activatedRoute: ActivatedRoute, private scheduleReader: ScheduleReaderService, private sanitizer: DomSanitizer) {
   }
 
+  // detect changes to the client window size
+  @HostListener('window:resize', ['$event'])
+  onResize(event) {
+    this.innerWidth = window.innerWidth;
+  }
+
   ngOnInit() {
+    // set the client width based on window width
+    this.innerWidth = window.innerWidth;
+
     this.activatedRoute.paramMap.subscribe((p: ParamMap) => {
       this.scheduleReader.educationId.next(p.get('educationId'));
       this.educationId = p.get('educationId');

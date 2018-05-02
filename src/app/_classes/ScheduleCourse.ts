@@ -75,6 +75,7 @@ export class ScheduleCourse {
     if (this.scheduleView) {
       const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
+      // Map day (number) -> period list (numbers)
       const viewMap: Map<number, number[]> = new Map<number, number[]>();
       const schedules: string[] = this.scheduleView.split(/\),/);
 

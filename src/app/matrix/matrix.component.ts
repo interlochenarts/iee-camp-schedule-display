@@ -88,7 +88,7 @@ export class MatrixComponent implements OnInit, OnChanges {
     return 'grid-column: ' + (index + 1) + ' / ' + (index + 1) + ';';
   }
 
-  constructor(private renderer: Renderer2, private scheduleReaderService: ScheduleReaderService) {
+  constructor(private renderer: Renderer2) {
   }
 
   ngOnInit() {
