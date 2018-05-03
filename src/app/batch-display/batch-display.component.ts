@@ -44,9 +44,9 @@ export class BatchDisplayComponent implements OnInit {
       // sort keys based on term dates
       keys.sort((a: string, b: string) => {
         if (termsById.get(a) < termsById.get(b)) {
-          return -1;
-        } else if (termsById.get(a) > termsById.get(b)) {
           return 1;
+        } else if (termsById.get(a) > termsById.get(b)) {
+          return -1;
         } else {
           return 0;
         }
