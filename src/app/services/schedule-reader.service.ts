@@ -109,10 +109,11 @@ export class ScheduleReaderService {
     );
   }
 
-  public getCabins(): Promise<string[]> {
+  public getCabins(termId: string): Promise<string[]> {
     return new Promise((resolve, reject) => {
       Visualforce.remoting.Manager.invokeAction(
         'IEE_CampScheduleBatchController.getCampCabins',
+        termId,
         json => {
           if (json) {
             resolve(JSON.parse(json));

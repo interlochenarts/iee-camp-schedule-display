@@ -30,14 +30,6 @@ export class BatchDisplayComponent implements OnInit {
       this.alt = true;
     }
 
-    this.scheduleReaderService.getCabins().then((cabins: string[]) => {
-      cabins.forEach(cabin => {
-        // create a select item and add to cabin select
-        const selectItem: HTMLOptionElement = new Option(cabin, cabin);
-        this.cabinSelect.nativeElement.add(selectItem);
-      });
-    });
-
     this.scheduleReaderService.getCampTerms().then((termsById: Map<string, string>) => {
       const keys: Array<string> = Array.from(termsById.keys());
 
@@ -52,17 +44,14 @@ export class BatchDisplayComponent implements OnInit {
         }
       });
 
+      this.termSelect.nativeElement.length = 0;
       keys.forEach(id => {
         const selectItem: HTMLOptionElement = new Option(termsById.get(id), id);
         this.termSelect.nativeElement.add(selectItem);
       });
 
-      this.scheduleReaderService.getArrivalWeeksForTerm(keys[0]).then((arrivalWeeks: string[]) => {
-        arrivalWeeks.forEach(wk => {
-          const selectItem: HTMLOptionElement = new Option(wk, wk);
-          this.arrivalSelect.nativeElement.add(selectItem);
-        });
-      });
+      this.updateArrivalWeeksByTerm(keys[0]);
+      this.updateCabinsByTerm(keys[0]);
     });
 
     // load the map of schedule times based on the possible student divisions
@@ -72,10 +61,27 @@ export class BatchDisplayComponent implements OnInit {
   }
 
   onChangeTerm(): void {
-    this.scheduleReaderService.getArrivalWeeksForTerm(this.termSelect.nativeElement.value).then((arrivalWeeks: string[]) => {
+    this.updateArrivalWeeksByTerm(this.termSelect.nativeElement.value);
+    this.updateCabinsByTerm(this.termSelect.nativeElement.value);
+  }
+
+  updateArrivalWeeksByTerm(termId: string): void {
+    this.arrivalSelect.nativeElement.length = 1;
+    this.scheduleReaderService.getArrivalWeeksForTerm(termId).then((arrivalWeeks: string[]) => {
       arrivalWeeks.forEach(wk => {
         const selectItem: HTMLOptionElement = new Option(wk, wk);
         this.arrivalSelect.nativeElement.add(selectItem);
+      });
+    });
+  }
+
+  updateCabinsByTerm(termId: string): void {
+    this.cabinSelect.nativeElement.length = 1;
+    this.scheduleReaderService.getCabins(termId).then((cabins: string[]) => {
+      cabins.forEach(cabin => {
+        // create a select item and add to cabin select
+        const selectItem: HTMLOptionElement = new Option(cabin, cabin);
+        this.cabinSelect.nativeElement.add(selectItem);
       });
     });
   }
