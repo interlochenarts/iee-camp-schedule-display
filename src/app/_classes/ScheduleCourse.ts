@@ -1,5 +1,5 @@
 export class ScheduleCourse {
-  public courseName: string;
+  public _courseName: string;
   public instructor: string;
   public location: string;
   public scheduleView: string;
@@ -24,6 +24,18 @@ export class ScheduleCourse {
     }
 
     return scheduleCourse;
+  }
+
+  set courseName(cn: string) {
+    this._courseName = cn;
+  }
+
+  get courseName(): string {
+    if (this._courseName.startsWith('JR') || this._courseName.startsWith('INT') || this._courseName.startsWith('HS')) {
+      return this._courseName.substr(this._courseName.indexOf(' '));
+    } else {
+      return this._courseName;
+    }
   }
 
   constructor(courseName: string) {
