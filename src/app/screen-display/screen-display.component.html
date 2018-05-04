@@ -18,7 +18,7 @@
          *ngIf="activeSession && activeSession.toLowerCase().includes('1 week') === false">
       <div *ngIf="!isMobile">
         <div>
-          <h3>{{student.majorBySessionName[activeSession]}}</h3>
+          <h3>{{student.getMajorBySessionName(activeSession)}}</h3>
         </div>
         <iee-matrix [sessionSchedule]="activeSchedule"
                     [timesByDivision]="timesByDivision"
@@ -33,7 +33,7 @@
     <div class="matrix well" id="institute-well"
          *ngIf="activeSession && activeSession.toLowerCase().includes('1 week')">
       <div>
-        {{student.majorBySessionName[activeSession]}}
+        {{student.getMajorBySessionName(activeSession)}}
       </div>
       <embed *ngIf="instituteSchedule && instituteSchedule.pdfLink"
              [src]="instituteSchedule.pdfLink | safeUrl"

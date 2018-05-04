@@ -18,7 +18,7 @@ export class PrintHeaderComponent implements OnInit {
 
   getMajorName(): string {
     if (this.student.majorBySessionName) {
-      return this.student.majorBySessionName[this.session];
+      return this.student.getMajorBySessionName(this.session);
     }
 
     return '';

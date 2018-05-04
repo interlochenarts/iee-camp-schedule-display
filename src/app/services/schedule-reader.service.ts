@@ -45,6 +45,7 @@ export class ScheduleReaderService {
             });
 
             this.schedule.next(courseMap);
+            this.sessions.next(Array.from(courseMap.keys()).sort());
           }
         },
         {buffer: false, escape: false}
@@ -78,7 +79,6 @@ export class ScheduleReaderService {
             const j = JSON.parse(json);
             const s: Student = Student.createFromJson(j);
             this.student.next(s);
-            this.sessions.next(Object.keys(s.majorBySessionName));
           }
         },
         {buffer: false, escape: false}
