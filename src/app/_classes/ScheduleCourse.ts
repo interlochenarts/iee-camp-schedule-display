@@ -18,7 +18,6 @@ export class ScheduleCourse {
       scheduleCourse.scheduleView = scheduleCourse.scheduleNotesArray[0];
       scheduleCourse.setScheduleViewMap();
       scheduleCourse.setPracticeHourMap();
-      scheduleCourse.practiceBuilding = 'PB 7';
     } else {
       scheduleCourse.setScheduleViewMap();
     }
@@ -80,7 +79,6 @@ export class ScheduleCourse {
     } else {
       this.practiceHourMap = new Map<number, number[]>();
     }
-
   }
 
   setScheduleViewMap(): void {
