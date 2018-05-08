@@ -15,7 +15,7 @@ export class ScheduleCourse {
     if (scheduleCourse.courseName.toLowerCase().includes('private')) {
       scheduleCourse.instructor = scheduleCourse.privateLessonTeacher;
       scheduleCourse.location = scheduleCourse.privateLessonLocation;
-      scheduleCourse.scheduleView = scheduleCourse.scheduleNotesArray[0];
+      scheduleCourse.scheduleView = (scheduleCourse.scheduleNotesArray[0] || scheduleCourse.scheduleView);
       scheduleCourse.setScheduleViewMap();
       scheduleCourse.setPracticeHourMap();
     } else {
@@ -44,7 +44,7 @@ export class ScheduleCourse {
   }
 
   get scheduleNotesArray(): string[] {
-    if (this.scheduleNotes && this.courseName.toLowerCase().includes('private')) {
+    if (this.scheduleNotes && this.scheduleNotes.includes('|') && this.courseName.toLowerCase().includes('private')) {
       return this.scheduleNotes.split('|');
     }
 
