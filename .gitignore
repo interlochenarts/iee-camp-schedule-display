@@ -45,3 +45,4 @@ Thumbs.db
 
 *.zip
 *.css.map
+/Salesforce/src/staticresources/IEE_CampScheduleAngular.resource
