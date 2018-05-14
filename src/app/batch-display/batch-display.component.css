@@ -22,6 +22,21 @@
   color: white;
   text-decoration: none;
 }
+.flex-row {
+  display: flex;
+}
+.student-count {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px;
+}
+.alternative {
+  font-family: Papyrus, fantasy;
+}
+.alternative > h1 {
+  font-family: Papyrus, fantasy;
+}
 #filterContainer {
   position: relative;
 }

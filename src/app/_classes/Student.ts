@@ -5,6 +5,7 @@ export class Student {
   division: string;
   term: string;
   school: string;
+  id: string;
   majorBySessionName: any;
 
   public static createFromJson(json: any): Student {

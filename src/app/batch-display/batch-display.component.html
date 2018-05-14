@@ -66,14 +66,26 @@
         </div>
       </fieldset>
     </div>
+  </div>
+  <div class="row flex-row">
+    <div class="col-xs-12 col-md-6 student-count"
+         [ngClass]="{'alternative': alt}">
+      <h1 *ngIf="schedules && schedules.length > 0">Students found: {{uniqueStudentCount}}</h1>
+    </div>
 
-    <div class="col-xs-12 text-right">
+    <div class="col-xs-12 col-md-6 text-right">
       <a class="btn btn-default" (click)="getBatchSchedule()" *ngIf="alt === false">
         <i class="fa fa-star-half" aria-hidden="true"></i> Get Schedules <i class="fa fa-star-half fa-flip-horizontal"
                                                                             aria-hidden="true"></i></a>
+      <a class="btn btn-default" (click)="getBatchSchedule()"
+         *ngIf="alt === false && schedules && schedules.length > 0">
+        <i class="fa fa-print" aria-hidden="true"></i> Print</a>
+
       <a class="tButton" (click)="getBatchSchedule()" *ngIf="alt === true">
         <i class="fa fa-star-half" aria-hidden="true"></i> Get Schedules <i class="fa fa-star-half fa-flip-horizontal"
                                                                             aria-hidden="true"></i></a>
+      <a class="tButton" (click)="getBatchSchedule()" *ngIf="alt === true && schedules && schedules.length > 0">
+        <i class="fa fa-rocket" aria-hidden="true"></i> Print</a>
     </div>
   </div>
 </div>

@@ -25,6 +25,19 @@ export class BatchDisplayComponent implements OnInit {
   constructor(private router: Router, private scheduleReaderService: ScheduleReaderService) {
   }
 
+  get uniqueStudentCount(): number {
+    if (this.schedules && this.schedules.length > 0) {
+      const ids: Set<string> = new Set<string>();
+      this.schedules.forEach((bs: BatchSchedule) => {
+        ids.add(bs.student.id);
+      });
+
+      return ids.size;
+    } else {
+      return 0;
+    }
+  }
+
   ngOnInit() {
     if (this.router.url.endsWith('/c')) {
       this.alt = true;
@@ -169,5 +182,9 @@ export class BatchDisplayComponent implements OnInit {
         }
       }
     });
+  }
+
+  print(): void {
+    window.print();
   }
 }
