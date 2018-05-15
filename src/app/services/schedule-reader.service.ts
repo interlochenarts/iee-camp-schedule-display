@@ -62,7 +62,6 @@ export class ScheduleReaderService {
           if (json !== null) {
             const j = JSON.parse(json);
             this.instituteSchedule.next(InstituteSchedule.createFromJson(j));
-            console.log(this.instituteSchedule.getValue());
           }
         },
         {buffer: false, escape: false}

@@ -35,9 +35,9 @@
       <div>
         {{student.getMajorBySessionName(activeSession)}}
       </div>
-      <embed *ngIf="instituteSchedule && instituteSchedule.pdfLink"
-             [src]="instituteSchedule.pdfLink | safeUrl"
-             width="100%" height="600" alt="pdf" pluginspage="http://www.adobe.com/products/acrobat/readstep2.html">
+      <object *ngIf="instituteSchedule && instituteSchedule.pdfLink" [data]="instituteSchedule.pdfLink | safeUrl" type="application/pdf" width="100%" height="600">
+        alt : <a [href]="instituteSchedule.pdfLink | safeUrl">Institute Schedule</a>
+      </object>
     </div>
   </div>
 </div>

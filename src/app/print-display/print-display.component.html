@@ -7,7 +7,7 @@
        href="javascript:void(0);" (click)="onPrint()"><i class="fa fa-print"
                                                          aria-hidden="true"></i> Print</a>
 
-    <a *ngIf="instituteSchedule"
+    <a *ngIf="instituteSchedule && instituteSchedule.pdfLink"
        class="btn btn-default"
        [href]="instituteSchedule.pdfLink | safeUrl"
        target="_blank"><i class="fa fa-print"
