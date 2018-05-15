@@ -3,8 +3,9 @@
     display: none;
   }
 }
-.tButton {
-  background-image: url(//smithmd.github.io/calendar-react/cdn/tet.png);
+.tButton,
+.lButton,
+.blButton {
   display: inline-block;
   width: 206px;
   height: 137px;
@@ -14,13 +15,49 @@
   padding-top: 90px;
   text-decoration: none;
   cursor: pointer;
+  text-shadow: 2px 2px 5px #333;
 }
 .tButton:link,
+.lButton:link,
+.blButton:link,
 .tButton:hover,
+.lButton:hover,
+.blButton:hover,
 .tButton:visited,
-.tButton:active {
+.lButton:visited,
+.blButton:visited,
+.tButton:active,
+.lButton:active,
+.blButton:active {
   color: white;
   text-decoration: none;
+}
+.tButton {
+  background-image: url(//smithmd.github.io/calendar-react/cdn/tet-T.png);
+}
+.lButton {
+  background-image: url(//smithmd.github.io/calendar-react/cdn/tet-L.png);
+}
+.blButton {
+  background-image: url(//smithmd.github.io/calendar-react/cdn/tet-bL.png);
+}
+.flex-row {
+  display: flex;
+}
+.student-count {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px;
+}
+div.alt {
+  font-family: Papyrus, fantasy;
+}
+div.alt > h1 {
+  font-family: Papyrus, fantasy;
+}
+legend.alt {
+  font-family: "Comic Sans MS", "Comic Sans", sans-serif;
 }
 #filterContainer {
   position: relative;

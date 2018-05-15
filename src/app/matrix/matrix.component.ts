@@ -259,6 +259,11 @@ export class MatrixComponent implements OnInit, OnChanges {
     div.style['grid-column'] = (dayIndex + startingOffset) + ' / ' + (dayIndex + endingOffset);
     div.style.padding = '5px';
     div.style.borderTop = '1px solid gray';
+    // INFO: centers the course info in the grid cell... temporarily removed because it might introduce confusion
+    // div.style.display = 'flex';
+    // div.style.flexDirection = 'column';
+    // div.style.justifyContent = 'center';
+    // div.style.alignContent = 'center';
     if (this.lastPeriodInRange(viewMap, period, day) === this.periodNumbers[this.periodNumbers.length - 1]) {
       div.style.borderBottom = '1px solid gray';
     }
