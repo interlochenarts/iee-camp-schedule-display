@@ -6,7 +6,6 @@ import {ScheduleCourse} from '../_classes/ScheduleCourse';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/observable/combineLatest';
 import {InstituteSchedule} from '../_classes/InstituteSchedule';
-import {DomSanitizer, SafeUrl} from '@angular/platform-browser';
 import {ScheduleTime} from '../_classes/ScheduleTime';
 
 @Component({
@@ -30,7 +29,7 @@ export class ScreenDisplayComponent implements OnInit {
     return this.innerWidth < 1200;
   }
 
-  constructor(private activatedRoute: ActivatedRoute, private scheduleReader: ScheduleReaderService, private sanitizer: DomSanitizer) {
+  constructor(private activatedRoute: ActivatedRoute, private scheduleReader: ScheduleReaderService) {
   }
 
   // detect changes to the client window size

@@ -15,7 +15,7 @@ export class ScheduleReaderService {
   public educationId = new BehaviorSubject<string>(null);
   public sessions = new BehaviorSubject<string[]>([]);
   public student = new BehaviorSubject<Student>(new Student());
-  public instituteSchedule = new BehaviorSubject<InstituteSchedule>(new InstituteSchedule());
+  public instituteSchedule = new BehaviorSubject<InstituteSchedule>(null);
   public timesByDivision = new BehaviorSubject<Map<string, ScheduleTime[]>>(new Map<string, ScheduleTime[]>());
 
   constructor() {
@@ -62,6 +62,7 @@ export class ScheduleReaderService {
           if (json !== null) {
             const j = JSON.parse(json);
             this.instituteSchedule.next(InstituteSchedule.createFromJson(j));
+            console.log(this.instituteSchedule.getValue());
           }
         },
         {buffer: false, escape: false}
