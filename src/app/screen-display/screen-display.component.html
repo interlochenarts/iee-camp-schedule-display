@@ -4,6 +4,7 @@
 <div class="row">
   <div class="col-xs-12 text-right buttons">
     <a class="btn btn-default"
+       *ngIf="displayPrintView()"
        [routerLink]="['../','print']"><i class="fa fa-print"
                                          aria-hidden="true"></i> Printable View</a>
   </div>

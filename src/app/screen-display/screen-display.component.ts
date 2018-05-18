@@ -67,4 +67,8 @@ export class ScreenDisplayComponent implements OnInit {
       this.timesByDivision = value;
     });
   }
+
+  displayPrintView(): boolean {
+    return !(this.sessions && this.sessions.length === 1 && this.sessions[0] === '1 week');
+  }
 }
