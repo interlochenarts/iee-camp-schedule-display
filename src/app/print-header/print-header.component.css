@@ -12,4 +12,6 @@
   align-items: center;
   justify-content: center;
 }
-/*# sourceMappingURL=print-header.component.css.map */
+.school img {
+  height: 100px;
+}
