@@ -37,7 +37,7 @@
         {{student.getMajorBySessionName(activeSession)}}
       </div>
       <object *ngIf="instituteSchedule && instituteSchedule.pdfLink" [data]="instituteSchedule.pdfLink | safeUrl" type="application/pdf" width="100%" height="600">
-        alt : <a [href]="instituteSchedule.pdfLink | safeUrl">Institute Schedule</a>
+        <a [href]="instituteSchedule.pdfLink | safeUrl" target="_blank">Download Institute Schedule</a>
       </object>
     </div>
   </div>
