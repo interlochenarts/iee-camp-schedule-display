@@ -90,7 +90,16 @@
   </div>
 </div>
 
-<div *ngIf="loadingBatch"><i class="fa fa-fw fa-spinner fa-pulse" aria-hidden="true"></i> Loading...</div>
+<div *ngIf="loadingBatch && alt === false">
+  <i class="fa fa-fw fa-spinner fa-pulse" aria-hidden="true"></i> Loading...
+</div>
+<div *ngIf="loadingBatch && alt === true"><i class="fa fa-fw fa-spin fa-star fa-2x" aria-hidden="true"></i>
+  <i class="fa fa-fw fa-spin fa-bath fa-2x" aria-hidden="true"></i>
+  <i class="fa fa-fw fa-spin fa-eye fa-2x" aria-hidden="true"></i> Loading...
+  <i class="fa fa-fw fa-spin fa-recycle fa-2x" aria-hidden="true"></i>
+  <i class="fa fa-fw fa-spin fa-coffee fa-2x" aria-hidden="true"></i>
+  <i class="fa fa-fw fa-spin fa-bed fa-2x" aria-hidden="true"></i>
+</div>
 
 <div class="row" *ngFor="let studentSchedule of schedules">
   <div class="col-print-12 col-xs-12">
