@@ -1,0 +1,14 @@
+<div *ngFor="let day of sortedDays" class="list-container">
+  <div class="row">
+    <div class="day-name col-xs-12">{{dayNames[day]}}</div>
+  </div>
+  <div class="row">
+    <iee-list-item *ngFor="let c of scheduleByDay.get(day); let p = index"
+                   [day]="day"
+                   [division]="division"
+                   [timesByDivision]="timesByDivision"
+                   [course]="c"
+                   [firstPeriod]="firstPeriodByDay.get(day)"
+                   [period]="p"></iee-list-item>
+  </div>
+</div>

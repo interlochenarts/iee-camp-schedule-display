@@ -1,3 +1,114 @@
-<p>
-  batch-display works!
-</p>
+<div class="well margin-top-sm" id="filterContainer" [ngClass]="{'dBg': alt}">
+  <div class="row">
+
+    <div class="col-xs-12 col-md-6">
+      <fieldset>
+        <legend [ngClass]="{'alt': alt}">Filter By:</legend>
+
+        <div class="form-group">
+          <label for="termFilter">Term:</label>
+          <select #term class="form-control" id="termFilter" (change)="onChangeTerm()">
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="cabinFilter">Cabin:</label>
+          <select multiple #cabin class="form-control" id="cabinFilter">
+            <option value="">Show All</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="divisionFilter">Division:</label>
+          <select #division class="form-control" id="divisionFilter">
+            <option value="">Show All</option>
+            <option value="Junior">Junior</option>
+            <option value="Intermediate">Intermediate</option>
+            <option value="High School">High School</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="housingDivisionFilter">Housing Division:</label>
+          <select #housingDivision class="form-control" id="housingDivisionFilter">
+            <option value="">Show All</option>
+            <option value="JB">Junior Boys</option>
+            <option value="JG">Junior Girls</option>
+            <option value="IB">Intermediate Boys</option>
+            <option value="IGL">Intermediate Girls Lakeside</option>
+            <option value="IGM">Intermediate Girls Meadow</option>
+            <option value="HSB">High School Boys</option>
+            <option value="HSG">High School Girls</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="arrivalDateFilter">Arrival Date:</label>
+          <select #arrival class="form-control" id="arrivalDateFilter">
+            <option value="">Show All</option>
+          </select>
+        </div>
+      </fieldset>
+    </div>
+
+    <div class="col-xs-12 col-md-6">
+      <fieldset>
+        <legend [ngClass]="{'alt': alt}">Sort By:</legend>
+        <div class="form-group">
+          <select #sortField
+                  class="form-control"
+                  (change)="onSortSchedules($event, sortField.value)">
+            <option value="cabin">Cabin</option>
+            <option value="division">Division</option>
+            <option value="lastName" selected>Last Name</option>
+            <option value="housing">Housing Division</option>
+          </select>
+        </div>
+      </fieldset>
+    </div>
+  </div>
+  <div class="row flex-row">
+    <div class="col-xs-12 col-md-6 student-count"
+         [ngClass]="{'alt': alt}">
+      <h1 *ngIf="schedules && schedules.length > 0">Students found: {{uniqueStudentCount}}</h1>
+    </div>
+
+    <div class="col-xs-12 col-md-6 text-right">
+      <a class="btn btn-default" (click)="getBatchSchedule()" *ngIf="alt === false">
+        <i class="fa fa-star-half" aria-hidden="true"></i> Get Schedules <i class="fa fa-star-half fa-flip-horizontal"
+                                                                            aria-hidden="true"></i></a>
+      <a class="btn btn-default" (click)="print()"
+         *ngIf="alt === false && schedules && schedules.length > 0">
+        <i class="fa fa-print" aria-hidden="true"></i> Print</a>
+
+      <a class="tButton" (click)="getBatchSchedule()" *ngIf="alt === true">
+        <i class="fa fa-star-half" aria-hidden="true"></i> Get Schedules <i class="fa fa-star-half fa-flip-horizontal"
+                                                                            aria-hidden="true"></i></a>
+      <a class="blButton" (click)="print()" *ngIf="alt === true && schedules && schedules.length > 0">
+        <i class="fa fa-rocket" aria-hidden="true"></i> Print</a>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="loadingBatch && alt === false">
+  <i class="fa fa-fw fa-spinner fa-pulse" aria-hidden="true"></i> Loading...
+</div>
+<div *ngIf="loadingBatch && alt === true"><i class="fa fa-fw fa-spin fa-star fa-2x" aria-hidden="true"></i>
+  <i class="fa fa-fw fa-spin fa-bath fa-2x" aria-hidden="true"></i>
+  <i class="fa fa-fw fa-spin fa-eye fa-2x" aria-hidden="true"></i> Loading...
+  <i class="fa fa-fw fa-spin fa-recycle fa-2x" aria-hidden="true"></i>
+  <i class="fa fa-fw fa-spin fa-coffee fa-2x" aria-hidden="true"></i>
+  <i class="fa fa-fw fa-spin fa-bed fa-2x" aria-hidden="true"></i>
+</div>
+
+<div class="row" *ngFor="let studentSchedule of schedules">
+  <div class="col-print-12 col-xs-12">
+    <div class="well margin-top-sm">
+      <iee-print-header [student]="studentSchedule.student"
+                        [session]="studentSchedule.campSession"></iee-print-header>
+      <iee-matrix [sessionSchedule]="studentSchedule.schedule"
+                  [division]="studentSchedule.student.division"
+                  [timesByDivision]="timesByDivision"></iee-matrix>
+    </div>
+  </div>
+</div>

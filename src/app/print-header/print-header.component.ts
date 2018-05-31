@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Student} from '../classes/Student';
+import {Student} from '../_classes/Student';
 
 @Component({
   selector: 'iee-print-header',
@@ -18,7 +18,7 @@ export class PrintHeaderComponent implements OnInit {
 
   getMajorName(): string {
     if (this.student.majorBySessionName) {
-      return this.student.majorBySessionName[this.session];
+      return this.student.getMajorBySessionName(this.session);
     }
 
     return '';

@@ -1,9 +1,13 @@
-#matrixWell,
-#instituteWell {
+#matrix-well,
+#institute-well {
   border-top: 0;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
 }
 .buttons a {
   margin-bottom: -30px;
   position: relative;
   z-index: 10;
 }
+/*# sourceMappingURL=screen-display.component.css.map */
