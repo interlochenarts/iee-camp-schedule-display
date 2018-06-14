@@ -52,11 +52,27 @@ export class ScheduleCourse {
   }
 
   get privateLessonTeacher(): string {
-    return this.scheduleNotesArray[1];
+    if (this.scheduleNotesArray && this.scheduleNotesArray[1]) {
+      return this.scheduleNotesArray[1];
+    }
+
+    return null;
   }
 
   get privateLessonLocation(): string {
-    return this.scheduleNotesArray[2];
+    if (this.scheduleNotesArray && this.scheduleNotesArray[2]) {
+      return this.scheduleNotesArray[2];
+    }
+
+    return null;
+  }
+
+  get privateLessonAlternateTime(): string {
+    if (this.scheduleNotesArray && this.scheduleNotesArray[3]) {
+      return this.scheduleNotesArray[3];
+    }
+
+    return null;
   }
 
   setPracticeHourMap(): void {

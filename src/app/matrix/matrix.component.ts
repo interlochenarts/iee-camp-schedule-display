@@ -241,7 +241,8 @@ export class MatrixComponent implements OnInit, OnChanges {
     div.innerHTML = '<p><strong>' + (isPracticeHour ? 'Practice Hour' : course.courseName) + '</strong></p>' +
       (isPracticeHour ? '' : (course.instructor ? ('<p>' + course.instructor + '</p>') : '')) +
       (isPracticeHour ? (course.practiceBuilding ? ('<p>' + course.practiceBuilding + '</p>') : '') :
-        (course.location ? ('<p>' + course.location + '</p>') : ''));
+        (course.location ? ('<p>' + course.location + '</p>') : '')) +
+      (isPracticeHour ? '' : (course.privateLessonAlternateTime ? ('<p>' + course.privateLessonAlternateTime + '</p>') : ''));
   }
 
   generateStyleForCourseDiv(viewMap: Map<number, number[]>, div: HTMLDivElement,
