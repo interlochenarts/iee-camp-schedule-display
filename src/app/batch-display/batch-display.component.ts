@@ -63,7 +63,6 @@ export class BatchDisplayComponent implements OnInit {
         this.termSelect.nativeElement.add(selectItem);
       });
 
-      this.updateArrivalWeeksByTerm(keys[0]);
       this.updateCabinsByTerm(keys[0]);
     });
 
@@ -74,18 +73,7 @@ export class BatchDisplayComponent implements OnInit {
   }
 
   onChangeTerm(): void {
-    this.updateArrivalWeeksByTerm(this.termSelect.nativeElement.value);
     this.updateCabinsByTerm(this.termSelect.nativeElement.value);
-  }
-
-  updateArrivalWeeksByTerm(termId: string): void {
-    this.arrivalSelect.nativeElement.length = 1;
-    this.scheduleReaderService.getArrivalWeeksForTerm(termId).then((arrivalWeeks: string[]) => {
-      arrivalWeeks.forEach(wk => {
-        const selectItem: HTMLOptionElement = new Option(wk, wk);
-        this.arrivalSelect.nativeElement.add(selectItem);
-      });
-    });
   }
 
   updateCabinsByTerm(termId: string): void {
