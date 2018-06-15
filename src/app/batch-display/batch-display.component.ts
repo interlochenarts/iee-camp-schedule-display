@@ -112,8 +112,6 @@ export class BatchDisplayComponent implements OnInit {
           j.forEach(s => {
             this.schedules.push(BatchSchedule.createFromJson(s));
           });
-
-          this.sortSchedules('lastName');
         }
         this.loadingBatch = false;
       },
