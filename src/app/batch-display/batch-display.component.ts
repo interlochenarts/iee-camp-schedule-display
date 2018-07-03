@@ -17,6 +17,7 @@ export class BatchDisplayComponent implements OnInit {
   @ViewChild('housingDivision') housingDivisionSelect: HTMLSelectElement;
   @ViewChild('arrival') arrivalSelect: HTMLSelectElement;
   @ViewChild('term') termSelect: HTMLSelectElement;
+  @ViewChild('session') sessionSelect: HTMLSelectElement;
   schedules: BatchSchedule[] = [];
   loadingBatch = false;
   timesByDivision = new Map<string, ScheduleTime[]>();
@@ -100,7 +101,8 @@ export class BatchDisplayComponent implements OnInit {
       'cabin': selectedCabins,
       'division': this.divisionSelect.nativeElement.value,
       'arrivalWeek': this.arrivalSelect.nativeElement.value,
-      'term': this.termSelect.nativeElement.value
+      'term': this.termSelect.nativeElement.value,
+      'session': this.sessionSelect.nativeElement.value
     };
 
     Visualforce.remoting.Manager.invokeAction(
@@ -117,57 +119,6 @@ export class BatchDisplayComponent implements OnInit {
       },
       {buffer: false, escape: false}
     );
-  }
-
-  onSortSchedules($event, sortBy: string): void {
-    this.sortSchedules(sortBy);
-  }
-
-  sortSchedules(sortBy: string): void {
-    this.schedules.sort((a: BatchSchedule, b: BatchSchedule) => {
-
-      switch (sortBy) {
-        case 'lastName': {
-          if (a.student.lastName < b.student.lastName) {
-            return -1;
-          } else if (a.student.lastName > b.student.lastName) {
-            return 1;
-          } else {
-            return 0;
-          }
-        }
-        case 'cabin': {
-          if (a.student.cabin < b.student.cabin) {
-            return -1;
-          } else if (a.student.cabin > b.student.cabin) {
-            return 1;
-          } else {
-            return 0;
-          }
-        }
-        case 'division': {
-          if (a.student.division < b.student.division) {
-            return -1;
-          } else if (a.student.division > b.student.division) {
-            return 1;
-          } else {
-            return 0;
-          }
-        }
-        case 'housing': {
-          if (a.student.housingDivision < b.student.housingDivision) {
-            return -1;
-          } else if (a.student.housingDivision > b.student.housingDivision) {
-            return 1;
-          } else {
-            return 0;
-          }
-        }
-        default: {
-          return 0;
-        }
-      }
-    });
   }
 
   print(): void {

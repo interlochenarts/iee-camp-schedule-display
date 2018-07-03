@@ -1,76 +1,77 @@
 <div class="well margin-top-sm" id="filterContainer" [ngClass]="{'dBg': alt}">
   <div class="row">
 
-    <div class="col-xs-12 col-md-6">
+    <div class="col-xs-12">
       <fieldset>
         <legend [ngClass]="{'alt': alt}">Filter By:</legend>
 
-        <div class="form-group">
-          <label for="termFilter">Term:</label>
-          <select #term class="form-control" id="termFilter" (change)="onChangeTerm()">
-          </select>
+        <div class="col-xs-12 col-md-6">
+          <div class="form-group">
+            <label for="termFilter">Term:</label>
+            <select #term class="form-control" id="termFilter" (change)="onChangeTerm()">
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="sessionFilter">Session:</label>
+            <select #session class="form-control" id="sessionFilter">
+              <option value="">Show All</option>
+              <option value="1st 2 weeks">1st 2 weeks</option>
+              <option value="2nd 2 weeks">2nd 2 weeks</option>
+              <option value="3rd 2 weeks">3rd 2 weeks</option>
+              <option value="1st 3 weeks">1st 3 weeks</option>
+              <option value="2nd 3 weeks">2nd 3 weeks</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="arrivalWeekFilter">Arrival Week:</label>
+            <select #arrival class="form-control" id="arrivalWeekFilter">
+              <option value="">Show All</option>
+              <option value="1">1</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+            </select>
+          </div>
         </div>
 
-        <div class="form-group">
-          <label for="cabinFilter">Cabin:</label>
-          <select multiple #cabin class="form-control" id="cabinFilter">
-            <option value="">Show All</option>
-          </select>
-        </div>
+        <div class="col-xs-12 col-md-6">
+          <div class="form-group">
+            <label for="divisionFilter">Division:</label>
+            <select #division class="form-control" id="divisionFilter">
+              <option value="">Show All</option>
+              <option value="Junior">Junior</option>
+              <option value="Intermediate">Intermediate</option>
+              <option value="High School">High School</option>
+            </select>
+          </div>
 
-        <div class="form-group">
-          <label for="divisionFilter">Division:</label>
-          <select #division class="form-control" id="divisionFilter">
-            <option value="">Show All</option>
-            <option value="Junior">Junior</option>
-            <option value="Intermediate">Intermediate</option>
-            <option value="High School">High School</option>
-          </select>
-        </div>
+          <div class="form-group">
+            <label for="housingDivisionFilter">Housing Division:</label>
+            <select #housingDivision class="form-control" id="housingDivisionFilter">
+              <option value="">Show All</option>
+              <option value="JB">Junior Boys</option>
+              <option value="JG">Junior Girls</option>
+              <option value="IB">Intermediate Boys</option>
+              <option value="IGL">Intermediate Girls Lakeside</option>
+              <option value="IGM">Intermediate Girls Meadow</option>
+              <option value="HSB">High School Boys</option>
+              <option value="HSG">High School Girls</option>
+            </select>
+          </div>
 
-        <div class="form-group">
-          <label for="housingDivisionFilter">Housing Division:</label>
-          <select #housingDivision class="form-control" id="housingDivisionFilter">
-            <option value="">Show All</option>
-            <option value="JB">Junior Boys</option>
-            <option value="JG">Junior Girls</option>
-            <option value="IB">Intermediate Boys</option>
-            <option value="IGL">Intermediate Girls Lakeside</option>
-            <option value="IGM">Intermediate Girls Meadow</option>
-            <option value="HSB">High School Boys</option>
-            <option value="HSG">High School Girls</option>
-          </select>
-        </div>
-
-        <div class="form-group">
-          <label for="arrivalWeekFilter">Arrival Week:</label>
-          <select #arrival class="form-control" id="arrivalWeekFilter">
-            <option value="">Show All</option>
-            <option value="1">1</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-          </select>
-        </div>
-      </fieldset>
-    </div>
-
-    <div class="col-xs-12 col-md-6">
-      <fieldset>
-        <legend [ngClass]="{'alt': alt}">Sort By:</legend>
-        <div class="form-group">
-          <select #sortField
-                  class="form-control"
-                  (change)="onSortSchedules($event, sortField.value)">
-            <option value="cabin">Cabin</option>
-            <option value="division">Division</option>
-            <option value="lastName" selected>Last Name</option>
-            <option value="housing">Housing Division</option>
-          </select>
+          <div class="form-group">
+            <label for="cabinFilter">Cabin:</label>
+            <select multiple #cabin class="form-control" id="cabinFilter">
+              <option value="">Show All</option>
+            </select>
+          </div>
         </div>
       </fieldset>
     </div>
   </div>
+
   <div class="row flex-row">
     <div class="col-xs-12 col-md-6 student-count"
          [ngClass]="{'alt': alt}">
