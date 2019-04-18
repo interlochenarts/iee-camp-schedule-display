@@ -58,10 +58,10 @@ export class BatchDisplayComponent implements OnInit {
         }
       });
 
-      this.termSelect.nativeElement.length = 0;
+      this.termSelect.length = 0;
       keys.forEach(id => {
         const selectItem: HTMLOptionElement = new Option(termsById.get(id), id);
-        this.termSelect.nativeElement.add(selectItem);
+        this.termSelect.add(selectItem);
       });
 
       this.updateCabinsByTerm(keys[0]);
@@ -74,16 +74,16 @@ export class BatchDisplayComponent implements OnInit {
   }
 
   onChangeTerm(): void {
-    this.updateCabinsByTerm(this.termSelect.nativeElement.value);
+    this.updateCabinsByTerm(this.termSelect.value);
   }
 
   updateCabinsByTerm(termId: string): void {
-    this.cabinSelect.nativeElement.length = 1;
+    this.cabinSelect.length = 1;
     this.scheduleReaderService.getCabins(termId).then((cabins: string[]) => {
       cabins.forEach(cabin => {
         // create a select item and add to cabin select
         const selectItem: HTMLOptionElement = new Option(cabin, cabin);
-        this.cabinSelect.nativeElement.add(selectItem);
+        this.cabinSelect.add(selectItem);
       });
     });
   }
@@ -93,16 +93,16 @@ export class BatchDisplayComponent implements OnInit {
     this.schedules.length = 0;
 
     // get a list of selected options in the list of cabins
-    const selectedCabins: string[] = Array.apply(null, this.cabinSelect.nativeElement.options)
+    const selectedCabins: string[] = Array.apply(null, this.cabinSelect.options)
       .filter(opt => opt.selected).map(opt => opt.value);
 
     const fields = {
-      'housingDivision': this.housingDivisionSelect.nativeElement.value,
+      'housingDivision': this.housingDivisionSelect.value,
       'cabin': selectedCabins,
-      'division': this.divisionSelect.nativeElement.value,
-      'arrivalWeek': this.arrivalSelect.nativeElement.value,
-      'term': this.termSelect.nativeElement.value,
-      'session': this.sessionSelect.nativeElement.value
+      'division': this.divisionSelect.value,
+      'arrivalWeek': this.arrivalSelect.value,
+      'term': this.termSelect.value,
+      'session': this.sessionSelect.value
     };
 
     Visualforce.remoting.Manager.invokeAction(
