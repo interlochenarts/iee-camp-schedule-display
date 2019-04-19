@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {BatchSchedule} from '../_classes/BatchSchedule';
 import {ScheduleReaderService} from '../services/schedule-reader.service';
 import {ScheduleTime} from '../_classes/ScheduleTime';
@@ -12,12 +12,12 @@ declare const Visualforce: any;
   styleUrls: ['./batch-display.component.css']
 })
 export class BatchDisplayComponent implements OnInit {
-  @ViewChild('cabin') cabinSelect: HTMLSelectElement;
-  @ViewChild('division') divisionSelect: HTMLSelectElement;
-  @ViewChild('housingDivision') housingDivisionSelect: HTMLSelectElement;
-  @ViewChild('arrival') arrivalSelect: HTMLSelectElement;
-  @ViewChild('term') termSelect: HTMLSelectElement;
-  @ViewChild('session') sessionSelect: HTMLSelectElement;
+  @ViewChild('cabin') cabinSelect: ElementRef;
+  @ViewChild('division') divisionSelect: ElementRef;
+  @ViewChild('housingDivision') housingDivisionSelect: ElementRef;
+  @ViewChild('arrival') arrivalSelect: ElementRef;
+  @ViewChild('term') termSelect: ElementRef;
+  @ViewChild('session') sessionSelect: ElementRef;
   schedules: BatchSchedule[] = [];
   loadingBatch = false;
   timesByDivision = new Map<string, ScheduleTime[]>();
@@ -58,10 +58,10 @@ export class BatchDisplayComponent implements OnInit {
         }
       });
 
-      this.termSelect.length = 0;
+      this.termSelect.nativeElement.length = 0;
       keys.forEach(id => {
         const selectItem: HTMLOptionElement = new Option(termsById.get(id), id);
-        this.termSelect.add(selectItem);
+        this.termSelect.nativeElement.add(selectItem);
       });
 
       this.updateCabinsByTerm(keys[0]);
@@ -74,16 +74,16 @@ export class BatchDisplayComponent implements OnInit {
   }
 
   onChangeTerm(): void {
-    this.updateCabinsByTerm(this.termSelect.value);
+    this.updateCabinsByTerm(this.termSelect.nativeElement.value);
   }
 
   updateCabinsByTerm(termId: string): void {
-    this.cabinSelect.length = 1;
+    this.cabinSelect.nativeElement.length = 1;
     this.scheduleReaderService.getCabins(termId).then((cabins: string[]) => {
       cabins.forEach(cabin => {
         // create a select item and add to cabin select
         const selectItem: HTMLOptionElement = new Option(cabin, cabin);
-        this.cabinSelect.add(selectItem);
+        this.cabinSelect.nativeElement.add(selectItem);
       });
     });
   }
@@ -93,16 +93,16 @@ export class BatchDisplayComponent implements OnInit {
     this.schedules.length = 0;
 
     // get a list of selected options in the list of cabins
-    const selectedCabins: string[] = Array.apply(null, this.cabinSelect.options)
+    const selectedCabins: string[] = Array.apply(null, this.cabinSelect.nativeElement.options)
       .filter(opt => opt.selected).map(opt => opt.value);
 
     const fields = {
-      'housingDivision': this.housingDivisionSelect.value,
+      'housingDivision': this.housingDivisionSelect.nativeElement.value,
       'cabin': selectedCabins,
-      'division': this.divisionSelect.value,
-      'arrivalWeek': this.arrivalSelect.value,
-      'term': this.termSelect.value,
-      'session': this.sessionSelect.value
+      'division': this.divisionSelect.nativeElement.value,
+      'arrivalWeek': this.arrivalSelect.nativeElement.value,
+      'term': this.termSelect.nativeElement.value,
+      'session': this.sessionSelect.nativeElement.value
     };
 
     Visualforce.remoting.Manager.invokeAction(

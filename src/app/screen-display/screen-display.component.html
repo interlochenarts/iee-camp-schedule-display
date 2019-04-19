@@ -1,18 +1,19 @@
 <div class="row">
-  <iee-header [student]="student" [educationId]="educationId"></iee-header>
+  <iee-header [student]="student" [educationId]="educationId" class="w-100"></iee-header>
 </div>
 <div class="row">
-  <div class="col-xs-12 text-right buttons">
+  <div class="col-12 text-right buttons">
     <a class="btn btn-default"
        *ngIf="displayPrintView()"
        [routerLink]="['../','print']"><i class="fa fa-print"
                                          aria-hidden="true"></i> Printable View</a>
   </div>
-  <div class="col-xs-12 schedules">
+  <div class="col-12 schedules">
     <ul class="nav nav-tabs">
-      <li *ngFor="let session of sessions; let i = index"
-          [ngClass]="{'active': (i === activeSessionIndex)}">
-        <a data-toggle="tab" [routerLink]="['../', i]">{{session}}</a>
+      <li *ngFor="let session of sessions; let i = index" class="nav-item">
+        <a data-toggle="tab" [ngClass]="{'active': (i === activeSessionIndex)}"
+           class="nav-link"
+           [routerLink]="['../', i]">{{session}}</a>
       </li>
     </ul>
     <div class="matrix well" id="matrix-well"
@@ -38,7 +39,7 @@
       </div>
       <object *ngIf="instituteSchedule && instituteSchedule.pdfLink"
               [data]="instituteSchedule.pdfLink | safeUrl"
-              type="application/pdf" width="100%" height="600">
+              type="application/pdf" width="100%" height="600" class="w-100">
         <a [href]="instituteSchedule.pdfLink | safeUrl" target="_blank">Download Institute Schedule</a>
       </object>
     </div>
