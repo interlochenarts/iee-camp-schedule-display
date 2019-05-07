@@ -3,7 +3,7 @@ import {ActivatedRoute, ParamMap} from '@angular/router';
 import {ScheduleReaderService} from '../services/schedule-reader.service';
 import {ScheduleCourse} from '../_classes/ScheduleCourse';
 import {Student} from '../_classes/Student';
-import {Observable} from 'rxjs/Observable';
+import {combineLatest} from 'rxjs/index';
 import {InstituteSchedule} from '../_classes/InstituteSchedule';
 import {ScheduleTime} from '../_classes/ScheduleTime';
 
@@ -30,7 +30,7 @@ export class PrintDisplayComponent implements OnInit {
       const sessionsObs = this.scheduleReader.sessions.asObservable();
       const instituteObs = this.scheduleReader.instituteSchedule.asObservable();
 
-      Observable.combineLatest(scheduleObs, sessionsObs, instituteObs).subscribe(obs => {
+      combineLatest(scheduleObs, sessionsObs, instituteObs).subscribe(obs => {
         [this.schedulesBySession, this.sessions, this.instituteSchedule] = obs;
       });
 

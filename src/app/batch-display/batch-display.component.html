@@ -1,71 +1,75 @@
 <div class="well margin-top-sm" id="filterContainer" [ngClass]="{'dBg': alt}">
   <div class="row">
 
-    <div class="col-xs-12">
-      <fieldset>
+    <div class="col-12">
+      <fieldset class="row px-4">
         <legend [ngClass]="{'alt': alt}">Filter By:</legend>
 
-        <div class="col-xs-12 col-md-6">
-          <div class="form-group">
-            <label for="termFilter">Term:</label>
-            <select #term class="form-control" id="termFilter" (change)="onChangeTerm()">
-            </select>
-          </div>
+        <div class="col-12 col-md-6">
+          <div class="form-row">
+            <div class="form-group col-12">
+              <label for="termFilter">Term:</label>
+              <select #term class="custom-select" id="termFilter" (change)="onChangeTerm()">
+              </select>
+            </div>
 
-          <div class="form-group">
-            <label for="sessionFilter">Session:</label>
-            <select #session class="form-control" id="sessionFilter">
-              <option value="">Show All</option>
-              <option value="1st 2 weeks">1st 2 weeks</option>
-              <option value="2nd 2 weeks">2nd 2 weeks</option>
-              <option value="3rd 2 weeks">3rd 2 weeks</option>
-              <option value="1st 3 weeks">1st 3 weeks</option>
-              <option value="2nd 3 weeks">2nd 3 weeks</option>
-            </select>
-          </div>
+            <div class="form-group col-12">
+              <label for="sessionFilter">Session:</label>
+              <select #session class="custom-select" id="sessionFilter">
+                <option value="">Show All</option>
+                <option value="1st 2 weeks">1st 2 weeks</option>
+                <option value="2nd 2 weeks">2nd 2 weeks</option>
+                <option value="3rd 2 weeks">3rd 2 weeks</option>
+                <option value="1st 3 weeks">1st 3 weeks</option>
+                <option value="2nd 3 weeks">2nd 3 weeks</option>
+              </select>
+            </div>
 
-          <div class="form-group">
-            <label for="arrivalWeekFilter">Arrival Week:</label>
-            <select #arrival class="form-control" id="arrivalWeekFilter">
-              <option value="">Show All</option>
-              <option value="1">1</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-              <option value="5">5</option>
-            </select>
+            <div class="form-group col-12">
+              <label for="arrivalWeekFilter">Arrival Week:</label>
+              <select #arrival class="custom-select" id="arrivalWeekFilter">
+                <option value="">Show All</option>
+                <option value="1">1</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+              </select>
+            </div>
           </div>
         </div>
 
-        <div class="col-xs-12 col-md-6">
-          <div class="form-group">
-            <label for="divisionFilter">Division:</label>
-            <select #division class="form-control" id="divisionFilter">
-              <option value="">Show All</option>
-              <option value="Junior">Junior</option>
-              <option value="Intermediate">Intermediate</option>
-              <option value="High School">High School</option>
-            </select>
-          </div>
+        <div class="col-12 col-md-6">
+          <div class="form-row">
+            <div class="form-group col-12">
+              <label for="divisionFilter">Division:</label>
+              <select #division class="custom-select" id="divisionFilter">
+                <option value="">Show All</option>
+                <option value="Junior">Junior</option>
+                <option value="Intermediate">Intermediate</option>
+                <option value="High School">High School</option>
+              </select>
+            </div>
 
-          <div class="form-group">
-            <label for="housingDivisionFilter">Housing Division:</label>
-            <select #housingDivision class="form-control" id="housingDivisionFilter">
-              <option value="">Show All</option>
-              <option value="JB">Junior Boys</option>
-              <option value="JG">Junior Girls</option>
-              <option value="IB">Intermediate Boys</option>
-              <option value="IGL">Intermediate Girls Lakeside</option>
-              <option value="IGM">Intermediate Girls Meadow</option>
-              <option value="HSB">High School Boys</option>
-              <option value="HSG">High School Girls</option>
-            </select>
-          </div>
+            <div class="form-group col-12">
+              <label for="housingDivisionFilter">Housing Division:</label>
+              <select #housingDivision class="custom-select" id="housingDivisionFilter">
+                <option value="">Show All</option>
+                <option value="JB">Junior Boys</option>
+                <option value="JG">Junior Girls</option>
+                <option value="IB">Intermediate Boys</option>
+                <option value="IGL">Intermediate Girls Lakeside</option>
+                <option value="IGM">Intermediate Girls Meadow</option>
+                <option value="HSB">High School Boys</option>
+                <option value="HSG">High School Girls</option>
+              </select>
+            </div>
 
-          <div class="form-group">
-            <label for="cabinFilter">Cabin:</label>
-            <select multiple #cabin class="form-control" id="cabinFilter">
-              <option value="">Show All</option>
-            </select>
+            <div class="form-group col-12">
+              <label for="cabinFilter">Cabin:</label>
+              <select multiple #cabin class="custom-select" id="cabinFilter">
+                <option value="">Show All</option>
+              </select>
+            </div>
           </div>
         </div>
       </fieldset>
@@ -73,23 +77,23 @@
   </div>
 
   <div class="row flex-row">
-    <div class="col-xs-12 col-md-6 student-count"
+    <div class="col-12 col-md-6 student-count"
          [ngClass]="{'alt': alt}">
       <h1 *ngIf="schedules && schedules.length > 0">Students found: {{uniqueStudentCount}}</h1>
     </div>
 
-    <div class="col-xs-12 col-md-6 text-right">
-      <a class="btn btn-default" (click)="getBatchSchedule()" *ngIf="alt === false">
+    <div class="col-12 col-md-6 text-right">
+      <a href='javascript:void(0);' class="btn btn-default" (click)="getBatchSchedule()" *ngIf="alt === false">
         <i class="fa fa-star-half" aria-hidden="true"></i> Get Schedules <i class="fa fa-star-half fa-flip-horizontal"
                                                                             aria-hidden="true"></i></a>
-      <a class="btn btn-default" (click)="print()"
+      <a href='javascript:void(0);' class="btn btn-default" (click)="print()"
          *ngIf="alt === false && schedules && schedules.length > 0">
         <i class="fa fa-print" aria-hidden="true"></i> Print</a>
 
-      <a class="tButton" (click)="getBatchSchedule()" *ngIf="alt === true">
+      <a href='javascript:void(0);' class="tButton" (click)="getBatchSchedule()" *ngIf="alt === true">
         <i class="fa fa-star-half" aria-hidden="true"></i> Get Schedules <i class="fa fa-star-half fa-flip-horizontal"
                                                                             aria-hidden="true"></i></a>
-      <a class="blButton" (click)="print()" *ngIf="alt === true && schedules && schedules.length > 0">
+      <a href='javascript:void(0);' class="blButton" (click)="print()" *ngIf="alt === true && schedules && schedules.length > 0">
         <i class="fa fa-rocket" aria-hidden="true"></i> Print</a>
     </div>
   </div>
@@ -107,7 +111,7 @@
 </div>
 
 <div class="row" *ngFor="let studentSchedule of schedules">
-  <div class="col-print-12 col-xs-12">
+  <div class="col-print-12 col-12">
     <div class="well margin-top-sm">
       <iee-print-header [student]="studentSchedule.student"
                         [session]="studentSchedule.campSession"></iee-print-header>
