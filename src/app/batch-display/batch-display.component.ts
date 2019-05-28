@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {BatchSchedule} from '../_classes/BatchSchedule';
 import {ScheduleReaderService} from '../services/schedule-reader.service';
 import {ScheduleTime} from '../_classes/ScheduleTime';
@@ -12,12 +12,12 @@ declare const Visualforce: any;
   styleUrls: ['./batch-display.component.css']
 })
 export class BatchDisplayComponent implements OnInit {
-  @ViewChild('cabin') cabinSelect: HTMLSelectElement;
-  @ViewChild('division') divisionSelect: HTMLSelectElement;
-  @ViewChild('housingDivision') housingDivisionSelect: HTMLSelectElement;
-  @ViewChild('arrival') arrivalSelect: HTMLSelectElement;
-  @ViewChild('term') termSelect: HTMLSelectElement;
-  @ViewChild('session') sessionSelect: HTMLSelectElement;
+  @ViewChild('cabin') cabinSelect: ElementRef;
+  @ViewChild('division') divisionSelect: ElementRef;
+  @ViewChild('housingDivision') housingDivisionSelect: ElementRef;
+  @ViewChild('arrival') arrivalSelect: ElementRef;
+  @ViewChild('term') termSelect: ElementRef;
+  @ViewChild('session') sessionSelect: ElementRef;
   schedules: BatchSchedule[] = [];
   loadingBatch = false;
   timesByDivision = new Map<string, ScheduleTime[]>();
