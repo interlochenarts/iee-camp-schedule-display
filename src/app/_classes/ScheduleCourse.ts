@@ -111,6 +111,7 @@ export class ScheduleCourse {
         }
         const dayString = schedule.substring(schedule.indexOf('(') + 1, schedule.indexOf(')'));
         const days = dayString.split(',').map(dayRange => {
+          dayRange = dayRange.trim();
           if (dayRange.indexOf('-') >= 0) {
             const start = dayNames.indexOf(dayRange.substring(0, dayRange.indexOf('-')));
             const end = dayNames.indexOf(dayRange.substring(dayRange.indexOf('-') + 1));
@@ -125,6 +126,7 @@ export class ScheduleCourse {
         daysFlattened.forEach(day => {
           const periodString = schedule.substring(0, schedule.indexOf('('));
           let periods = periodString.split(',').map(periodRange => {
+            periodRange = periodRange.trim();
             if (periodRange.indexOf('-') >= 0) {
               const start = +periodRange.substring(0, periodRange.indexOf('-'));
               const end = +periodRange.substring(periodRange.indexOf('-') + 1);
