@@ -1,8 +1,18 @@
 @media print {
+  html {
+    width: 100%;
+    height: 100%;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    margin-top: 0 !important;
+    border: 1px solid;
+  }
   #filterContainer {
     display: none;
   }
   .row.schedule {
+    display: block;
     page-break-after: always;
   }
 }
@@ -69,14 +79,16 @@ legend.alt {
   position: relative;
   background: none;
 }
-.dBg::after {
-  content: "";
-  background-image: url(//upload.wikimedia.org/wikipedia/commons/2/22/Charles_R._Knight_New_Years%27s_Card.jpg);
-  opacity: 0.3;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  position: absolute;
-  z-index: -1;
+@media screen {
+  .dBg::after {
+    content: "";
+    background-image: url(//upload.wikimedia.org/wikipedia/commons/2/22/Charles_R._Knight_New_Years%27s_Card.jpg);
+    opacity: 0.3;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    position: absolute;
+    z-index: -1;
+  }
 }
