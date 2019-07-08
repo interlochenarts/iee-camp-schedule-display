@@ -45,6 +45,9 @@
   color: white;
   text-decoration: none;
 }
+.row.schedule {
+  page-break-after: always;
+}
 .tButton {
   background-image: url(//smithmd.github.io/calendar-react/cdn/tet-T.png);
 }
