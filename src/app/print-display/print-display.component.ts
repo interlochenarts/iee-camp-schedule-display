@@ -30,7 +30,7 @@ export class PrintDisplayComponent implements OnInit {
       const sessionsObs = this.scheduleReader.sessions.asObservable();
       const instituteObs = this.scheduleReader.instituteSchedule.asObservable();
 
-      combineLatest(scheduleObs, sessionsObs, instituteObs).subscribe(obs => {
+      combineLatest([scheduleObs, sessionsObs, instituteObs]).subscribe(obs => {
         [this.schedulesBySession, this.sessions, this.instituteSchedule] = obs;
       });
 
