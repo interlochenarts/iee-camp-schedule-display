@@ -9,14 +9,15 @@
           <div class="form-row">
             <div class="form-group col-12">
               <label for="termFilter">Term:</label>
-              <select #term class="custom-select" id="termFilter" (change)="onChangeTerm()">
+              <select #term class="w-100" id="termFilter" (change)="onChangeTerm()">
               </select>
             </div>
 
             <div class="form-group col-12">
               <label for="sessionFilter">Session:</label>
-              <select #session class="custom-select" id="sessionFilter">
+              <select #session class="w-100" id="sessionFilter">
                 <option value="">Show All</option>
+                <option value="1 week">1 week</option>
                 <option value="1st 2 weeks">1st 2 weeks</option>
                 <option value="2nd 2 weeks">2nd 2 weeks</option>
                 <option value="3rd 2 weeks">3rd 2 weeks</option>
@@ -27,8 +28,9 @@
 
             <div class="form-group col-12">
               <label for="arrivalWeekFilter">Arrival Week:</label>
-              <select #arrival class="custom-select" id="arrivalWeekFilter">
+              <select #arrival class="w-100" id="arrivalWeekFilter">
                 <option value="">Show All</option>
+                <option value="0">0</option>
                 <option value="1">1</option>
                 <option value="3">3</option>
                 <option value="4">4</option>
@@ -42,7 +44,7 @@
           <div class="form-row">
             <div class="form-group col-12">
               <label for="divisionFilter">Division:</label>
-              <select #division class="custom-select" id="divisionFilter">
+              <select #division class="w-100" id="divisionFilter">
                 <option value="">Show All</option>
                 <option value="Junior">Junior</option>
                 <option value="Intermediate">Intermediate</option>
@@ -52,7 +54,7 @@
 
             <div class="form-group col-12">
               <label for="housingDivisionFilter">Housing Division:</label>
-              <select #housingDivision class="custom-select" id="housingDivisionFilter">
+              <select #housingDivision class="w-100" id="housingDivisionFilter">
                 <option value="">Show All</option>
                 <option value="JB">Junior Boys</option>
                 <option value="JG">Junior Girls</option>
@@ -66,7 +68,7 @@
 
             <div class="form-group col-12">
               <label for="cabinFilter">Cabin:</label>
-              <select multiple #cabin class="custom-select" id="cabinFilter">
+              <select multiple #cabin class="w-100" id="cabinFilter">
                 <option value="">Show All</option>
               </select>
             </div>
