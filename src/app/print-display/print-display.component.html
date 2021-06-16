@@ -1,5 +1,5 @@
 <div class="row buttons">
-  <div class="col-12 margin-top-sm text-right">
+  <div class="col-12 margin-top-sm text-right pb-2">
     <a class="btn btn-default"
        [routerLink]="['../',0]"><i class="fa fa-calendar"
                                    aria-hidden="true"></i> View as calendar</a>
@@ -16,7 +16,7 @@
 </div>
 <div class="row" *ngFor="let session of sessions">
   <div class="col-print-12 col-12">
-    <div class="well margin-top-sm" *ngIf="session.toLowerCase().includes('1 week') === false">
+    <div class="well margin-top-sm" *ngIf="!(session.toLowerCase().includes('1 week') && instituteSchedule && instituteSchedule.pdfLink)">
       <iee-print-header [student]="student" [session]="session"></iee-print-header>
       <iee-matrix [sessionSchedule]="getScheduleBySessionName(session)"
                   [timesByDivision]="timesByDivision"
