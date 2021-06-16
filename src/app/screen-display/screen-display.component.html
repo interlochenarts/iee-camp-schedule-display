@@ -1,20 +1,22 @@
-<div class="row">
-  <div class="col-12 text-right buttons">
+<div class="row buttons">
+  <div class="col-12 text-right pb-4">
     <a class="btn btn-default"
        *ngIf="displayPrintView()"
        [routerLink]="['../','print']"><i class="fa fa-print"
                                          aria-hidden="true"></i> Printable View</a>
   </div>
+</div>
+<div class="row">
   <div class="col-12 schedules">
     <ul class="nav nav-tabs">
       <li *ngFor="let session of sessions; let i = index" class="nav-item">
         <a data-toggle="tab" [ngClass]="{'active': (i === activeSessionIndex)}"
            class="nav-link"
-           [routerLink]="['../', i]">{{session}}</a>
+           [routerLink]="['../', i]">{{weekNamesBySession.get(session)}}</a>
       </li>
     </ul>
     <div class="matrix well" id="matrix-well"
-         *ngIf="activeSession && activeSession.toLowerCase().includes('1 week') === false">
+         *ngIf="activeSession && !(activeSession.toLowerCase().includes('1 week') && instituteSchedule && instituteSchedule.pdfLink)">
       <div *ngIf="!isMobile">
         <div>
           <h3>{{student.getMajorBySessionName(activeSession)}}</h3>
@@ -30,7 +32,7 @@
       </div>
     </div>
     <div class="matrix well" id="institute-well"
-         *ngIf="activeSession && activeSession.toLowerCase().includes('1 week')">
+         *ngIf="activeSession && activeSession.toLowerCase().includes('1 week') && instituteSchedule && instituteSchedule.pdfLink">
       <div>
         {{student.getMajorBySessionName(activeSession)}}
       </div>
