@@ -25,14 +25,15 @@
     "zone.js": "~0.10.3"
   },
   "devDependencies": {
-    "@angular/cli": "v10-lts",
+    "@angular-devkit/build-angular": "~0.1102.18",
+    "@angular/cli": "11.2.19",
     "@angular/compiler-cli": "v10-lts",
     "@angular/language-service": "v10-lts",
     "@types/node": "^10.0.0",
     "bootstrap": "^5.1.3",
     "popper.js": "^2.0.0-next.4",
     "jquery": "^3.4.1",
-    "codelyzer": "^5.0.1",
+    "codelyzer": "^6.0.0",
     "ts-node": "^8.1.0",
     "eslint": "^8.13.0",
     "typescript": "4.0.8"
