@@ -12,12 +12,12 @@ declare const Visualforce: any;
   styleUrls: ['./batch-display.component.css']
 })
 export class BatchDisplayComponent implements OnInit {
-  @ViewChild('cabin') cabinSelect: ElementRef;
-  @ViewChild('division') divisionSelect: ElementRef;
-  @ViewChild('housingDivision') housingDivisionSelect: ElementRef;
-  @ViewChild('arrival') arrivalSelect: ElementRef;
-  @ViewChild('term') termSelect: ElementRef;
-  @ViewChild('session') sessionSelect: ElementRef;
+  @ViewChild('cabin', { static: true }) cabinSelect: ElementRef;
+  @ViewChild('division', { static: true }) divisionSelect: ElementRef;
+  @ViewChild('housingDivision', { static: true }) housingDivisionSelect: ElementRef;
+  @ViewChild('arrival', { static: true }) arrivalSelect: ElementRef;
+  @ViewChild('term', { static: true }) termSelect: ElementRef;
+  @ViewChild('session', { static: true }) sessionSelect: ElementRef;
   schedules: BatchSchedule[] = [];
   loadingBatch = false;
   timesByDivision = new Map<string, ScheduleTime[]>();

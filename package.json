@@ -12,30 +12,30 @@
   },
   "private": true,
   "dependencies": {
-    "@angular/animations": "v7-lts",
-    "@angular/common": "v7-lts",
-    "@angular/compiler": "v7-lts",
-    "@angular/core": "v7-lts",
-    "@angular/platform-browser": "v7-lts",
-    "@angular/platform-browser-dynamic": "v7-lts",
-    "@angular/router": "v7-lts",
+    "@angular/animations": "8.2.14",
+    "@angular/common": "8.2.14",
+    "@angular/compiler": "8.2.14",
+    "@angular/core": "8.2.14",
+    "@angular/platform-browser": "8.2.14",
+    "@angular/platform-browser-dynamic": "8.2.14",
+    "@angular/router": "8.2.14",
     "core-js": "^2.5.7",
-    "rxjs": "^6.3.3",
+    "rxjs": "^6.6.7",
     "tslib": "^1.11.1",
-    "zone.js": "^0.8.29"
+    "zone.js": "~0.9.1"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "v7-lts",
-    "@angular/cli": "v7-lts",
-    "@angular/compiler-cli": "v7-lts",
-    "@angular/language-service": "v7-lts",
+    "@angular-devkit/build-angular": "~0.803.29",
+    "@angular/cli": "8.3.29",
+    "@angular/compiler-cli": "8.2.14",
+    "@angular/language-service": "8.2.14",
     "@types/node": "^10.0.0",
     "bootstrap": "^4.3.1",
     "popper.js": "^1.14.7",
     "jquery": "^3.4.1",
-    "codelyzer": "^5.0.0",
+    "codelyzer": "^5.0.1",
     "ts-node": "^8.1.0",
     "tslint": "^6.1.0",
-    "typescript": "3.2.4"
+    "typescript": "3.5.3"
   }
 }
