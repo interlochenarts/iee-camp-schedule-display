@@ -43,7 +43,7 @@ const appRoutes: Routes = [
   ],
   imports: [
     BrowserModule,
-    RouterModule.forRoot(appRoutes, {useHash: true, paramsInheritanceStrategy: 'always'})
+    RouterModule.forRoot(appRoutes, { useHash: true, paramsInheritanceStrategy: 'always', relativeLinkResolution: 'legacy' })
   ],
   providers: [],
   bootstrap: [AppComponent]
