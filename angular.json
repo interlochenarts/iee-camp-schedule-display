@@ -123,7 +123,7 @@
   "schematics": {
     "@schematics/angular:component": {
       "prefix": "iee",
-      "styleext": "css"
+      "style": "css"
     },
     "@schematics/angular:directive": {
       "prefix": "iee"

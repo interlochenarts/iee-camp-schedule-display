@@ -21,11 +21,11 @@
     "@angular/router": "9.1.13",
     "core-js": "^2.5.7",
     "rxjs": "^6.6.7",
-    "tslib": "^1.11.1",
+    "tslib": "^2.0.0",
     "zone.js": "~0.10.3"
   },
   "devDependencies": {
-    "@angular/cli": "9.1.13",
+    "@angular/cli": "10.2.4",
     "@angular/compiler-cli": "9.1.13",
     "@angular/language-service": "9.1.13",
     "@types/node": "^10.0.0",
@@ -34,7 +34,7 @@
     "jquery": "^3.4.1",
     "codelyzer": "^5.0.1",
     "ts-node": "^8.1.0",
-    "tslint": "^6.1.0",
+    "tslint": "~6.1.0",
     "typescript": "3.8.3"
   }
 }
