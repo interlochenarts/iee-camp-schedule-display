@@ -1,7 +1,7 @@
 #!/bin/bash
 
-NODE_VERSION=10
-NG_CLI_VERSION=v7-lts
+NODE_VERSION=16
+NG_CLI_VERSION=13.3.2
 
 cd ..;
 
