@@ -3,7 +3,7 @@ import {ActivatedRoute, ParamMap} from '@angular/router';
 import {ScheduleReaderService} from '../services/schedule-reader.service';
 import {ScheduleCourse} from '../_classes/ScheduleCourse';
 import {Student} from '../_classes/Student';
-import {combineLatest} from 'rxjs/index';
+import {combineLatest} from 'rxjs';
 import {InstituteSchedule} from '../_classes/InstituteSchedule';
 import {ScheduleTime} from '../_classes/ScheduleTime';
 
