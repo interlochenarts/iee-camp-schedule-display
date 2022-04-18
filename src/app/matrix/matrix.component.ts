@@ -13,7 +13,7 @@ export class MatrixComponent implements OnInit, OnChanges {
   @Input() division: string;
   @Input() timesByDivision: Map<string, ScheduleTime[]>;
 
-  @ViewChild('matrixContainer') matrixContainer: ElementRef;
+  @ViewChild('matrixContainer', { static: true }) matrixContainer: ElementRef;
   divs: HTMLDivElement[] = [];
   firstDay = 7;
 
