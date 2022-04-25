@@ -1,7 +1,13 @@
 .day-name {
   background: #a7e6fb;
-  margin-top: .75em;
+  margin-top: 0.75em;
   line-height: 2;
   font-size: 1.75em;
   text-align: center;
+  color: #003057;
 }
+.list-container {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+/*# sourceMappingURL=list-view.component.css.map */
