@@ -1,12 +1,12 @@
-<div class="row buttons">
-  <div class="col-12 text-end pb-4">
+<div class="row buttons mb-3">
+  <div class="col-12 text-end">
     <a class="btn btn-default"
        *ngIf="displayPrintView()"
        [routerLink]="['../','print']"><i class="fa fa-print"
                                          aria-hidden="true"></i> Printable View</a>
   </div>
 </div>
-<div class="row">
+<div class="row mt-3">
   <div class="col-12 schedules">
     <ul class="nav nav-tabs">
       <li *ngFor="let session of sessions; let i = index" class="nav-item">
