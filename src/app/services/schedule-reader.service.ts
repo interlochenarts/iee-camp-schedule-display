@@ -4,6 +4,7 @@ import {ScheduleCourse} from '../_classes/ScheduleCourse';
 import {Student} from '../_classes/Student';
 import {InstituteSchedule} from '../_classes/InstituteSchedule';
 import {ScheduleTime} from '../_classes/ScheduleTime';
+import {ProgramMajor} from "../_classes/ProgramMajor";
 
 declare const Visualforce: any;
 
@@ -117,6 +118,28 @@ export class ScheduleReaderService {
             resolve(JSON.parse(json));
           } else {
             reject(new Error('Failed to get cabins'));
+          }
+        },
+        {buffer: false, escape: false}
+      );
+    });
+  }
+  public getCampProgramMajors(termId: string): Promise<ProgramMajor[]> {
+    return new Promise((resolve, reject) => {
+      Visualforce.remoting.Manager.invokeAction(
+        'IEE_CampScheduleBatchController.getCampProgramMajors',
+        termId,
+        json => {
+          if (json) {
+            const j = JSON.parse(json);
+            const programMajors = [];
+            j.forEach(programMajor => {
+              programMajors.push(ProgramMajor.createFromJson(programMajor))
+            });
+
+            resolve(programMajors);
+          } else {
+            reject(new Error('Failed to get program majors'));
           }
         },
         {buffer: false, escape: false}

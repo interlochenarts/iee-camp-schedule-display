@@ -3,6 +3,7 @@ import {BatchSchedule} from '../_classes/BatchSchedule';
 import {ScheduleReaderService} from '../services/schedule-reader.service';
 import {ScheduleTime} from '../_classes/ScheduleTime';
 import {Router} from '@angular/router';
+import {ProgramMajor} from "../_classes/ProgramMajor";
 
 declare const Visualforce: any;
 
@@ -18,7 +19,9 @@ export class BatchDisplayComponent implements OnInit {
   @ViewChild('arrival', { static: true }) arrivalSelect: ElementRef;
   @ViewChild('term', { static: true }) termSelect: ElementRef;
   @ViewChild('session', { static: true }) sessionSelect: ElementRef;
+  @ViewChild('programMajor', { static: true }) programMajorSelect: ElementRef;
   schedules: BatchSchedule[] = [];
+  programMajors: ProgramMajor[] = [];
   loadingBatch = false;
   timesByDivision = new Map<string, ScheduleTime[]>();
   alt = false;
@@ -64,7 +67,8 @@ export class BatchDisplayComponent implements OnInit {
         this.termSelect.nativeElement.add(selectItem);
       });
 
-      this.updateCabinsByTerm(keys[0]);
+      // Run all term logic on load to get cabins and program majors
+      this.onChangeTerm();
     });
 
     // load the map of schedule times based on the possible student divisions
@@ -75,6 +79,19 @@ export class BatchDisplayComponent implements OnInit {
 
   onChangeTerm(): void {
     this.updateCabinsByTerm(this.termSelect.nativeElement.value);
+    // get full P/M list for selected term
+    this.programMajors.length = 0;
+    this.scheduleReaderService.getCampProgramMajors(this.termSelect.nativeElement.value).then((programMajors: ProgramMajor[]) => {
+      // Save list of all programMajors locally for fast filtering
+      this.programMajors = programMajors;
+
+      this.updateProgramMajorsBySession(this.sessionSelect.nativeElement.value);
+    });
+  }
+
+  onChangeSession(): void {
+    // update program/major list
+    this.updateProgramMajorsBySession(this.sessionSelect.nativeElement.value);
   }
 
   updateCabinsByTerm(termId: string): void {
@@ -87,6 +104,21 @@ export class BatchDisplayComponent implements OnInit {
       });
     });
   }
+
+  updateProgramMajorsBySession(session: string): void {
+    this.programMajorSelect.nativeElement.length = 1;
+    const sessionProgramMajors = this.programMajors.filter(programMajor => programMajor.session === session || session === '');
+    const programMajorSet = [];
+    sessionProgramMajors.forEach(programMajor => {
+      if (!programMajorSet.includes(programMajor.name)) {
+        const selectItem: HTMLOptionElement = new Option(programMajor.name, programMajor.name);
+        this.programMajorSelect.nativeElement.add(selectItem);
+        programMajorSet.push(programMajor.name);
+      }
+    });
+  }
+
+
 
   getBatchSchedule() {
     this.loadingBatch = true;
@@ -102,7 +134,8 @@ export class BatchDisplayComponent implements OnInit {
       'division': this.divisionSelect.nativeElement.value,
       'arrivalWeek': this.arrivalSelect.nativeElement.value,
       'term': this.termSelect.nativeElement.value,
-      'session': this.sessionSelect.nativeElement.value
+      'session': this.sessionSelect.nativeElement.value,
+      'programMajor': this.programMajorSelect.nativeElement.value
     };
 
     Visualforce.remoting.Manager.invokeAction(
