@@ -17,7 +17,7 @@
               <label for="sessionFilter">Session:</label>
               <select #session class="w-100" id="sessionFilter" (change)="onChangeSession()">
 <!--                <option value="">Show All</option>-->
-                <option value="1 week">1 week</option>
+<!--                <option value="1 week">1 week</option>-->
                 <option value="1st 2 weeks">1st 2 weeks</option>
                 <option value="2nd 2 weeks">2nd 2 weeks</option>
                 <option value="3rd 2 weeks">3rd 2 weeks</option>
@@ -127,6 +127,7 @@
                         [session]="studentSchedule.campSession"></iee-print-header>
       <iee-matrix [sessionSchedule]="studentSchedule.schedule"
                   [division]="studentSchedule.student.division"
+                  [musicMajor]="studentSchedule.student.musicMajor"
                   [timesByDivision]="timesByDivision"></iee-matrix>
     </div>
   </div>
