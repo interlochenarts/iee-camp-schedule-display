@@ -3,6 +3,7 @@ export class Student {
   firstName: string;
   cabin: string;
   division: string;
+  musicMajor: boolean;
   term: string;
   school: string;
   id: string;

@@ -107,7 +107,7 @@ export class BatchDisplayComponent implements OnInit {
 
   updateProgramMajorsBySession(session: string): void {
     this.programMajorSelect.nativeElement.length = 1;
-    const sessionProgramMajors = this.programMajors.filter(programMajor => programMajor.session === session || session === '');
+    const sessionProgramMajors = this.programMajors.filter(programMajor => programMajor.session === session || session === '' || this.includesSession(session, programMajor.session));
     const programMajorSet = [];
     sessionProgramMajors.forEach(programMajor => {
       if (!programMajorSet.includes(programMajor.name)) {
@@ -118,7 +118,18 @@ export class BatchDisplayComponent implements OnInit {
     });
   }
 
-
+  includesSession(session: string, targetSession: string): boolean {
+    switch(targetSession) {
+      case '1st 4 weeks':
+        return session === '1st 2 weeks' || session === '2nd 2 weeks'
+      case '2nd 4 weeks':
+        return session === '2nd 2 weeks' || session === '3rd 2 weeks'
+      case '6 weeks':
+        return session === '1st 2 weeks' || session === '2nd 2 weeks' || session === '3rd 2 weeks' || session === '1st 3 weeks' || session === '2nd 3 weeks'
+      default:
+        return false;
+    }
+  }
 
   getBatchSchedule() {
     this.loadingBatch = true;
