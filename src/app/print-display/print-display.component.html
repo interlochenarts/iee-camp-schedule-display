@@ -20,6 +20,7 @@
       <iee-print-header [student]="student" [session]="session"></iee-print-header>
       <iee-matrix [sessionSchedule]="getScheduleBySessionName(session)"
                   [timesByDivision]="timesByDivision"
+                  [musicMajor]="student.musicMajor"
                   [division]="student.division"></iee-matrix>
     </div>
   </div>

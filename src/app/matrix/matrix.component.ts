@@ -12,6 +12,7 @@ export class MatrixComponent implements OnInit, OnChanges {
   @Input() sessionSchedule: ScheduleCourse[];
   @Input() division: string;
   @Input() timesByDivision: Map<string, ScheduleTime[]>;
+  @Input() musicMajor: boolean;
 
   @ViewChild('matrixContainer', { static: true }) matrixContainer: ElementRef;
   divs: HTMLDivElement[] = [];
@@ -143,7 +144,9 @@ export class MatrixComponent implements OnInit, OnChanges {
       this.sessionSchedule.forEach(c => {
         this.createDivsForCourse(c);
         if (this.division !== 'High School' && c.courseName.toLowerCase().includes('private')) {
-          this.createPracticeHourDivs(c);
+          // No practice hour for JR & Int Music Majors if 1st period (0 hour)
+          const noPracticeHourZero = this.musicMajor && (this.division === 'Junior' || this.division === 'Intermediate');
+          this.createPracticeHourDivs(c, noPracticeHourZero);
         }
       });
 
@@ -193,8 +196,16 @@ export class MatrixComponent implements OnInit, OnChanges {
         if (this.courseIsFirstInRange(course.scheduleViewMap, p, d)) {
           // insert div
           const div: HTMLDivElement = <HTMLDivElement>document.createElement('div');
+          div.dataset.day = dayIndex.toString();
+          div.dataset.period = periodIndex.toString();
           this.generateStyleForCourseDiv(course.scheduleViewMap, div, dayIndex, periodIndex, d, p);
           this.generateInnerHtmlForCourseDiv(course, div, false);
+
+          // Check for existing course collision
+          const collision = this.divs.findIndex(oldDiv => oldDiv.dataset.day === dayIndex.toString() && oldDiv.dataset.period === periodIndex.toString());
+          if (collision >= 0) {
+            this.divs.splice(collision, 1);
+          }
 
           this.divs.push(div);
         }
@@ -204,7 +215,7 @@ export class MatrixComponent implements OnInit, OnChanges {
     });
   }
 
-  createPracticeHourDivs(course: ScheduleCourse) {
+  createPracticeHourDivs(course: ScheduleCourse, noPracticeHourZero: boolean) {
     Array.from(course.practiceHourMap.keys()).forEach(d => {
       const dayIndex = this.periodDays.indexOf(d);
       // check to see if we have a valid practice period for this day
@@ -213,16 +224,16 @@ export class MatrixComponent implements OnInit, OnChanges {
         if (practiceHours) {
           practiceHours.forEach(p => {
             const periodIndex = this.periodNumbers.indexOf(p);
-            if (this.courseIsFirstInRange(course.practiceHourMap, p, d)) {
+            if (this.courseIsFirstInRange(course.practiceHourMap, p, d) && !this.isGridPositionFilled(dayIndex, periodIndex) && !(noPracticeHourZero && periodIndex === 0)) {
               // insert div
               const div: HTMLDivElement = <HTMLDivElement>document.createElement('div');
               this.generateStyleForCourseDiv(course.practiceHourMap, div, dayIndex, periodIndex, d, p);
               this.generateInnerHtmlForCourseDiv(course, div, true);
 
               this.divs.push(div);
-            }
 
-            this.setGridPositionFilled(dayIndex, periodIndex);
+              this.setGridPositionFilled(dayIndex, periodIndex);
+            }
           });
         }
       }
@@ -235,6 +246,11 @@ export class MatrixComponent implements OnInit, OnChanges {
     //   then add the column index (dayIndex)
     const gridPosition: number = (periodIndex * this.dayCount) + dayIndex;
     this.gridPositionsFilled[gridPosition] = true;
+  }
+
+  isGridPositionFilled(dayIndex: number, periodIndex: number): boolean {
+    const gridPosition: number = (periodIndex * this.dayCount) + dayIndex;
+    return this.gridPositionsFilled[gridPosition];
   }
 
   generateInnerHtmlForCourseDiv(course: ScheduleCourse, div: HTMLDivElement, isPracticeHour: boolean): void {
@@ -260,6 +276,7 @@ export class MatrixComponent implements OnInit, OnChanges {
     div.style['grid-column'] = (dayIndex + startingOffset) + ' / ' + (dayIndex + endingOffset);
     div.style.padding = '5px';
     div.style.borderTop = '1px solid gray';
+    div.style.fontSize = '1.2em';
     // INFO: centers the course info in the grid cell... temporarily removed because it might introduce confusion
     // div.style.display = 'flex';
     // div.style.flexDirection = 'column';
