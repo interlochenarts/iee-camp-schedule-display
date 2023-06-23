@@ -144,9 +144,7 @@ export class MatrixComponent implements OnInit, OnChanges {
       this.sessionSchedule.forEach(c => {
         this.createDivsForCourse(c);
         if (this.division !== 'High School' && c.courseName.toLowerCase().includes('private')) {
-          // No practice hour for JR & Int Music Majors if 1st period (0 hour)
-          const noPracticeHourZero = this.musicMajor && (this.division === 'Junior' || this.division === 'Intermediate');
-          this.createPracticeHourDivs(c, noPracticeHourZero);
+          this.createPracticeHourDivs(c, this.musicMajor, this.division);
         }
       });
 
@@ -215,7 +213,7 @@ export class MatrixComponent implements OnInit, OnChanges {
     });
   }
 
-  createPracticeHourDivs(course: ScheduleCourse, noPracticeHourZero: boolean) {
+  createPracticeHourDivs(course: ScheduleCourse, musicMajor: boolean, division: string) {
     Array.from(course.practiceHourMap.keys()).forEach(d => {
       const dayIndex = this.periodDays.indexOf(d);
       // check to see if we have a valid practice period for this day
@@ -224,7 +222,9 @@ export class MatrixComponent implements OnInit, OnChanges {
         if (practiceHours) {
           practiceHours.forEach(p => {
             const periodIndex = this.periodNumbers.indexOf(p);
-            if (this.courseIsFirstInRange(course.practiceHourMap, p, d) && !this.isGridPositionFilled(dayIndex, periodIndex) && !(noPracticeHourZero && periodIndex === 0)) {
+            // No practice hour for JR & Int Music Majors if 1st period (0 hour) or 9th period if JR
+            const noPracticeHourZero = ((division === 'Junior' || division === 'Intermediate') && musicMajor && periodIndex === 0) || (division == 'Junior' && musicMajor && periodIndex === 8);
+            if (this.courseIsFirstInRange(course.practiceHourMap, p, d) && !this.isGridPositionFilled(dayIndex, periodIndex) && !noPracticeHourZero) {
               // insert div
               const div: HTMLDivElement = <HTMLDivElement>document.createElement('div');
               this.generateStyleForCourseDiv(course.practiceHourMap, div, dayIndex, periodIndex, d, p);
