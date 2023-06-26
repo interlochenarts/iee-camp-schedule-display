@@ -220,10 +220,11 @@ export class MatrixComponent implements OnInit, OnChanges {
       if (this.periodDays.indexOf(d) > -1) {
         const practiceHours = course.practiceHourMap.get(d);
         if (practiceHours) {
+          const periodNumber = course.scheduleView.split('(');
           practiceHours.forEach(p => {
             const periodIndex = this.periodNumbers.indexOf(p);
             // No practice hour for JR & Int Music Majors if 1st period (0 hour) or 9th period if JR
-            const noPracticeHourZero = ((division === 'Junior' || division === 'Intermediate') && musicMajor && periodIndex === 0) || (division == 'Junior' && musicMajor && periodIndex === 8);
+            const noPracticeHourZero = ((division === 'Junior' || division === 'Intermediate') && musicMajor && periodNumber[0] === '1') || (division == 'Junior' && musicMajor && periodNumber[0] === '9');
             if (this.courseIsFirstInRange(course.practiceHourMap, p, d) && !this.isGridPositionFilled(dayIndex, periodIndex) && !noPracticeHourZero) {
               // insert div
               const div: HTMLDivElement = <HTMLDivElement>document.createElement('div');
