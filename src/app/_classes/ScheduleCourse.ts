@@ -17,7 +17,13 @@ export class ScheduleCourse {
       scheduleCourse.location = scheduleCourse.privateLessonLocation;
       scheduleCourse.scheduleView = (scheduleCourse.scheduleNotesArray[0] || scheduleCourse.scheduleView);
       scheduleCourse.setScheduleViewMap();
-      scheduleCourse.setPracticeHourMap();
+      // Temporarily remove Practice Hour logic, this might come back depending on how Kara likes her new method
+      // Temporarily remove Practice Hour logic, this might come back depending on how Kara likes her new method
+      // Temporarily remove Practice Hour logic, this might come back depending on how Kara likes her new method
+      // scheduleCourse.setPracticeHourMap();
+      // Temporarily remove Practice Hour logic, this might come back depending on how Kara likes her new method
+      // Temporarily remove Practice Hour logic, this might come back depending on how Kara likes her new method
+      // Temporarily remove Practice Hour logic, this might come back depending on how Kara likes her new method
     } else {
       scheduleCourse.setScheduleViewMap();
     }
