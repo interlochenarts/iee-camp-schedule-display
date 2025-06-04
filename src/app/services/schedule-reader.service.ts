@@ -124,6 +124,23 @@ export class ScheduleReaderService {
       );
     });
   }
+
+  public getCampHousingDivisions(): Promise<HTMLOptionElement[]> {
+    return new Promise((resolve, reject) => {
+      Visualforce.remoting.Manager.invokeAction(
+        'IEE_CampScheduleBatchController.getCampHousingDivisions',
+        json => {
+          if (json) {
+            resolve(json.map(d => new Option(d.label, d.value)));
+          } else {
+            reject(new Error('Failed to get campHousingDivisions'));
+          }
+        },
+        {buffer: false, escape: false}
+      )
+    })
+  }
+
   public getCampProgramMajors(termId: string): Promise<ProgramMajor[]> {
     return new Promise((resolve, reject) => {
       Visualforce.remoting.Manager.invokeAction(
@@ -168,20 +185,20 @@ export class ScheduleReaderService {
     });
   }
 
-  public getArrivalWeeksForTerm(term: string): Promise<string[]> {
-    return new Promise((resolve, reject) => {
-      Visualforce.remoting.Manager.invokeAction(
-        'IEE_CampScheduleBatchController.getArrivalWeekDatesForTerm',
-        term,
-        json => {
-          if (json) {
-            resolve(JSON.parse(json));
-          } else {
-            reject(new Error('Failed to get arrival weeks'));
-          }
-        },
-        {buffer: false, escape: false}
-      );
-    });
-  }
+  // public getArrivalWeeksForTerm(term: string): Promise<string[]> {
+  //   return new Promise((resolve, reject) => {
+  //     Visualforce.remoting.Manager.invokeAction(
+  //       'IEE_CampScheduleBatchController.getArrivalWeekDatesForTerm',
+  //       term,
+  //       json => {
+  //         if (json) {
+  //           resolve(JSON.parse(json));
+  //         } else {
+  //           reject(new Error('Failed to get arrival weeks'));
+  //         }
+  //       },
+  //       {buffer: false, escape: false}
+  //     );
+  //   });
+  // }
 }
