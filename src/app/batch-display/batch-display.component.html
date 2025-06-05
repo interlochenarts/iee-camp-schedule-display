@@ -60,17 +60,9 @@
             </div>
 
             <div class="form-group col-12">
-              <label for="housingDivisionFilter">Cohort:</label>
+              <label for="housingDivisionFilter">Housing Division:</label>
               <select #housingDivision class="w-100" id="housingDivisionFilter">
                 <option value="">Show All</option>
-                <option value="HSL">High School Lakeside</option>
-                <option value="HSP">High School Pines</option>
-                <option value="IL">Intermediate Lakeside</option>
-                <option value="IM">Intermediate Meadows</option>
-                <option value="IP">Intermediate Pines</option>
-                <option value="JL">Junior Lakeside</option>
-                <option value="JP">Junior Pines</option>
-                <option value="NA">Not Assigned</option>
               </select>
             </div>
 
@@ -93,14 +85,12 @@
     </div>
 
     <div class="col-12 col-md-6 text-end">
-      <a href='javascript:void(0);' class="btn btn-default" (click)="getBatchSchedule()" *ngIf="alt === false">
-        <i class="fa fa-star-half" aria-hidden="true"></i> Get Schedules <i class="fa fa-star-half fa-flip-horizontal"
-                                                                            aria-hidden="true"></i></a>
+      <a href='javascript:void(0);' class="btn btn-default me-2" (click)="getBatchSchedule()" *ngIf="alt === false">Get Schedules</a>
       <a href='javascript:void(0);' class="btn btn-default" (click)="print()"
          *ngIf="alt === false && schedules && schedules.length > 0">
         <i class="fa fa-print" aria-hidden="true"></i> Print</a>
 
-      <a href='javascript:void(0);' class="tButton" (click)="getBatchSchedule()" *ngIf="alt === true">
+      <a href='javascript:void(0);' class="tButton me-2" (click)="getBatchSchedule()" *ngIf="alt === true">
         <i class="fa fa-star-half" aria-hidden="true"></i> Get Schedules <i class="fa fa-star-half fa-flip-horizontal"
                                                                             aria-hidden="true"></i></a>
       <a href='javascript:void(0);' class="blButton" (click)="print()" *ngIf="alt === true && schedules && schedules.length > 0">
