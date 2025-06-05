@@ -75,6 +75,8 @@ export class BatchDisplayComponent implements OnInit {
     this.scheduleReaderService.timesByDivision.asObservable().subscribe(value => {
       this.timesByDivision = value;
     });
+
+    this.updateCampHousingDivisions();
   }
 
   onChangeTerm(): void {
@@ -103,6 +105,14 @@ export class BatchDisplayComponent implements OnInit {
         this.cabinSelect.nativeElement.add(selectItem);
       });
     });
+  }
+
+  updateCampHousingDivisions() {
+    this.scheduleReaderService.getCampHousingDivisions().then(housingDivisions => {
+      housingDivisions.forEach(div => {
+        this.housingDivisionSelect.nativeElement.add(div);
+      });
+    })
   }
 
   updateProgramMajorsBySession(session: string): void {
